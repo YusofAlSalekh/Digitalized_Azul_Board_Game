@@ -10,4 +10,8 @@ public class Player {
     public void setBoard(PlayerBoard board) {
         this.board = board;
     }
+
+    public Player() {
+        this.board = new PlayerBoard();
+    }
 }

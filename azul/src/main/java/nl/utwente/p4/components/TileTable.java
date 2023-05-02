@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TileTable {
     private ArrayList<Tile> tiles;
-    private boolean isAlreadyTaken;
+    private boolean hasBeenTaken;
 
     public ArrayList<Tile> getTiles() {
         return tiles;
@@ -12,6 +12,14 @@ public class TileTable {
 
     public void setTiles(ArrayList<Tile> tiles) {
         this.tiles = tiles;
+    }
+
+    public boolean isHasBeenTaken() {
+        return hasBeenTaken;
+    }
+
+    public void setHasBeenTaken(boolean hasBeenTaken) {
+        this.hasBeenTaken = hasBeenTaken;
     }
 
     // TODO: implement method

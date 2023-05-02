@@ -21,9 +21,9 @@ public class Wall {
     }
 
     // TODO: implement method
-    public boolean addTile(Tile tiles, int row) {
+    public int addTile(Tile tiles, int row) {
         // check if tile is not filled in row, then add to row
-        return true;
+        return 0;
     }
 
     // TODO: implement method

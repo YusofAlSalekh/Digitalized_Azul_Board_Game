@@ -20,5 +20,5 @@ public class Factory {
     public void addTile(Tile tile) { }
 
     // TODO: implement method
-    public int getRemainingTileAmount() { return 4; }
+    public ArrayList<Tile> getRemainingTiles() { return null; }
 }

@@ -19,7 +19,7 @@ public class TileBag {
     }
 
     // TODO: implement method
-    public void addTile(Tile tile) { }
+    public void addTiles(ArrayList<Tile> tiles) { }
 
     // TODO: implement method
     public boolean isEmpty() { return false; }
