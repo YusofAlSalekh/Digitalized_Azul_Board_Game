@@ -13,8 +13,8 @@ public class Factory {
         this.tiles = tiles;
     }
 
-    public Factory() {
-        this.tiles = new ArrayList<>();
+    public Factory(ArrayList<Tile> tiles) {
+        this.tiles = tiles;
     }
 
     // TODO: implement method
