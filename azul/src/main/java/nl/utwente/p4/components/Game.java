@@ -3,6 +3,7 @@ package nl.utwente.p4.components;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
     private TileBag tileBag;
@@ -25,11 +26,15 @@ public class Game {
     }
 
     public void startGame() {
+        // Create players
         for (int i = 0; i < numOfPlayers; i++) {
             this.players.add(new Player());
         }
 
-        for (TileType type : TileType.values()) {
+        // Create tile bag
+        ArrayList<TileType> tileTypes = new ArrayList<>(
+                Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.GREEN, TileType.YELLOW));
+        for (TileType type : tileTypes) {
             ArrayList<Tile> initialBagTiles = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
                 initialBagTiles.add(new Tile(type));
@@ -37,6 +42,7 @@ public class Game {
             this.tileBag.addTiles(initialBagTiles);
         }
 
+        // Create factories
         int numOfFactories = 2 * numOfPlayers + 1;
         for (int i = 0; i < numOfFactories; i++) {
             ArrayList<Tile> initialFactoryTiles = new ArrayList<>();
@@ -46,26 +52,24 @@ public class Game {
             this.factories.add(new Factory(initialFactoryTiles));
         }
 
-//        // TODO: used for testing, remove before submission
-//        System.out.println("printing tile bag");
-//        for (Tile t : this.tileBag.getTiles()) {
-//            System.out.print(t.getType() + ", ");
-//        }
-//        System.out.println("\nprinting factories");
-//        for (Factory f : this.factories) {
-//            System.out.println("factory:");
-//            for (Tile t : f.getTiles()) {
-//                System.out.print(t.getType() + ", ");
-//            }
-//            System.out.println();
-//        }
+        // TODO: used for testing, remove before submission
+        /* System.out.println("printing tile bag");
+        for (Tile t : this.tileBag.getTiles()) {
+            System.out.print(t.getType() + ", ");
+        }
+        System.out.println("\nprinting factories");
+        for (Factory f : this.factories) {
+            System.out.println("factory:");
+            for (Tile t : f.getTiles()) {
+                System.out.print(t.getType() + ", ");
+            }
+            System.out.println();
+        } */
     }
 
     // TODO: implement method
     public void getFactoryOfferFromFactory() {}
 
-    // TODO: implement method
-    public void getFactoryOfferFromTileTable() {}
 
     // TODO: implement method
     public void wallTiling() {}
