@@ -14,6 +14,11 @@ public class TileTable {
         this.tiles = tiles;
     }
 
+    public TileTable() {
+        this.tiles = new ArrayList<>();
+        this.hasBeenTaken = false;
+    }
+
     public boolean isHasBeenTaken() {
         return hasBeenTaken;
     }

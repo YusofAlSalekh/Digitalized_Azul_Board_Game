@@ -13,6 +13,10 @@ public class TileBag {
         this.tiles = tiles;
     }
 
+    public TileBag() {
+        this.tiles = new ArrayList<>();
+    }
+
     // TODO: implement method
     public Tile getRandomTile() {
         return null;

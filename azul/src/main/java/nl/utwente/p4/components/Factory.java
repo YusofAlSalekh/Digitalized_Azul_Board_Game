@@ -13,6 +13,10 @@ public class Factory {
         this.tiles = tiles;
     }
 
+    public Factory() {
+        this.tiles = new ArrayList<>();
+    }
+
     // TODO: implement method
     public ArrayList<Tile> takeTiles(Tile tile) { return null; }
 
