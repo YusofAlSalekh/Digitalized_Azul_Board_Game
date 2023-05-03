@@ -1,5 +1,9 @@
 package nl.utwente.p4.components;
 
+import nl.utwente.p4.constants.TileType;
+
+import java.util.ArrayList;
+
 public class PlayerBoard {
     private PatternLine patternLine;
     private Wall wall;
@@ -50,4 +54,24 @@ public class PlayerBoard {
     
     // TODO: implement method
     public void subtractScore(int value) { }
+
+    /***
+     * Method to add given tiles to the player boards pattern line
+     * @param tiles tiles to be added
+     * @param rowNum row to add tiles to
+     */
+    public void addTiles(ArrayList<Tile> tiles, Integer rowNum) {
+        // If first player to take from table, add first token to floor
+        if (tiles.get(0).getType() == TileType.FIRST_PLAYER) {
+            this.floorLine.addTile(tiles.get(0));
+            tiles.remove(0);
+        }
+
+        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
+
+        // Add excess tiles to the floor
+        for (int i = 0; i < excessTiles.size(); i++) {
+            floorLine.addTile(excessTiles.get(i));
+        }
+    }
 }

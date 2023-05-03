@@ -5,5 +5,7 @@ public enum TileType {
     GREEN,
     BLUE,
     YELLOW,
-    RED
+    RED,
+    FIRST_PLAYER,
+    NULL
 }
