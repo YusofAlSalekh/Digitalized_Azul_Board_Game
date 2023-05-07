@@ -44,6 +44,7 @@ private Map<TileType, TileType>[] tiles;
         for (TileType column : targetRow.keySet()) {
             if (column == tile.getType() && targetRow.get(column) == null) {
                 targetRow.put(column, tile.getType());
+
             }
         }
         return this.tiles[row];
