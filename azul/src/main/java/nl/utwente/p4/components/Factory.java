@@ -18,11 +18,18 @@ public class Factory {
     }
 
     // TODO: implement method
-    public ArrayList<Tile> takeTiles(Tile tile) { return null; }
+    public ArrayList<Tile> takeTiles(Tile tile) {
+        var taken = tiles.stream().filter(t -> t.getType() == tile.getType()).toList();
+
+        tiles.removeIf(t -> t.getType() == tile.getType());
+
+        return new ArrayList<>(taken);
+    }
 
     // TODO: implement method
     public void addTile(Tile tile) { }
 
     // TODO: implement method
-    public ArrayList<Tile> getRemainingTiles() { return null; }
+    public ArrayList<Tile> getRemainingTiles() { return tiles; }
+    // returns the unselected tiles on a factory
 }
