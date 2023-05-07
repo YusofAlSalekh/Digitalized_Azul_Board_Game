@@ -38,9 +38,15 @@ private Map<TileType, TileType>[] tiles;
     }
 
     // TODO: implement method
-    public int addTile(Tile tiles, int row) {
+    public Map addTile(Tile tile, int row) {
         // check if tile is not filled in row, then add to row
-        return 0;
+        Map<TileType, TileType> targetRow = this.tiles[row];
+        for (TileType column : targetRow.keySet()) {
+            if (column == tile.getType() && targetRow.get(column) == null) {
+                targetRow.put(column, tile.getType());
+            }
+        }
+        return this.tiles[row];
     }
 
     // TODO: implement method
