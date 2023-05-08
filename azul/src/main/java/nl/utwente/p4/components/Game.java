@@ -47,7 +47,7 @@ public class Game {
         int numOfFactories = 2 * numOfPlayers + 1;
         for (int i = 0; i < numOfFactories; i++) {
             ArrayList<Tile> initialFactoryTiles = new ArrayList<>();
-            for (int j = 0; j < 0; j++) {
+            for (int j = 0; j < 4; j++) {
                 initialFactoryTiles.add(this.tileBag.getRandomTile());
             }
             this.factories.add(new Factory(initialFactoryTiles));
