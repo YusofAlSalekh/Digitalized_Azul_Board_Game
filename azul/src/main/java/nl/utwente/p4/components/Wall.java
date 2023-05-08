@@ -44,7 +44,6 @@ private Map<TileType, TileType>[] tiles;
         for (TileType column : targetRow.keySet()) {
             if (column == tile.getType() && targetRow.get(column) == null) {
                 targetRow.put(column, tile.getType());
-
             }
         }
         return this.tiles[row];
@@ -52,12 +51,19 @@ private Map<TileType, TileType>[] tiles;
 
     // TODO: implement method
     public boolean isTileFilled(Tile tile, int row) {
+        Map<TileType, TileType> targetRow = this.tiles[row];
+        if(targetRow.containsValue(tile.getType())) return true;
         return false;
     }
 
     // TODO: implement method
     public boolean isRowFilled(int row) {
-        return false;
+
+        Map<TileType, TileType> targetRow = this.tiles[row];
+        for (TileType item : targetRow.keySet()) {
+            if(targetRow.get(item) == null) return false;
+        }
+        return true;
     }
 
     // TODO: implement method
