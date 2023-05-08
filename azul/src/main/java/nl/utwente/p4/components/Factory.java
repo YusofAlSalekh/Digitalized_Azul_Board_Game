@@ -20,8 +20,9 @@ public class Factory {
     // TODO: implement method
     public ArrayList<Tile> takeTiles(Tile tile) { return null; }
 
-    // TODO: implement method
-    public void addTile(Tile tile) { }
+    public void addTile(Tile tile) {
+        this.tiles.add(tile);
+    }
 
     // TODO: implement method
     public ArrayList<Tile> getRemainingTiles() { return null; }
