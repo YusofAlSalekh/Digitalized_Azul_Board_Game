@@ -30,6 +30,10 @@ public class TileLine {
         return this.lineSize;
     }
 
+    public ArrayList<Tile> getTiles() {
+        return this.tiles;
+    }
+
 
     /***
      * Add tiles to the tile line. If the line is empty, set the line type according to the tiles to be added
