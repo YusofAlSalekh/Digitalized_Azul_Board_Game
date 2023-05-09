@@ -19,6 +19,10 @@ public class TileBag {
     }
 
     public Tile getRandomTile() {
+        if (this.tiles.size() == 0) {
+            return null;
+        }
+
         Random rand = new Random();
         int idx = rand.nextInt(this.tiles.size());
         return this.tiles.remove(idx);

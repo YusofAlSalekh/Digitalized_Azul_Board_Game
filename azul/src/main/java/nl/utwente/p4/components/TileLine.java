@@ -52,4 +52,8 @@ public class TileLine {
         }
         return excess;
     }
+
+    public boolean isFilled() {
+        return lineSize == tiles.stream().filter(t -> t.getType() != TileType.NULL).count();
+    }
 }
