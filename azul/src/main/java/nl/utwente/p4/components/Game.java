@@ -1,10 +1,12 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@Data
 public class Game {
     private TileBag tileBag;
     private TileTable tileTable;

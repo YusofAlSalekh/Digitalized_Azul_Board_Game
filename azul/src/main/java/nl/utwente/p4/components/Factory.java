@@ -1,17 +1,12 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 
+@Data
 public class Factory {
     private ArrayList<Tile> tiles;
-
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(ArrayList<Tile> tiles) {
-        this.tiles = tiles;
-    }
 
     public Factory(ArrayList<Tile> tiles) {
         this.tiles = tiles;

@@ -1,9 +1,11 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
+@Data
 public class TileLine {
     private ArrayList<Tile> tiles;
     private int lineSize;

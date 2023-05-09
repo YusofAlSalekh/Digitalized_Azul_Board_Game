@@ -1,46 +1,16 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
+@Data
 public class PlayerBoard {
     private PatternLine patternLine;
     private Wall wall;
     private FloorLine floorLine;
     private int scoreTrack;
-
-    public PatternLine getPatternLine() {
-        return patternLine;
-    }
-
-    public void setPatternLine(PatternLine patternLine) {
-        this.patternLine = patternLine;
-    }
-
-    public Wall getWall() {
-        return wall;
-    }
-
-    public void setWall(Wall wall) {
-        this.wall = wall;
-    }
-
-    public FloorLine getFloorLine() {
-        return floorLine;
-    }
-
-    public void setFloorLine(FloorLine floorLine) {
-        this.floorLine = floorLine;
-    }
-
-    public int getScoreTrack() {
-        return scoreTrack;
-    }
-
-    public void setScoreTrack(int scoreTrack) {
-        this.scoreTrack = scoreTrack;
-    }
 
     public PlayerBoard() {
         this.patternLine = new PatternLine();

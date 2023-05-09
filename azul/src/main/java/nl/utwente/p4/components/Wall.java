@@ -1,17 +1,12 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 
+@Data
 public class Wall {
     private ArrayList<ArrayList<Tile>> tiles;
-
-    public ArrayList<ArrayList<Tile>> getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(ArrayList<ArrayList<Tile>> tiles) {
-        this.tiles = tiles;
-    }
 
     public Wall() {
         this.tiles = new ArrayList<>();

@@ -4,19 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
+@Data
 public class TileTable {
     private ArrayList<Tile> tiles;
     private boolean firstHasBeenTaken;
-
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(ArrayList<Tile> tiles) {
-        this.tiles = tiles;
-    }
 
     public TileTable() {
         this.tiles = new ArrayList<>(Arrays.asList(new Tile(TileType.FIRST_PLAYER)));
