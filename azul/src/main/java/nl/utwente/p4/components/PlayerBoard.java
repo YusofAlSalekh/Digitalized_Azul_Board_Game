@@ -63,8 +63,7 @@ public class PlayerBoard {
     public void addTiles(ArrayList<Tile> tiles, Integer rowNum) {
         // If first player to take from table, add first token to floor
         if (tiles.get(0).getType() == TileType.FIRST_PLAYER) {
-            this.floorLine.addTile(tiles.get(0));
-            tiles.remove(0);
+            this.floorLine.addTile(tiles.remove(0));
         }
 
         ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
