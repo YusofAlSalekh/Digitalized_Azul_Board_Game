@@ -23,6 +23,7 @@ public class Game {
     // TODO: add overall game logic here
     public void play(){
         startGame();
+        prepareNextRound();
     }
 
     public void startGame() {
@@ -52,11 +53,45 @@ public class Game {
             this.factories.add(new Factory(initialFactoryTiles));
         }
 
-        // TODO: used for testing, remove before submission
-        /* System.out.println("printing tile bag");
+        // TODO: this is used for testing, remove before submission
+        tempPrintTileBag();
+        tempPrintFactories();
+    }
+
+    // TODO: implement method
+    public void getFactoryOfferFromFactory() {}
+
+    // TODO: implement method
+    public void wallTiling() {}
+
+    public void prepareNextRound() {
+        for (Factory f  : this.factories) {
+            for (int i = 0; i < 4; i++) {
+                Tile newTile = this.tileBag.getRandomTile();
+                if (newTile != null) {
+                    f.addTile(newTile);
+                }
+            }
+        }
+        this.tileTable.setFirstHasBeenTaken(false);
+
+        // TODO: this is used for testing, remove before submission
+        tempPrintFactories();
+    }
+
+    // TODO: implement method
+    public void endGame() {}
+
+    // TODO: this is used for testing, remove before submission
+    public void tempPrintTileBag() {
+        System.out.println("printing tile bag");
         for (Tile t : this.tileBag.getTiles()) {
             System.out.print(t.getType() + ", ");
         }
+    }
+
+    // TODO: this is used for testing, remove before submission
+    public void tempPrintFactories() {
         System.out.println("\nprinting factories");
         for (Factory f : this.factories) {
             System.out.println("factory:");
@@ -64,7 +99,7 @@ public class Game {
                 System.out.print(t.getType() + ", ");
             }
             System.out.println();
-        } */
+        }
     }
 
     // TODO: implement method
