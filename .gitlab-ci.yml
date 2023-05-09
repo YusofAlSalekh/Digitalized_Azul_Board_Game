@@ -23,4 +23,4 @@ test:
     when: always
     reports:
       junit:
-        - 2023Team06/azul/target/surefire-reports/TEST-*.xml
+        - azul/target/surefire-reports/TEST-*.xml
