@@ -21,7 +21,9 @@ public class FloorLine {
     // TODO: implement method
     public boolean addTile(Tile tile) {
         // return true if still <7, else return false
-        return true;
+        if (tiles.size() < 7)
+            tiles.add(tile);
+        return tiles.size() < 7;
     }
 
     // TODO: implement method
