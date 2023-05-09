@@ -38,8 +38,10 @@ public class PatternLine {
 
     // TODO: implement method
     public boolean isRowFilled(int row) {
-        return false;
+        return tileLines.get(row).isFilled();
     }
+
+
 
     // TODO: implement method
     public Tile getFilledRow(int row) {
