@@ -10,15 +10,14 @@ build:
   image: maven
   stage: build
   script:
-    - ls
-    - cd 2023Team06/azul
+    - cd azul
     - mvn package
 
 test:
   image: maven
   stage: test
   script:
-    - cd 2023Team06/azul
+    - cd azul
     - mvn verify
   artifacts:
     when: always
