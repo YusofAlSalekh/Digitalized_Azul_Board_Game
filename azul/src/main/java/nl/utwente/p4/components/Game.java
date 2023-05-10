@@ -102,6 +102,13 @@ public class Game {
             if (score > highestScore) {
                 highestScore = score;
             }
+           // ArrayList<Tile> floorTiles = player1.getBoard().getFloorLine().getTiles();
+            // System.out.println("Checking first player floor line, which contains " + floorTiles.size() + " tiles");
+            //for (int i=0; i<floorTiles.size(); i++) {
+                //System.out.println("Floor tile index " + i + " with type " + floorTiles.get(i).getType());
         }
+
     }
 }
+
+    
