@@ -1,18 +1,13 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Random;
 
+@Data
 public class TileBag {
     private ArrayList<Tile> tiles;
-
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(ArrayList<Tile> tiles) {
-        this.tiles = tiles;
-    }
 
     public TileBag() {
         this.tiles = new ArrayList<>();

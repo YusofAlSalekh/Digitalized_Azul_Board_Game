@@ -1,0 +1,26 @@
+default:
+  tags:
+    - pppp
+
+stages:
+  - build
+  - test
+
+build:
+  image: maven
+  stage: build
+  script:
+    - cd azul
+    - mvn package
+
+test:
+  image: maven
+  stage: test
+  script:
+    - cd azul
+    - mvn verify
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - azul/target/surefire-reports/TEST-*.xml

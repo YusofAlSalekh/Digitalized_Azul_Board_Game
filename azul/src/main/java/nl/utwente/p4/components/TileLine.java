@@ -1,9 +1,11 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
+@Data
 public class TileLine {
     private ArrayList<Tile> tiles;
     private int lineSize;
@@ -30,6 +32,10 @@ public class TileLine {
         return this.lineSize;
     }
 
+    public ArrayList<Tile> getTiles() {
+        return this.tiles;
+    }
+
 
     /***
      * Add tiles to the tile line. If the line is empty, set the line type according to the tiles to be added
@@ -51,5 +57,9 @@ public class TileLine {
             }
         }
         return excess;
+    }
+
+    public boolean isFilled() {
+        return lineSize == tiles.stream().filter(t -> t.getType() != TileType.NULL).count();
     }
 }
