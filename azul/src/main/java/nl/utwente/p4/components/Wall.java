@@ -5,7 +5,7 @@ import nl.utwente.p4.constants.TileType;
 import java.util.*;
 
 public class Wall {
-private Map<TileType, TileType>[] tiles;
+    private Map<TileType, TileType>[] tiles;
     public Map<TileType, TileType>[] getTiles() {
         return tiles;
     }
