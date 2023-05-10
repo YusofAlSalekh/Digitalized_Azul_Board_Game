@@ -10,7 +10,7 @@ public class GameTest {
     @Test
     void startGame_createdTwoPlayers_true() { // methodName_behaviorToBeTested_expectedResult
         // arrange
-        Game game = new Game();
+        Game game = Game.getInstance();
 
         // act
         game.startGame();

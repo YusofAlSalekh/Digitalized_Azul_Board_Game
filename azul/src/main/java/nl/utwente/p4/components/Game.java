@@ -13,11 +13,17 @@ public class Game {
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
 
-    public Game() {
+    private static final Game INSTANCE = new Game();
+
+    private Game() {
         this.tileBag = new TileBag();
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
+    }
+
+    public static Game getInstance() {
+        return INSTANCE;
     }
 
     private static final int numOfPlayers = 2;
