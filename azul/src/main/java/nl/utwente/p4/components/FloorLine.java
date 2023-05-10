@@ -1,18 +1,13 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 
+@Data
 public class FloorLine {
     private static final int[] floorScores = {-1, -1, -2, -2, -2, -3, -3};
     private ArrayList<Tile> tiles;
-
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(ArrayList<Tile> tiles) {
-        this.tiles = tiles;
-    }
 
     public FloorLine() {
         this.tiles = new ArrayList<>();

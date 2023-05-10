@@ -1,17 +1,12 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 
+@Data
 public class PatternLine {
     private ArrayList<TileLine> tileLines;
-
-    public ArrayList<TileLine> getTileLines() {
-        return tileLines;
-    }
-
-    public void setTileLines(ArrayList<TileLine> tileLines) {
-        this.tileLines = tileLines;
-    }
 
     public PatternLine() {
         // Initialize lines with tileLines of sizes from 1 to 5
