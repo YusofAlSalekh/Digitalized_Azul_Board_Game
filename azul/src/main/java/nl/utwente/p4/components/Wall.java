@@ -16,6 +16,8 @@ private Map<TileType, TileType>[] tiles;
         TileType[] set = {TileType.BLUE,TileType.YELLOW,TileType.RED,TileType.BLACK,TileType.WHITE};
         return set;
     }
+
+    int totalScore =0;
     public static TileType[] RotateSet(TileType[] set){
         //move set one index to the right
         TileType lastSetElement = set[set.length - 1];
@@ -46,6 +48,8 @@ private Map<TileType, TileType>[] tiles;
                 targetRow.put(column, tile.getType());
             }
         }
+        totalScore += 1; // gain 1 point for adding tile to wall
+        totalScore += getScoreFromTile( tile,row);
         return this.tiles[row];
     }
 
@@ -64,6 +68,70 @@ private Map<TileType, TileType>[] tiles;
             if(targetRow.get(item) == null) return false;
         }
         return true;
+    }
+    public int getTileIndex(Tile tile,int row) {
+            int i = 0;
+            Map<TileType, TileType> targetRow = this.tiles[row];
+            for (Map.Entry<TileType, TileType> entry : targetRow.entrySet()) {
+                if (entry.getKey() == tile.getType() && entry.getValue() == tile.getType()) {
+                    return i;
+                }
+                i++;
+            }
+        return -1; // Tile was not found
+    }
+    public  int getScoreFromTile(Tile tile,int row){
+        int total = 0 ;
+        total += countHorizontalTiles(tile,row);
+        total += countVerticalTiles(tile,row);
+        return total;
+
+    }
+    public int countHorizontalTiles(Tile tile,int row) {
+        int count = 0;
+        int left = getTileIndex(tile,row) - 1;
+        int right = getTileIndex(tile,row) + 1;
+        Map targetrow = this.tiles[row];
+        List<String> listOFTargetRow = new ArrayList<>(targetrow.keySet());
+        // count tiles to the left
+        while (left >= 0 && targetrow.get(listOFTargetRow.get(left)) != null) {
+            count++;
+            left--;
+        }
+        // count tiles to the right
+        while (right < 5 && targetrow.get(listOFTargetRow.get(right)) != null) {
+            count++;
+            right++;
+        }
+        return count;
+    }
+    public int countVerticalTiles(Tile tile,int row) {
+        int count = 0;
+        int up =  row - 1;
+        int down = row + 1;
+        int index = getTileIndex(tile,row);
+        Map targetrow ;
+        List<String> listOFTargetRow ;
+        // count tiles above
+        while (up >= 0 ) {
+            targetrow = this.tiles[up];
+            listOFTargetRow = new ArrayList<>(targetrow.keySet());
+            if (targetrow.get(listOFTargetRow.get(index)) == null) break;
+            count++;
+            up--;
+        }
+        // count tiles below
+        while (down < 5 ) {
+            targetrow = this.tiles[down];
+            listOFTargetRow = new ArrayList<>(targetrow.keySet());
+            if (targetrow.get(listOFTargetRow.get(index)) == null)  break;
+            count++;
+            down++;
+        }
+        return count;
+    }
+    public int getTotalScore(){
+        return totalScore;
     }
 
     // TODO: implement method
