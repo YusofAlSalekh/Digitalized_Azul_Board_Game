@@ -13,7 +13,7 @@ public class Game {
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
 
-    private static final Game INSTANCE = new Game();
+    private static Game instance;
 
     private Game() {
         this.tileBag = new TileBag();
@@ -23,7 +23,10 @@ public class Game {
     }
 
     public static Game getInstance() {
-        return INSTANCE;
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
     }
 
     private static final int numOfPlayers = 2;
