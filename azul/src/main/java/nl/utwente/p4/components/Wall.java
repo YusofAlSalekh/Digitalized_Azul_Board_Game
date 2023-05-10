@@ -80,13 +80,6 @@ public class Wall {
             }
         return -1; // Tile was not found
     }
-    public  int getScoreFromTile(Tile tile,int row){
-        int total = 0 ;
-        total += countHorizontalTiles(tile,row);
-        total += countVerticalTiles(tile,row);
-        return total;
-
-    }
     public int countHorizontalTiles(Tile tile,int row) {
         int count = 0;
         int left = getTileIndex(tile,row) - 1;
@@ -129,6 +122,15 @@ public class Wall {
             down++;
         }
         return count;
+    }
+    public  int getScoreFromTile(Tile tile,int row){
+        int total = 0 ;
+        total += countHorizontalTiles(tile,row);
+        total += countVerticalTiles(tile,row);
+        return total;
+    }
+    public int deductScoreFromFloorLine(int getTotalFloorScore){
+        return  totalScore -= getTotalFloorScore ;
     }
     public int getTotalScore(){
         return totalScore;
