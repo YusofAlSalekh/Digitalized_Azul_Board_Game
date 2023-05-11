@@ -11,14 +11,14 @@ build:
   stage: build
   script:
     - cd azul
-    - mvn package
+    - mvn compile
 
 test:
   image: maven
   stage: test
   script:
     - cd azul
-    - mvn verify
+    - mvn test
   artifacts:
     when: always
     reports:
