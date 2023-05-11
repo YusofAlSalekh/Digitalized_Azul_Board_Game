@@ -20,6 +20,7 @@ class WallTest {
            wall.addTile(tile, 0);
            assertEquals(tile.getType(), wall.getTiles()[0].get(tile.getType()));
        }
+
     @Test
     void  checkIfTileIsFilled(){
         Wall wall = new Wall();
@@ -36,6 +37,13 @@ class WallTest {
         wall.addTile(new Tile(TileType.BLACK), 0);
         wall.addTile(new Tile(TileType.YELLOW), 0);
         assertTrue(wall.isRowFilled(0));
+    }
+    @Test
+    void checkForDuplicateTile(){
+        Wall wall = new Wall();
+        wall.addTile(new Tile(TileType.YELLOW), 0);
+        wall.addTile(new Tile(TileType.YELLOW), 0);
+        assertEquals(1,wall.getTotalScore());
     }
     @Test
     void  countHorizontally(){

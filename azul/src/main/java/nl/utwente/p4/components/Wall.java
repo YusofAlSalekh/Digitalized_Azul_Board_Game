@@ -1,17 +1,20 @@
 package nl.utwente.p4.components;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.*;
 
 @Data
 public class Wall {
+    @Setter(AccessLevel.PRIVATE)
     private Map<TileType, TileType>[] tiles;
+    @Setter(AccessLevel.PRIVATE)
     private int totalScore =  0;
     private TileType[] WallSet() {
-        TileType[] set = {TileType.BLUE,TileType.YELLOW,TileType.RED,TileType.BLACK,TileType.WHITE};
-        return set;
+        return new TileType[]{TileType.BLUE, TileType.YELLOW, TileType.RED, TileType.BLACK, TileType.WHITE};
     }
 
     private static TileType[] RotateSet(TileType[] set){
@@ -34,27 +37,24 @@ public class Wall {
         }
         setTiles(this.tiles);
     }
-    public Map addTile(Tile tile, int row) {
+    public  Map<TileType, TileType>  addTile(Tile tile, int row) {
         // check if tile is not filled in row, then add to row
+
         Map<TileType, TileType> targetRow = this.tiles[row];
         for (TileType column : targetRow.keySet()) {
             if (column == tile.getType() && targetRow.get(column) == null) {
                 targetRow.put(column, tile.getType());
+                int  points = getTotalScore() + getScoreFromTile(tile,row) + 1; // gain +1 point for inserting a tile into the wall
+                setTotalScore(points);
             }
         }
-        totalScore += 1; // gain 1 point for adding tile to wall
-        totalScore += getScoreFromTile( tile,row);
         return this.tiles[row];
     }
 
-    // TODO: implement method
     public boolean isTileFilled(Tile tile, int row) {
         Map<TileType, TileType> targetRow = this.tiles[row];
-        if(targetRow.containsValue(tile.getType())) return true;
-        return false;
+        return targetRow.containsValue(tile.getType());
     }
-
-    // TODO: implement method
     public boolean isRowFilled(int row) {
 
         Map<TileType, TileType> targetRow = this.tiles[row];
@@ -118,13 +118,10 @@ public class Wall {
         return count;
     }
     private  int getScoreFromTile(Tile tile,int row){
-        int total = 0 ;
-        total += countHorizontalTiles(tile,row);
-        total += countVerticalTiles(tile,row);
-        return total;
+        return countHorizontalTiles(tile,row) + countVerticalTiles(tile,row);
     }
     public int deductScoreFromFloorLine(int getTotalFloorScore){
-        return  totalScore -= getTotalFloorScore ;
+        return  getTotalScore() - getTotalFloorScore ;
     }
 
 
