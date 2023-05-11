@@ -87,4 +87,12 @@ class WallTest {
         wall.addTile(new Tile(TileType.BLACK), 3);
         assertEquals(20,wall.getTotalScore());
     }
+
+    @Test
+    void checkIFScoreP0() {
+        Wall wall = new Wall();
+        wall.addTile(new Tile(TileType.WHITE), 0);
+        wall.deductScoreFromFloorLine(15);
+        assertEquals(0,wall.getTotalScore());
+    }
 }

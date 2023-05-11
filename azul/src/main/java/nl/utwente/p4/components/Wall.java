@@ -120,8 +120,12 @@ public class Wall {
     private  int getScoreFromTile(Tile tile,int row){
         return countHorizontalTiles(tile,row) + countVerticalTiles(tile,row);
     }
+
+    //STILL WORK IN PROGRESS
     public int deductScoreFromFloorLine(int getTotalFloorScore){
-        return  getTotalScore() - getTotalFloorScore ;
+        int total =  Math.max(0 , getTotalScore() - getTotalFloorScore ) ;
+        setTotalScore(total);
+        return total;
     }
 
 
