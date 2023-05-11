@@ -1,5 +1,7 @@
-package nl.utwente.p4.components;
+package nl.utwente.p4;
 
+import nl.utwente.p4.components.Tile;
+import nl.utwente.p4.components.Wall;
 import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 import java.util.Map;

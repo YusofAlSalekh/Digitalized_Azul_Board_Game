@@ -1,24 +1,20 @@
 package nl.utwente.p4.components;
 
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.*;
 
+@Data
 public class Wall {
     private Map<TileType, TileType>[] tiles;
-    public Map<TileType, TileType>[] getTiles() {
-        return tiles;
-    }
-    public void setTiles(Map<TileType, TileType>[] tiles) {
-        this.tiles = tiles;
-    }
-    public TileType[] WallSet() {
+    private int totalScore =  0;
+    private TileType[] WallSet() {
         TileType[] set = {TileType.BLUE,TileType.YELLOW,TileType.RED,TileType.BLACK,TileType.WHITE};
         return set;
     }
 
-    int totalScore =0;
-    public static TileType[] RotateSet(TileType[] set){
+    private static TileType[] RotateSet(TileType[] set){
         //move set one index to the right
         TileType lastSetElement = set[set.length - 1];
         System.arraycopy(set, 0, set, 1, set.length - 1);
@@ -38,8 +34,6 @@ public class Wall {
         }
         setTiles(this.tiles);
     }
-
-    // TODO: implement method
     public Map addTile(Tile tile, int row) {
         // check if tile is not filled in row, then add to row
         Map<TileType, TileType> targetRow = this.tiles[row];
@@ -69,7 +63,7 @@ public class Wall {
         }
         return true;
     }
-    public int getTileIndex(Tile tile,int row) {
+    private int getTileIndex(Tile tile,int row) {
             int i = 0;
             Map<TileType, TileType> targetRow = this.tiles[row];
             for (Map.Entry<TileType, TileType> entry : targetRow.entrySet()) {
@@ -80,7 +74,7 @@ public class Wall {
             }
         return -1; // Tile was not found
     }
-    public int countHorizontalTiles(Tile tile,int row) {
+    private int countHorizontalTiles(Tile tile,int row) {
         int count = 0;
         int left = getTileIndex(tile,row) - 1;
         int right = getTileIndex(tile,row) + 1;
@@ -98,7 +92,7 @@ public class Wall {
         }
         return count;
     }
-    public int countVerticalTiles(Tile tile,int row) {
+    private int countVerticalTiles(Tile tile,int row) {
         int count = 0;
         int up =  row - 1;
         int down = row + 1;
@@ -123,7 +117,7 @@ public class Wall {
         }
         return count;
     }
-    public  int getScoreFromTile(Tile tile,int row){
+    private  int getScoreFromTile(Tile tile,int row){
         int total = 0 ;
         total += countHorizontalTiles(tile,row);
         total += countVerticalTiles(tile,row);
@@ -132,9 +126,7 @@ public class Wall {
     public int deductScoreFromFloorLine(int getTotalFloorScore){
         return  totalScore -= getTotalFloorScore ;
     }
-    public int getTotalScore(){
-        return totalScore;
-    }
+
 
     // TODO: implement method
     public int countFilledRows() {

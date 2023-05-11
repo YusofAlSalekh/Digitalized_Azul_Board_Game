@@ -45,7 +45,7 @@ public class Game {
 
         // Create tile bag
         ArrayList<TileType> tileTypes = new ArrayList<>(
-                Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.GREEN, TileType.YELLOW));
+                Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW));
         for (TileType type : tileTypes) {
             ArrayList<Tile> initialBagTiles = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
@@ -120,8 +120,8 @@ public class Game {
     public void tempTestTakeTileFromTable() {
         // Test player 1 taking tiles from the table
         // Add tiles for testing so the table should contain the tiles below
-        tileTable.addTile(new Tile(TileType.GREEN));
-        tileTable.addTile(new Tile(TileType.GREEN));
+        tileTable.addTile(new Tile(TileType.WHITE));
+        tileTable.addTile(new Tile(TileType.WHITE));
         tileTable.addTile(new Tile(TileType.YELLOW));
         tileTable.addTile(new Tile(TileType.BLUE));
         tileTable.addTile(new Tile(TileType.RED));
