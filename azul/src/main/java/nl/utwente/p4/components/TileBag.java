@@ -27,6 +27,12 @@ public class TileBag {
         this.tiles.addAll(tiles);
     }
 
+    public ArrayList<Tile> getAndRemoveTiles() {
+        ArrayList<Tile> tilesToReturn = this.tiles;
+        this.tiles = new ArrayList<>();
+        return tilesToReturn;
+    }
+
     // TODO: implement method
     public boolean isEmpty() { return false; }
 }
