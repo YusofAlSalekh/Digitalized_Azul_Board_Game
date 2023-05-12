@@ -22,10 +22,10 @@ public class PatternLineTest {
         tiles.add(new Tile(TileType.BLACK));
 
         ArrayList<Tile> tiles2 = new ArrayList<>();
-        tiles2.add(new Tile(TileType.GREEN));
-        tiles2.add(new Tile(TileType.GREEN));
-        tiles2.add(new Tile(TileType.GREEN));
-        tiles2.add(new Tile(TileType.GREEN));
+        tiles2.add(new Tile(TileType.WHITE));
+        tiles2.add(new Tile(TileType.WHITE));
+        tiles2.add(new Tile(TileType.WHITE));
+        tiles2.add(new Tile(TileType.WHITE));
 
         // act
         ArrayList<Tile> excess1 = patternLine.addTiles(tiles, 0);

@@ -9,15 +9,34 @@ import java.util.Arrays;
 @Data
 public class Game {
     private TileBag tileBag;
+    private TileBag gameBoxLid;
     private TileTable tileTable;
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
 
-    public Game() {
+    private static Game instance;
+
+    private Game() {
         this.tileBag = new TileBag();
+        this.gameBoxLid = new TileBag();
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
+    }
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    public ArrayList<Tile> getTilesFromGameBoxLid() {
+        return this.gameBoxLid.getAndRemoveTiles();
+    }
+
+    public void addTilesToGameBoxLid(ArrayList<Tile> tiles) {
+        this.gameBoxLid.addTiles(tiles);
     }
 
     private static final int numOfPlayers = 2;
@@ -36,7 +55,7 @@ public class Game {
 
         // Create tile bag
         ArrayList<TileType> tileTypes = new ArrayList<>(
-                Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.GREEN, TileType.YELLOW));
+                Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW));
         for (TileType type : tileTypes) {
             ArrayList<Tile> initialBagTiles = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
@@ -107,8 +126,24 @@ public class Game {
         }
     }
 
+<<<<<<< HEAD
     // TODO: implement method
     public void getFactoryOfferFromFactory() {}
+=======
+    // TODO: this is used for testing, remove before submission
+    public void tempTestTakeTileFromTable() {
+        // Test player 1 taking tiles from the table
+        // Add tiles for testing so the table should contain the tiles below
+        tileTable.addTile(new Tile(TileType.WHITE));
+        tileTable.addTile(new Tile(TileType.WHITE));
+        tileTable.addTile(new Tile(TileType.YELLOW));
+        tileTable.addTile(new Tile(TileType.BLUE));
+        tileTable.addTile(new Tile(TileType.RED));
+        System.out.println("Table contains tiles: ");
+        for (int i = 0; i<tileTable.getTiles().size(); i++) {
+            System.out.println("Tile with index " + i + " and type " + tileTable.getTiles().get(i).getType() + " found!");
+        }
+>>>>>>> main
 
 
     // TODO: implement method

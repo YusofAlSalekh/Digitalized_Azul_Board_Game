@@ -20,7 +20,7 @@ public class TileTableTest {
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.YELLOW));
-        tileTable.addTile(new Tile(TileType.GREEN));
+        tileTable.addTile(new Tile(TileType.WHITE));
 
         // act
         ArrayList<Tile> takenTiles = tileTable.takeTiles(TileType.BLACK);

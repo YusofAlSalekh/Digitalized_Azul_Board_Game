@@ -22,7 +22,7 @@ public class PlayerTest {
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.YELLOW));
-        tileTable.addTile(new Tile(TileType.GREEN));
+        tileTable.addTile(new Tile(TileType.WHITE));
 
         // Get black tiles from tile table and add to row index 1, which has size 2
         player.getFactoryOfferFromTileTable(tileTable, new Tile(TileType.BLACK), 1);
