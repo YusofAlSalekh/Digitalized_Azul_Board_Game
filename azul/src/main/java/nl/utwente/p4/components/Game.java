@@ -31,8 +31,8 @@ public class Game {
         return instance;
     }
 
-    public Tile getTileFromGameBoxLid() {
-        return this.gameBoxLid.getRandomTile();
+    public ArrayList<Tile> getTilesFromGameBoxLid() {
+        return this.gameBoxLid.getAndRemoveTiles();
     }
 
     public void addTilesToGameBoxLid(ArrayList<Tile> tiles) {
