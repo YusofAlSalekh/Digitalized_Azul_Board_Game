@@ -4,6 +4,7 @@ import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Data
 public class Player {
@@ -24,71 +25,54 @@ public class Player {
         this.board.addTiles(tilesFromTable, rowNum);
     }
     public boolean hasFilledRow() {
-        // Check for full rows and end the game if a row has exactly 5 tiles
-        for(int i=0; i<board.wall.tile.length; i++) {
-            int count = 0;
-            for(int j=0; j<board.wall.tile[i].length; j++) {
-                if(board.wall.tile[i][j] != null) {
-                    count++;
-                }
-            }
-            if(count == 5) {
+        for (int i = 0; i < 5; i++) {
+            if (this.board.getWall().isRowFilled(i)) {
                 return true;
             }
         }
+        return false;
     }
 
-public int calculateScore() {
-        int TotalBonusPoints = 0;
-        int fullRowBonus = 0;
-        int fullColumnBonus = 0;
-        int colorBonus = 0;
+    public int calculateFinalScore() {
+        int totalBonusPoints = 0;
+        int counter = 0;
+        Tile tempTile = null;
     
-        // Check for full rows and end the game if a row has exactly 5 tiles
-        for(int i=0; i<board.wall.tile.length; i++) {
-            int count = 0;
-            for(int j=0; j<board.wall.tile[i].length; j++) {
-                if(board.wall.tile[i][j] != null) {
-                    count++;
-                }
-            }
-            if(count == 5) {
-                fullRowBonus += 2; // Add 2 points for each full row
+        // Check for full rows
+        for (int i = 0; i < 5; i++) {
+            if (this.board.getWall().isRowFilled(i)) {
+                totalBonusPoints += 2; // Add 2 points for each full row
             }
         }
     
         // Check for full columns
-        for(int j=0; j<board.wall.tile[0].length; j++) {
-            int count = 0;
-            for(int i=0; i<board.wall.tile.length; i++) {
-                if(board.wall.tile[i][j] != null) {
-                    count++;
-                }
-            }
-            if(count == 5) {
-                fullColumnBonus += 7; // Add 7 points for each full column
+        ArrayList<TileType> tileTypes = new ArrayList<>(
+                Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW));
+        for (TileType type : tileTypes) {
+            tempTile = new Tile(type);
+            counter = 1 + this.board.getWall().countVerticalTiles(tempTile, 0);
+            if (counter == 5) {
+                totalBonusPoints += 7; // Add 7 points for each full column
             }
         }
     
-        // Check for color sets
-        for(Color color : Color.values()) {
-            int count = 0;
-            for(int i=0; i<board.wall.tile.length; i++) {
-                for(int j=0; j<board.wall.tile[i].length; j++) {
-                    if(board.wall.tile[i][j] != null && board.wall.tile[i][j].getColor() == color) {
-                        count++;
-                    }
+        // Check for tile type sets
+        for (TileType type : tileTypes){
+            tempTile = new Tile(type);
+            counter = 0;
+            for (int i = 0; i < 5; i++) {
+                if (this.board.getWall().isTileFilled(tempTile, i)) {
+                    counter++;
                 }
             }
-            if(count == 5) {
-                colorBonus += 10; // Add 10 points for each full color set
+            if (counter == 5) {
+                totalBonusPoints += 10; // Add 10 points for each full tile type set
             }
         }
     
-        // Add up all the bonuses and score
-        TotalBonusPoints = fullRowBonus + fullColumnBonus + colorBonus;
-        player.addToscoreTrack(TotalBonusPoints);
-    
-        return TotalBonusPoints;
+        // Add up all the bonuses to the score
+        this.board.addScore(totalBonusPoints);
+
+        return this.board.getScoreTrack();
     }
 }

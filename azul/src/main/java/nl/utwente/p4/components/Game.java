@@ -120,7 +120,7 @@ public class Game {
 
         int highestScore = -99999;
         for (Player p : players) {
-            int score = p.calculateScore();
+            int score = p.calculateFinalScore();
 
             // check if this score was highest
             if (score > highestScore) {
