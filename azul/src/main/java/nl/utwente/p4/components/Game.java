@@ -104,7 +104,31 @@ public class Game {
     }
 
     // TODO: implement method
-    public void endGame() {}
+    public void endGame() {
+        boolean hasGameEnded = false;
+        
+        for (Player p : players) {
+            if (p.hasFilledRow()) {
+                hasGameEnded = true;
+                break;
+            }
+        }
+
+        if (!hasGameEnded) {
+            return;
+        }
+
+        int highestScore = -99999;
+        for (Player p : players) {
+            int score = p.calculateScore();
+
+            // check if this score was highest
+            if (score > highestScore) {
+                highestScore = score;
+            }
+        }
+
+    }
 
     // TODO: this is used for testing, remove before submission
     public void tempPrintTileBag() {
@@ -126,10 +150,6 @@ public class Game {
         }
     }
 
-<<<<<<< HEAD
-    // TODO: implement method
-    public void getFactoryOfferFromFactory() {}
-=======
     // TODO: this is used for testing, remove before submission
     public void tempTestTakeTileFromTable() {
         // Test player 1 taking tiles from the table
@@ -143,51 +163,30 @@ public class Game {
         for (int i = 0; i<tileTable.getTiles().size(); i++) {
             System.out.println("Tile with index " + i + " and type " + tileTable.getTiles().get(i).getType() + " found!");
         }
->>>>>>> main
 
+        // Next player 1 tries to get green type tiles and insert into first line with length 1.
+        // The other green tiles should go to the players floorline with the first player tile
+        Player player1 = players.get(0);
+        player1.getFactoryOfferFromTileTable(tileTable, tileTable.getTiles().get(1), 0);
 
-    // TODO: implement method
-    public void wallTiling() {}
+        System.out.println("Checking first player pattern lines");
+        for (int i=0; i<player1.getBoard().getPatternLine().getTileLines().size(); i++) {
+            TileLine tileLine = player1.getBoard().getPatternLine().getTileLines().get(i);
+            System.out.println("Found tile line with size " + tileLine.getLineSize() + " and filled with " + tileLine.getTiles().size() + " tiles!");
+            ArrayList<Tile> tiles = tileLine.getTiles();
+            System.out.println("Tile line " + i + " includes following tiles:");
+            for (int j=0; j<tiles.size(); j++) {
+                System.out.println("Tile at index " + j + " with type " + tiles.get(j).getType() + " found!");
 
-    // TODO: implement method
-    public void prepareNextRound() {}
-
-    // TODO: implement method
-<<<<<<< HEAD
-    public void endGame() {
-        boolean hasGameEnded = false;
-        
-        // TODO: iterate through players arraylist to check if anyone has a row filled out
-        for (Player p : players) {
-            if (p.hasFilledRow()) {
-                hasGameEnded = true;
-                break;
             }
+            System.out.println("");
         }
 
-        if (!hasGameEnded) {
-            return;
+        ArrayList<Tile> floorTiles = player1.getBoard().getFloorLine().getTiles();
+        System.out.println("Checking first player floor line, which contains " + floorTiles.size() + " tiles");
+        for (int i=0; i<floorTiles.size(); i++) {
+            System.out.println("Floor tile index " + i + " with type " + floorTiles.get(i).getType());
         }
-
-        int highestScore = -99999;
-        // TODO: call the calcuate score function for each player & check player with the highest score
-        for (Player p : players) {
-            int score = p.calculateScore();
-
-            // check if this score was highest
-            if (score > highestScore) {
-                highestScore = score;
-            }
-           // ArrayList<Tile> floorTiles = player1.getBoard().getFloorLine().getTiles();
-            // System.out.println("Checking first player floor line, which contains " + floorTiles.size() + " tiles");
-            //for (int i=0; i<floorTiles.size(); i++) {
-                //System.out.println("Floor tile index " + i + " with type " + floorTiles.get(i).getType());
-        }
-
     }
-=======
-    public void endGame() {}
->>>>>>> main
 }
-
     
