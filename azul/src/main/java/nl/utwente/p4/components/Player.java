@@ -9,10 +9,11 @@ import java.util.ArrayList;
 public class Player {
     private PlayerBoard board;
 
-    private Boolean firstPlayer = false;
+    private Boolean firstPlayer;
 
     public Player() {
         this.board = new PlayerBoard();
+        this.firstPlayer = false;
     }
 
     /**

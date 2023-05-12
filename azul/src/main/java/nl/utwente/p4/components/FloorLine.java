@@ -31,7 +31,7 @@ public class FloorLine {
      * @return true if first player tile was found, false if not
      */
     public Boolean clearFloorLine() {
-        Boolean firstPlayerFound = this.tiles.contains(new Tile(TileType.FIRST_PLAYER));
+        Boolean firstPlayerFound = this.tiles.remove(new Tile(TileType.FIRST_PLAYER));
         Game.getInstance().addTilesToGameBoxLid(tiles);
         this.tiles = new ArrayList<>();
         return firstPlayerFound;

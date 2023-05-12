@@ -32,8 +32,7 @@ public class PlayerBoard {
     public Boolean calculateFloorLineScore() {
         // TODO: Add correct floorline calculation and reduce scoretrack accordingly
         floorLine.getTotalFloorScore();
-        Boolean firstPlayerTileFound = floorLine.clearFloorLine();
-        return firstPlayerTileFound;
+        return floorLine.clearFloorLine();
     }
 
     /***
