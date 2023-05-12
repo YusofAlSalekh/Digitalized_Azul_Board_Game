@@ -107,39 +107,18 @@ public class Game {
         }
     }
 
-    // TODO: this is used for testing, remove before submission
-    public void tempTestTakeTileFromTable() {
-        // Test player 1 taking tiles from the table
-        // Add tiles for testing so the table should contain the tiles below
-        tileTable.addTile(new Tile(TileType.GREEN));
-        tileTable.addTile(new Tile(TileType.GREEN));
-        tileTable.addTile(new Tile(TileType.YELLOW));
-        tileTable.addTile(new Tile(TileType.BLUE));
-        tileTable.addTile(new Tile(TileType.RED));
-        System.out.println("Table contains tiles: ");
-        for (int i = 0; i<tileTable.getTiles().size(); i++) {
-            System.out.println("Tile with index " + i + " and type " + tileTable.getTiles().get(i).getType() + " found!");
-        }
+    // TODO: implement method
+    public void getFactoryOfferFromFactory() {}
 
-        // Next player 1 tries to get green type tiles and insert into first line with length 1.
-        // The other green tiles should go to the players floorline with the first player tile
-        Player player1 = players.get(0);
-        player1.getFactoryOfferFromTileTable(tileTable, tileTable.getTiles().get(1), 0);
-
-        System.out.println("Checking first player pattern lines");
-        for (int i=0; i<player1.getBoard().getPatternLine().getTileLines().size(); i++) {
-            TileLine tileLine = player1.getBoard().getPatternLine().getTileLines().get(i);
-            System.out.println("Found tile line with size " + tileLine.getLineSize() + " and filled with " + tileLine.getTiles().size() + " tiles!");
-            ArrayList<Tile> tiles = tileLine.getTiles();
-            System.out.println("Tile line " + i + " includes following tiles:");
-            for (int j=0; j<tiles.size(); j++) {
-                System.out.println("Tile at index " + j + " with type " + tiles.get(j).getType() + " found!");
-
-            }
-            System.out.println("");
-        }
 
     // TODO: implement method
+    public void wallTiling() {}
+
+    // TODO: implement method
+    public void prepareNextRound() {}
+
+    // TODO: implement method
+<<<<<<< HEAD
     public void endGame() {
         boolean hasGameEnded = false;
         
@@ -171,6 +150,9 @@ public class Game {
         }
 
     }
+=======
+    public void endGame() {}
+>>>>>>> main
 }
 
     
