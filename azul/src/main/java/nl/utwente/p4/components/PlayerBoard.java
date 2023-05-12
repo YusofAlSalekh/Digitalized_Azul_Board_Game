@@ -39,16 +39,16 @@ public class PlayerBoard {
 
         ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
 
-        // Add excess tiles to the floor or tilebag if floor is full
+        // Add excess tiles to the floor or game box lid if floor is full
         Boolean prevWasAddedToFloor = true;
-        ArrayList<Tile> tilesToBag = new ArrayList<>();
+        ArrayList<Tile> tilesToLid = new ArrayList<>();
         for (int i = 0; i < excessTiles.size(); i++) {
             prevWasAddedToFloor = floorLine.addTile(excessTiles.get(i));
             if (!prevWasAddedToFloor) {
-                tilesToBag.add(excessTiles.get(i));
+                tilesToLid.add(excessTiles.get(i));
             }
         }
 
-        Game.getInstance().addTilesToGameBoxLid(tilesToBag);
+        Game.getInstance().addTilesToGameBoxLid(tilesToLid);
     }
 }
