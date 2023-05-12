@@ -14,8 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class GameTest {
     @Test
     void startGame_createdTwoPlayers_true() { // methodName_behaviorToBeTested_expectedResult
-        // arrange
+        // arrange and reset player count
         Game game = Game.getInstance();
+        game.setPlayers(new ArrayList<>());
 
         // act
         game.startGame();
@@ -30,6 +31,7 @@ public class GameTest {
     void prepareNextRound_nextRoundPreparedWithFullFactoriesFromGameBoxLid_true() { // methodName_behaviorToBeTested_expectedResult
         // Clear tilebag and factories
         Game game = Game.getInstance();
+        game.setPlayers(new ArrayList<>());
         game.startGame();
         game.getTileBag().getAndRemoveTiles();
         for (Factory f : game.getFactories()) {
