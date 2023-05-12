@@ -21,6 +21,16 @@ public class Factory {
         return new ArrayList<>(taken);
     }
 
+    /**
+     * Take all the tiles from the factory
+     * @return tiles from the factory
+     */
+    public ArrayList<Tile> takeAllTiles() {
+        ArrayList<Tile> tilesToTake = this.tiles;
+        this.tiles = new ArrayList<>();
+        return tilesToTake;
+    }
+
     public void addTile(Tile tile) {
         this.tiles.add(tile);
     }
