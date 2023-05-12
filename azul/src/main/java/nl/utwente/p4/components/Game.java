@@ -104,7 +104,31 @@ public class Game {
     }
 
     // TODO: implement method
-    public void endGame() {}
+    public void endGame() {
+        boolean hasGameEnded = false;
+        
+        for (Player p : players) {
+            if (p.hasFilledRow()) {
+                hasGameEnded = true;
+                break;
+            }
+        }
+
+        if (!hasGameEnded) {
+            return;
+        }
+
+        int highestScore = -99999;
+        for (Player p : players) {
+            int score = p.calculateFinalScore();
+
+            // check if this score was highest
+            if (score > highestScore) {
+                highestScore = score;
+            }
+        }
+
+    }
 
     // TODO: this is used for testing, remove before submission
     public void tempPrintTileBag() {
@@ -165,3 +189,4 @@ public class Game {
         }
     }
 }
+    

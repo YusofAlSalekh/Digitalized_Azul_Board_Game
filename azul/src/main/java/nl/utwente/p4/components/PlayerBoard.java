@@ -19,8 +19,9 @@ public class PlayerBoard {
         this.scoreTrack = 0;
     }
 
-    // TODO: implement method
-    public void addScore(int value) { }
+    public void addScore(int value) { 
+        this.scoreTrack += value;
+     }
     
     // TODO: implement method
     public void subtractScore(int value) { }

@@ -92,7 +92,7 @@ public class Wall {
         }
         return count;
     }
-    private int countVerticalTiles(Tile tile,int row) {
+    public int countVerticalTiles(Tile tile,int row) {
         int count = 0;
         int up =  row - 1;
         int down = row + 1;
