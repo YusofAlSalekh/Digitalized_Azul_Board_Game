@@ -52,7 +52,6 @@ public class GameTest {
         game.prepareNextRound();
 
         // assert
-        // reference for assertion methods: https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html
         assertFalse(game.getTileTable().isFirstHasBeenTaken());
     }
 
@@ -77,8 +76,6 @@ public class GameTest {
         // act
         game.prepareNextRound();
 
-        // assert
-        // reference for assertion methods: https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html
         // assert tile bag
         assertEquals(0, game.getTileBag().getTiles().size());
 
@@ -111,8 +108,6 @@ public class GameTest {
         // act
         game.prepareNextRound();
 
-        // assert
-        // reference for assertion methods: https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html
         // assert tile bag
         assertEquals(0, game.getTileBag().getTiles().size());
 
