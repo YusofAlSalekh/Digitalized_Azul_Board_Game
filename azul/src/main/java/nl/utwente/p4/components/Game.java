@@ -32,7 +32,7 @@ public class Game {
     private static final int numOfPlayers = 2;
 
     // TODO: add overall game logic here
-    public void play(){
+    public void play() {
         startGame();
         prepareNextRound();
     }
@@ -72,14 +72,33 @@ public class Game {
         tempTestTakeTileFromTable();
     }
 
-    // TODO: implement method
-    public void getFactoryOfferFromFactory() {}
+    /***
+     * Method to Pick all tiles of the same color from any one Factory,
+     * then move the remaining tiles from this Factory to the center of the table
+     * and afterwards add the tiles player picked to one of the 5 pattern lines on player board
+     *
+     * @param factoryIdx id factory from which player take tiles
+     * @param color the colour(type) of tiles that player take
+     * @param player the player who takes tiles
+     * @param row the row in which player put tiles
+     */
+    public void pickTilesFromFactory(int factoryIdx, TileType color, Player player, int row) {
+
+        ArrayList<Tile> pickedTiles = factories.get(factoryIdx).takeTiles(color);
+
+        factories.get(factoryIdx).getRemainingTiles().forEach(t -> tileTable.addTile(t));
+
+        ArrayList<Tile> excess = player.getBoard().getPatternLine().addTiles(pickedTiles, row, player.getBoard().getWall());
+
+        excess.forEach(t -> player.getBoard().getFloorLine().addTile(t));
+    }
 
     // TODO: implement method
-    public void wallTiling() {}
+    public void wallTiling() {
+    }
 
     public void prepareNextRound() {
-        for (Factory f  : this.factories) {
+        for (Factory f : this.factories) {
             for (int i = 0; i < 4; i++) {
                 Tile newTile = this.tileBag.getRandomTile();
                 if (newTile != null) {
@@ -94,7 +113,8 @@ public class Game {
     }
 
     // TODO: implement method
-    public void endGame() {}
+    public void endGame() {
+    }
 
     // TODO: this is used for testing, remove before submission
     public void tempPrintTileBag() {
@@ -126,7 +146,7 @@ public class Game {
         tileTable.addTile(new Tile(TileType.BLUE));
         tileTable.addTile(new Tile(TileType.RED));
         System.out.println("Table contains tiles: ");
-        for (int i = 0; i<tileTable.getTiles().size(); i++) {
+        for (int i = 0; i < tileTable.getTiles().size(); i++) {
             System.out.println("Tile with index " + i + " and type " + tileTable.getTiles().get(i).getType() + " found!");
         }
 
@@ -136,12 +156,12 @@ public class Game {
         player1.getFactoryOfferFromTileTable(tileTable, tileTable.getTiles().get(1), 0);
 
         System.out.println("Checking first player pattern lines");
-        for (int i=0; i<player1.getBoard().getPatternLine().getTileLines().size(); i++) {
+        for (int i = 0; i < player1.getBoard().getPatternLine().getTileLines().size(); i++) {
             TileLine tileLine = player1.getBoard().getPatternLine().getTileLines().get(i);
             System.out.println("Found tile line with size " + tileLine.getLineSize() + " and filled with " + tileLine.getTiles().size() + " tiles!");
             ArrayList<Tile> tiles = tileLine.getTiles();
             System.out.println("Tile line " + i + " includes following tiles:");
-            for (int j=0; j<tiles.size(); j++) {
+            for (int j = 0; j < tiles.size(); j++) {
                 System.out.println("Tile at index " + j + " with type " + tiles.get(j).getType() + " found!");
 
             }
@@ -150,7 +170,7 @@ public class Game {
 
         ArrayList<Tile> floorTiles = player1.getBoard().getFloorLine().getTiles();
         System.out.println("Checking first player floor line, which contains " + floorTiles.size() + " tiles");
-        for (int i=0; i<floorTiles.size(); i++) {
+        for (int i = 0; i < floorTiles.size(); i++) {
             System.out.println("Floor tile index " + i + " with type " + floorTiles.get(i).getType());
         }
     }

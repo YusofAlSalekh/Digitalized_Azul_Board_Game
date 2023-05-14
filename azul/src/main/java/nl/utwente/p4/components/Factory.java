@@ -1,6 +1,7 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
@@ -12,11 +13,16 @@ public class Factory {
         this.tiles = tiles;
     }
 
-    // TODO: implement method
-    public ArrayList<Tile> takeTiles(Tile tile) {
-        var taken = tiles.stream().filter(t -> t.getType() == tile.getType()).toList();
+    /***
+     *method that takes tiles of one colour from the factory
+     * @param color the colour of tails that player decided to take
+     * @return list of taken tiles
+     */
+    public ArrayList<Tile> takeTiles(TileType color) {
 
-        tiles.removeIf(t -> t.getType() == tile.getType());
+        var taken = tiles.stream().filter(t -> t.getType() == color).toList();
+
+        tiles.removeIf(t -> t.getType() == color);
 
         return new ArrayList<>(taken);
     }
@@ -25,7 +31,7 @@ public class Factory {
         this.tiles.add(tile);
     }
 
-    // TODO: implement method
-    public ArrayList<Tile> getRemainingTiles() { return tiles; }
-    // returns the unselected tiles on a factory
+    public ArrayList<Tile> getRemainingTiles() {
+        return tiles;
+    }
 }

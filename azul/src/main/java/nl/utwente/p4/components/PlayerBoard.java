@@ -20,10 +20,12 @@ public class PlayerBoard {
     }
 
     // TODO: implement method
-    public void addScore(int value) { }
-    
+    public void addScore(int value) {
+    }
+
     // TODO: implement method
-    public void subtractScore(int value) { }
+    public void subtractScore(int value) {
+    }
 
     /***
      * Method to add given tiles to the player boards pattern line
@@ -36,7 +38,7 @@ public class PlayerBoard {
             this.floorLine.addTile(tiles.remove(0));
         }
 
-        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
+        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum, wall);
 
         // Add excess tiles to the floor
         for (int i = 0; i < excessTiles.size(); i++) {

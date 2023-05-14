@@ -1,6 +1,9 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import nl.utwente.p4.exceptions.TileColourNotMatchedException;
+import nl.utwente.p4.exceptions.PatternLineFilledException;
+import nl.utwente.p4.exceptions.TileColourNotMatchedWallTileColourException;
 
 import java.util.ArrayList;
 
@@ -16,26 +19,39 @@ public class PatternLine {
         }
     }
 
-    /***
+    /**
      * Method to add given tiles to the given row
+     *
      * @param tilesToAdd tiles to add
-     * @param row row index to add to
+     * @param row        row index to add to
+     * @param wall       the wall of the board, to check that there is no tile of particular color on the wall
      * @return any excess tiles
      */
-    public ArrayList<Tile> addTiles(ArrayList<Tile> tilesToAdd, int row) {
-        // check if row is not filled yet
-        // ensure that colour matches
-        // ensure that colour is not filled in wall already
+    public ArrayList<Tile> addTiles(ArrayList<Tile> tilesToAdd, int row, Wall wall) {
+
         TileLine tileLine = this.tileLines.get(row);
-        ArrayList<Tile> excessTiles = tileLine.addTilesToLine(tilesToAdd);
-        return excessTiles;
+
+        // check if row is not filled yet
+        if (tileLine.isFilled()) {
+            throw new PatternLineFilledException("The pattern line is filled");
+
+            // ensure that colour matches
+        } else if (!tileLine.getTiles().isEmpty() &&
+                tilesToAdd.stream().anyMatch(t -> t.getType() != tileLine.getTiles().get(0).getType())) {
+            throw new TileColourNotMatchedException("The pattern line already consists of tiles of a different color");
+
+            // ensure that colour is not filled in wall already
+        } else if (wall.isTileFilled(tilesToAdd.get(0), row)) {
+            throw new TileColourNotMatchedWallTileColourException("Tile of this color is already on the wall");
+        } else {
+            ArrayList<Tile> excessTiles = tileLine.addTilesToLine(tilesToAdd);
+            return excessTiles;
+        }
     }
 
-    // TODO: implement method
     public boolean isRowFilled(int row) {
         return tileLines.get(row).isFilled();
     }
-
 
 
     // TODO: implement method
