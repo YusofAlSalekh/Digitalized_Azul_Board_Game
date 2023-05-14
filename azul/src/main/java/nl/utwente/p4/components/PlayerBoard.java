@@ -19,16 +19,17 @@ public class PlayerBoard {
         this.scoreTrack = 0;
     }
 
-    // TODO: implement method
-    public void addScore(int value) {
-    }
-
+    public void addScore(int value) { 
+        this.scoreTrack += value;
+     }
+    
     // TODO: implement method
     public void subtractScore(int value) {
     }
 
     /***
      * Method to add given tiles to the player boards pattern line
+     * Excess tiles are added to the players floorline or the tilebag
      * @param tiles tiles to be added
      * @param rowNum row to add tiles to
      */
@@ -40,9 +41,16 @@ public class PlayerBoard {
 
         ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum, wall);
 
-        // Add excess tiles to the floor
+        // Add excess tiles to the floor or game box lid if floor is full
+        Boolean prevWasAddedToFloor = true;
+        ArrayList<Tile> tilesToLid = new ArrayList<>();
         for (int i = 0; i < excessTiles.size(); i++) {
-            floorLine.addTile(excessTiles.get(i));
+            prevWasAddedToFloor = floorLine.addTile(excessTiles.get(i));
+            if (!prevWasAddedToFloor) {
+                tilesToLid.add(excessTiles.get(i));
+            }
         }
+
+        Game.getInstance().addTilesToGameBoxLid(tilesToLid);
     }
 }

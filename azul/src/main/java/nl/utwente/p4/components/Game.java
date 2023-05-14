@@ -9,6 +9,7 @@ import java.util.Arrays;
 @Data
 public class Game {
     private TileBag tileBag;
+    private TileBag gameBoxLid;
     private TileTable tileTable;
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
@@ -17,6 +18,7 @@ public class Game {
 
     private Game() {
         this.tileBag = new TileBag();
+        this.gameBoxLid = new TileBag();
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -27,6 +29,14 @@ public class Game {
             instance = new Game();
         }
         return instance;
+    }
+
+    public ArrayList<Tile> getTilesFromGameBoxLid() {
+        return this.gameBoxLid.getAndRemoveTiles();
+    }
+
+    public void addTilesToGameBoxLid(ArrayList<Tile> tiles) {
+        this.gameBoxLid.addTiles(tiles);
     }
 
     private static final int numOfPlayers = 2;
@@ -114,6 +124,29 @@ public class Game {
 
     // TODO: implement method
     public void endGame() {
+        boolean hasGameEnded = false;
+        
+        for (Player p : players) {
+            if (p.hasFilledRow()) {
+                hasGameEnded = true;
+                break;
+            }
+        }
+
+        if (!hasGameEnded) {
+            return;
+        }
+
+        int highestScore = -99999;
+        for (Player p : players) {
+            int score = p.calculateFinalScore();
+
+            // check if this score was highest
+            if (score > highestScore) {
+                highestScore = score;
+            }
+        }
+
     }
 
     // TODO: this is used for testing, remove before submission
@@ -175,3 +208,4 @@ public class Game {
         }
     }
 }
+    
