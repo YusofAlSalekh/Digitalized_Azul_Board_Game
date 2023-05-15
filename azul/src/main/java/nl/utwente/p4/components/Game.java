@@ -113,6 +113,15 @@ public class Game {
                 Tile newTile = this.tileBag.getRandomTile();
                 if (newTile != null) {
                     f.addTile(newTile);
+                } else { // If tile bag is empty, fill it from the game box lid
+                    ArrayList<Tile> gameBoxLidTiles = this.gameBoxLid.getAndRemoveTiles();
+                    this.tileBag.addTiles(gameBoxLidTiles);
+                    newTile = this.tileBag.getRandomTile();
+                    if (newTile != null) {
+                        f.addTile(newTile);
+                    } else { // If random tile is still null, stop loop
+                        break;
+                    }
                 }
             }
         }

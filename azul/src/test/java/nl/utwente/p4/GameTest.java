@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
@@ -179,5 +178,36 @@ public class GameTest {
 
         //Testing that the third Black tile goes to Box lid
         assertEquals(1, game.getGameBoxLid().getTiles().size());
+    }
+
+    @Test
+    void prepareNextRound_nextRoundPreparedWithFullFactoriesFromGameBoxLid_true() { // methodName_behaviorToBeTested_expectedResult
+        // Clear tilebag and factories
+        Game game = Game.getInstance();
+        game.setPlayers(new ArrayList<>());
+        game.startGame();
+        game.getTileBag().getAndRemoveTiles();
+        for (Factory f : game.getFactories()) {
+            f.takeAllTiles();
+        }
+
+        // Fill game box lid with tiles
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (int i=0; i<20; i++) {
+            tiles.add(new Tile(TileType.WHITE));
+        }
+        game.addTilesToGameBoxLid(tiles);
+
+        // act
+        game.prepareNextRound();
+
+        // Check that all factories are full and game box lid is empty
+        assertEquals(4, game.getFactories().get(0).getTiles().size());
+        assertEquals(4, game.getFactories().get(1).getTiles().size());
+        assertEquals(4, game.getFactories().get(2).getTiles().size());
+        assertEquals(4, game.getFactories().get(3).getTiles().size());
+        assertEquals(4, game.getFactories().get(4).getTiles().size());
+        assertEquals(0, game.getGameBoxLid().getTiles().size());
+
     }
 }

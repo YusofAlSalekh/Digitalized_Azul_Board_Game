@@ -40,6 +40,9 @@ public class PlayerBoardTest {
 
     @Test
     void addTilesToFillGameBox_tilesAddedToGameBox_true() {
+        // Clear game box lid first
+        Game.getInstance().getGameBoxLid().getAndRemoveTiles();
+
         // arrange
         PlayerBoard playerBoard = new PlayerBoard();
         ArrayList<Tile> tiles = new ArrayList<>();

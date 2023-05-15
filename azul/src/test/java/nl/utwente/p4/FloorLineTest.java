@@ -52,4 +52,56 @@ public class FloorLineTest {
         assertEquals(false, wasAdded8);
         assertEquals(7, floorLine.getTiles().size());
     }
+
+    @Test
+    void clearFloorLine_FloorCleared_true() { // methodName_behaviorToBeTested_expectedResult
+        // arrange
+        FloorLine floorLine = new FloorLine();
+        Tile tile1 = new Tile(TileType.BLACK);
+        Tile tile2 = new Tile(TileType.BLACK);
+        Tile tile3 = new Tile(TileType.BLACK);
+        Tile tile4 = new Tile(TileType.BLACK);
+        Tile tile5 = new Tile(TileType.BLACK);
+        Tile tile6 = new Tile(TileType.BLACK);
+        Tile tile7 = new Tile(TileType.BLACK);
+
+        // act
+        floorLine.addTile(tile1);
+        floorLine.addTile(tile2);
+        floorLine.addTile(tile3);
+        floorLine.addTile(tile4);
+        floorLine.addTile(tile5);
+        floorLine.addTile(tile6);
+        floorLine.addTile(tile7);
+        floorLine.clearFloorLine();
+
+        // assert
+        assertEquals(0, floorLine.getTiles().size());
+    }
+
+    @Test
+    void clearFloorLine_FloorCleared_FirstPlayerFound() { // methodName_behaviorToBeTested_expectedResult
+        // arrange
+        FloorLine floorLine = new FloorLine();
+        Tile tile1 = new Tile(TileType.BLACK);
+        Tile tile2 = new Tile(TileType.FIRST_PLAYER);
+        Tile tile3 = new Tile(TileType.BLACK);
+        Tile tile4 = new Tile(TileType.BLACK);
+        Tile tile5 = new Tile(TileType.BLACK);
+        Tile tile6 = new Tile(TileType.BLACK);
+        Tile tile7 = new Tile(TileType.BLACK);
+
+        // act
+        floorLine.addTile(tile1);
+        floorLine.addTile(tile2);
+        floorLine.addTile(tile3);
+        floorLine.addTile(tile4);
+        floorLine.addTile(tile5);
+        floorLine.addTile(tile6);
+        floorLine.addTile(tile7);
+        Boolean firstPlayerFound = floorLine.clearFloorLine();
+
+        // assert
+        assertEquals(true, firstPlayerFound);
+    }
 }
