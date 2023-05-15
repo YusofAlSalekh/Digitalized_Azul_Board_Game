@@ -1,14 +1,13 @@
 package nl.utwente.p4;
 
 import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.TileLine;
 import nl.utwente.p4.components.TileTable;
 import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTableTest {
     @Test
@@ -37,5 +36,29 @@ public class TileTableTest {
         assertEquals(TileType.FIRST_PLAYER, takenTiles.get(0).getType());
         assertEquals(TileType.BLACK, takenTiles.get(1).getType());
         assertEquals(true, tileTable.isFirstHasBeenTaken());
+    }
+
+    @Test
+    void isFirstHasBeenTaken_getValue_false() {
+        // arrange
+        TileTable tileTable = new TileTable();
+
+        // act
+        boolean hasBeenTaken = tileTable.isFirstHasBeenTaken();
+
+        // assert
+        assertFalse(hasBeenTaken);
+    }
+
+    @Test
+    void setFirstHasBeenTaken_setNewValue_true() {
+        // arrange
+        TileTable tileTable = new TileTable();
+
+        // act
+        tileTable.setFirstHasBeenTaken(true);
+
+        // assert
+        assertTrue(tileTable.isFirstHasBeenTaken());
     }
 }
