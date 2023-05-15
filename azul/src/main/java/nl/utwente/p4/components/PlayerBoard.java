@@ -26,6 +26,16 @@ public class PlayerBoard {
     // TODO: implement method
     public void subtractScore(int value) { }
 
+    /**
+     * Calculates the boards floorlines score and reducts it from the scoretrack
+     * @return true if a first player tile was found on the floorline, false otherwise
+     */
+    public Boolean calculateFloorLineScore() {
+        // TODO: Add correct floorline calculation and reduce scoretrack accordingly
+        floorLine.getTotalFloorScore();
+        return floorLine.clearFloorLine();
+    }
+
     /***
      * Method to add given tiles to the player boards pattern line
      * Excess tiles are added to the players floorline or the tilebag

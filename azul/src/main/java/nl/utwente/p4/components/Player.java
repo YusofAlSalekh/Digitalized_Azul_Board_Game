@@ -10,8 +10,20 @@ import java.util.Arrays;
 public class Player {
     private PlayerBoard board;
 
+    private Boolean firstPlayer;
+
     public Player() {
         this.board = new PlayerBoard();
+        this.firstPlayer = false;
+    }
+
+    /**
+     * Calculates the players boards floor lines score and adjusts the players boards score accordingly.
+     * Also sets the player as first player if a first player was found on the floor line.
+     */
+    public void calculateFloorLineScore() {
+        Boolean foundFirstPlayerTile = this.board.calculateFloorLineScore();
+        this.firstPlayer = foundFirstPlayerTile;
     }
 
     /***
