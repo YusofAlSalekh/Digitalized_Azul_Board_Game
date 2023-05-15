@@ -39,10 +39,11 @@ public class Game {
         this.gameBoxLid.addTiles(tiles);
     }
 
-    private static final int numOfPlayers = 2;
+    private int numOfPlayers;
 
     // TODO: add overall game logic here
-    public void play(){
+    public void play(int numOfPlayers){
+        this.numOfPlayers = numOfPlayers;
         startGame();
         prepareNextRound();
     }
@@ -75,11 +76,11 @@ public class Game {
         }
 
         // TODO: this is used for testing, remove before submission
-        tempPrintTileBag();
-        tempPrintFactories();
+        // tempPrintTileBag();
+        // tempPrintFactories();
 
         // TODO: this is used for testing, remove before submission
-        tempTestTakeTileFromTable();
+        // tempTestTakeTileFromTable();
     }
 
     // TODO: implement method
@@ -109,11 +110,35 @@ public class Game {
         this.tileTable.setFirstHasBeenTaken(false);
 
         // TODO: this is used for testing, remove before submission
-        tempPrintFactories();
+        // tempPrintFactories();
     }
 
     // TODO: implement method
-    public void endGame() {}
+    public void endGame() {
+        boolean hasGameEnded = false;
+        
+        for (Player p : players) {
+            if (p.hasFilledRow()) {
+                hasGameEnded = true;
+                break;
+            }
+        }
+
+        if (!hasGameEnded) {
+            return;
+        }
+
+        int highestScore = -99999;
+        for (Player p : players) {
+            int score = p.calculateFinalScore();
+
+            // check if this score was highest
+            if (score > highestScore) {
+                highestScore = score;
+            }
+        }
+
+    }
 
     // TODO: this is used for testing, remove before submission
     public void tempPrintTileBag() {
@@ -174,3 +199,4 @@ public class Game {
         }
     }
 }
+    

@@ -2,7 +2,6 @@ package nl.utwente.p4.components;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 import lombok.Data;
 import nl.utwente.p4.constants.TileType;
