@@ -42,7 +42,7 @@ public class Game {
     private int numOfPlayers;
 
     // TODO: add overall game logic here
-    public void play(int numOfPlayers){
+    public void play(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         startGame();
         prepareNextRound();
@@ -86,7 +86,8 @@ public class Game {
     /***
      * Method to Pick all tiles of the same color from any one Factory,
      * then move the remaining tiles from this Factory to the center of the table
-     * and afterwards add the tiles player picked to one of the 5 pattern lines on player board
+     * and afterwards add given tiles to the player board pattern line.
+     * Excess tiles are added to the players Floorline or the BoxLid
      *
      * @param factoryIdx id factory from which player take tiles
      * @param color the colour(type) of tiles that player take
@@ -99,9 +100,7 @@ public class Game {
 
         factories.get(factoryIdx).getRemainingTiles().forEach(t -> tileTable.addTile(t));
 
-        ArrayList<Tile> excess = player.getBoard().getPatternLine().addTiles(pickedTiles, row, player.getBoard().getWall());
-
-        excess.forEach(t -> player.getBoard().getFloorLine().addTile(t));
+        player.getBoard().addTiles(pickedTiles, row);
     }
 
     // TODO: implement method
@@ -126,7 +125,7 @@ public class Game {
     // TODO: implement method
     public void endGame() {
         boolean hasGameEnded = false;
-        
+
         for (Player p : players) {
             if (p.hasFilledRow()) {
                 hasGameEnded = true;
