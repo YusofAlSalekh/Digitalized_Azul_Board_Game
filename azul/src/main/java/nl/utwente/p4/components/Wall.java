@@ -63,6 +63,20 @@ public class Wall {
         }
         return true;
     }
+    // Check if column is filled
+    //  requires params of the column you want to check if filled
+    public boolean isColumnFilled(int column){
+        Map targetRow ;
+        int rowIndex = 0;
+        List<String> listOFTargetRow ;
+        while (rowIndex < 5){
+            targetRow = this.tiles[rowIndex];
+            listOFTargetRow = new ArrayList<>(targetRow.keySet());
+            if(targetRow.get(listOFTargetRow.get(column)) == null) return false;
+            rowIndex++;
+        }
+        return true;
+    }
     private int getTileIndex(Tile tile,int row) {
             int i = 0;
             Map<TileType, TileType> targetRow = this.tiles[row];

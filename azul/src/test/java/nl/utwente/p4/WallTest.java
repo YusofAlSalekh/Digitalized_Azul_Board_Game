@@ -36,7 +36,36 @@ class WallTest {
         wall.addTile(new Tile(TileType.RED), 0);
         wall.addTile(new Tile(TileType.BLACK), 0);
         wall.addTile(new Tile(TileType.YELLOW), 0);
+        for (Map w : wall.getTiles()) {
+            System.out.println(w);
+        }
         assertTrue(wall.isRowFilled(0));
+    }
+    @Test
+    void  checkIfColumnIsFilled_Pass(){
+        Wall wall = new Wall();
+        wall.addTile(new Tile(TileType.WHITE), 0);
+        wall.addTile(new Tile(TileType.BLACK), 1);
+        wall.addTile(new Tile(TileType.RED), 2);
+        wall.addTile(new Tile(TileType.YELLOW), 3);
+        wall.addTile(new Tile(TileType.BLUE), 4);
+        for (Map w : wall.getTiles()) {
+            System.out.println(w);
+        }
+        assertTrue(wall.isColumnFilled(4));
+    }
+    @Test
+    void  checkIfColumnIsFilled_Fail(){
+        Wall wall = new Wall();
+        wall.addTile(new Tile(TileType.BLUE), 0);
+        wall.addTile(new Tile(TileType.WHITE), 1);
+        wall.addTile(new Tile(TileType.BLACK), 2);
+        wall.addTile(new Tile(TileType.RED), 3);
+        wall.addTile(new Tile(TileType.YELLOW), 2);
+        for (Map w : wall.getTiles()) {
+            System.out.println(w);
+        }
+        assertFalse(wall.isColumnFilled(0));
     }
     @Test
     void checkForDuplicateTile(){
