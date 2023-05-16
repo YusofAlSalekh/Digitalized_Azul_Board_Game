@@ -137,8 +137,9 @@ public class Wall {
 
     //add tiles from the patterline to the wall
     //extra tiles are added in an array and then added to the games gameBoxLid
-    public void addFromPatterLineToWall(PatternLine patternLine){
+    public int addFromPatterLineToWall(PatternLine patternLine, int getTotalFloorScore){
         int index = 0;
+        setTotalScore(0);
         ArrayList<Tile> extraTiles = new ArrayList<>();
         for (TileLine row: patternLine.getTileLines()) {
            if(row.isFilled()){
@@ -150,14 +151,13 @@ public class Wall {
            index ++;
         }
         Game.getInstance().addTilesToGameBoxLid(extraTiles);
+        return deductScoreFromFloorLine(getTotalFloorScore);
     }
 
-
-    //STILL WORK IN PROGRESS
     public int deductScoreFromFloorLine(int getTotalFloorScore){
         int total =  Math.max(0 , getTotalScore() - getTotalFloorScore ) ;
         setTotalScore(total);
-        return total;
+        return getTotalScore();
     }
 
 

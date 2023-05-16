@@ -1,6 +1,7 @@
 package nl.utwente.p4;
 
 import nl.utwente.p4.components.PatternLine;
+import nl.utwente.p4.components.Player;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.components.Wall;
 import nl.utwente.p4.constants.TileType;
@@ -48,13 +49,43 @@ class WallTest {
         p.addTiles(tiles2,1,wall);
         p.addTiles(tiles3,2,wall);
 
-        wall.addFromPatterLineToWall(p);
+        wall.addFromPatterLineToWall(p,0);
 
         assertEquals(tile1.getType(), wall.getTiles()[0].get(tile1.getType()));
         assertEquals(tile2.getType(), wall.getTiles()[1].get(tile2.getType()));
         assertEquals(tile3.getType(), wall.getTiles()[2].get(tile3.getType()));
     }
 
+    //test with a player instance
+    // note the  player1.getBoard().getFloorLine().getTotalFloorScore() is assumed to be 0 in this test
+    @Test
+    void testWallWithPlayerInstance(){
+        Player player1 = new Player();
+        Wall wall = player1.getBoard().getWall();
+        PatternLine patternLine = player1.getBoard().getPatternLine();
+
+        ArrayList<Tile> tiles1 = new ArrayList<>();
+        Tile tile1 = new Tile(TileType.RED);
+        tiles1.add(tile1);
+
+        ArrayList<Tile> tiles2 = new ArrayList<>();
+        Tile tile2 = new Tile(TileType.BLACK);
+        tiles2.add(tile2);
+        tiles2.add(tile2);
+
+        ArrayList<Tile> tiles3 = new ArrayList<>();
+        Tile tile3 = new Tile(TileType.RED);
+        tiles3.add(tile3);
+        tiles3.add(tile3);
+        tiles3.add(tile3);
+
+        patternLine.addTiles(tiles1,0,wall);
+        patternLine.addTiles(tiles2,1,wall);
+        patternLine.addTiles(tiles3,2,wall);
+         int score = wall.addFromPatterLineToWall(patternLine , player1.getBoard().getFloorLine().getTotalFloorScore());
+         player1.getBoard().addScore(score);
+         assertEquals(4 , player1.getBoard().getScoreTrack());
+    }
     @Test
     void  checkIfTileIsFilled(){
         Wall wall = new Wall();
