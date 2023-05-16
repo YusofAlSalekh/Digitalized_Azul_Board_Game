@@ -135,6 +135,24 @@ public class Wall {
         return countHorizontalTiles(tile,row) + countVerticalTiles(tile,row);
     }
 
+    //add tiles from the patterline to the wall
+    //extra tiles are added in an array and returned so they cna be added to the gameBoxLid
+    public ArrayList<Tile> addFromPatterLineToWall(PatternLine patternLine){
+        int index = 0;
+        ArrayList<Tile> extraTiles = new ArrayList<>();
+        for (TileLine row: patternLine.getTileLines()) {
+           if(row.isFilled()){
+             addTile(row.getTiles().get(row.getLineSize()-1),index);
+             for (int j = 0; j < row.getLineSize() -1 ; j++) {
+                 extraTiles.add(new Tile(row.getLineType()));
+             }
+           }
+           index ++;
+        }
+        return extraTiles;
+    }
+
+
     //STILL WORK IN PROGRESS
     public int deductScoreFromFloorLine(int getTotalFloorScore){
         int total =  Math.max(0 , getTotalScore() - getTotalFloorScore ) ;
