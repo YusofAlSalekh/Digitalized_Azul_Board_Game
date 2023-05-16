@@ -24,6 +24,7 @@ public class Wall {
         set[0] = lastSetElement;
         return set;
     }
+
     public Wall() {
         this.tiles = new HashMap[5];
         TileType[] set = WallSet();
@@ -37,6 +38,7 @@ public class Wall {
         }
         setTiles(this.tiles);
     }
+
     public  Map<TileType, TileType>  addTile(Tile tile, int row) {
         // check if tile is not filled in row, then add to row
 
@@ -55,6 +57,7 @@ public class Wall {
         Map<TileType, TileType> targetRow = this.tiles[row];
         return targetRow.containsValue(tile.getType());
     }
+
     public boolean isRowFilled(int row) {
 
         Map<TileType, TileType> targetRow = this.tiles[row];
@@ -63,6 +66,7 @@ public class Wall {
         }
         return true;
     }
+
     private int getTileIndex(Tile tile,int row) {
             int i = 0;
             Map<TileType, TileType> targetRow = this.tiles[row];
@@ -74,6 +78,7 @@ public class Wall {
             }
         return -1; // Tile was not found
     }
+
     private int countHorizontalTiles(Tile tile,int row) {
         int count = 0;
         int left = getTileIndex(tile,row) - 1;
@@ -92,6 +97,7 @@ public class Wall {
         }
         return count;
     }
+
     public int countVerticalTiles(Tile tile,int row) {
         int count = 0;
         int up =  row - 1;
@@ -100,6 +106,7 @@ public class Wall {
         Map targetrow ;
         List<String> listOFTargetRow ;
         // count tiles above
+        // TODO: Refactor to own method
         while (up >= 0 ) {
             targetrow = this.tiles[up];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());
@@ -108,6 +115,7 @@ public class Wall {
             up--;
         }
         // count tiles below
+        // TODO: Refactor to own method
         while (down < 5 ) {
             targetrow = this.tiles[down];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());
@@ -117,6 +125,7 @@ public class Wall {
         }
         return count;
     }
+
     private  int getScoreFromTile(Tile tile,int row){
         return countHorizontalTiles(tile,row) + countVerticalTiles(tile,row);
     }
