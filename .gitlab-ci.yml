@@ -5,6 +5,7 @@ default:
 stages:
   - build
   - test
+  - report
 
 build:
   image: maven
@@ -24,3 +25,41 @@ test:
     reports:
       junit:
         - azul/target/surefire-reports/TEST-*.xml
+
+sigridci:
+  stage: report
+  image:
+    name: softwareimprovementgroup/sigridci
+  tags:
+    - pppp
+
+  script:
+    - sigridci.py --customer utst --system P42023T06 --source . 
+  allow_failure: true
+  artifacts:
+    paths:
+      - "sigrid-ci-output/*"
+    reports:
+      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
+    expire_in: 1 week
+    when: always
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    
+sigridpublish:
+  stage: report
+  image:
+    name: softwareimprovementgroup/sigridci
+  tags:
+    - pppp
+
+  script:
+    - sigridci.py --customer utst --system P42023T06 --source . --publish
+  allow_failure: true
+  artifacts:
+    paths:
+      - "sigrid-ci-output/*"
+    expire_in: 1 week
+    when: always
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
