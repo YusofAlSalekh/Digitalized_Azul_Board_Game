@@ -24,26 +24,15 @@ public class Player {
     }
 
     /**
-     * Calculates the players boards floor lines score and adjusts the players boards score accordingly.
-     * Also sets the player as first player if a first player was found on the floor line.
-     */
-//    public void calculateFloorLineScore() {
-//        Boolean foundFirstPlayerTile = this.board.calculateFloorLineScore();
-//        this.firstPlayer = foundFirstPlayerTile;
-//    }
-    /**
      * Calculates the boards floorlines score and reducts it from the scoretrack
-     * @return true if a first player tile was found on the floorline, false otherwise
+     * Mark player as first player if first player tile was found on the floorline
      */
-    public Boolean calculateFloorLineScore() {
-
-        Boolean foundFirstPlayerTile = this.calculateFloorLineScore();
-        this.firstPlayer = foundFirstPlayerTile;
-        // TODO: Add correct floorline calculation and reduce scoretrack accordingly
-        floorLine.getTotalFloorScore();
-        return floorLine.clearFloorLine();
+    public void calculateFloorLineScore() {
+        this.scoreTrack -= floorLine.getTotalFloorScore();
+        this.firstPlayer = floorLine.clearFloorLine();
     }
-    /***
+
+    /**
      * Method to get given tiles from the tiletable
      * @param tileTable table to take tiles from
      * @param pickedTile tile to be picked
@@ -115,9 +104,7 @@ public class Player {
     public void subtractScore(int value) {
     }
 
-
-
-    /***
+    /**
      * Method to add given tiles to the player boards pattern line
      * Excess tiles are added to the players floorline or the gameboxlid
      * @param tiles tiles to be added

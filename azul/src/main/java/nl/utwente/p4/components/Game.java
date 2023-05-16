@@ -13,7 +13,7 @@ public class Game {
     private TileTable tileTable;
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
-
+    private int numOfPlayers;
     private static Game instance;
 
     private Game() {
@@ -38,8 +38,6 @@ public class Game {
     public void addTilesToGameBoxLid(ArrayList<Tile> tiles) {
         this.gameBoxLid.addTiles(tiles);
     }
-
-    private int numOfPlayers;
 
     // TODO: add overall game logic here
     public void play(int numOfPlayers) {
