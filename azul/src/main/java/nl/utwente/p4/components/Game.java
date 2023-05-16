@@ -55,6 +55,7 @@ public class Game {
         }
 
         // Create tile bag
+        // TODO: Refactor to own method?
         ArrayList<TileType> tileTypes = new ArrayList<>(
                 Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW));
         for (TileType type : tileTypes) {
@@ -66,6 +67,7 @@ public class Game {
         }
 
         // Create factories
+        // TODO: Refactor to own method?
         int numOfFactories = 2 * numOfPlayers + 1;
         for (int i = 0; i < numOfFactories; i++) {
             ArrayList<Tile> initialFactoryTiles = new ArrayList<>();
@@ -107,6 +109,7 @@ public class Game {
     public void wallTiling() {
     }
 
+    // TODO: Refactor to 15 lines
     public void prepareNextRound() {
         for (Factory f : this.factories) {
             for (int i = 0; i < 4; i++) {
@@ -146,6 +149,7 @@ public class Game {
             return;
         }
 
+        // TODO: Refactor calculating scores to own method
         int highestScore = -99999;
         for (Player p : players) {
             int score = p.calculateFinalScore();
