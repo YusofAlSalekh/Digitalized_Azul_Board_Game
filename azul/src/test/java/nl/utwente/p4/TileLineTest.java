@@ -1,6 +1,5 @@
 package nl.utwente.p4;
 
-import nl.utwente.p4.components.PlayerBoard;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.components.TileLine;
 import nl.utwente.p4.constants.TileType;

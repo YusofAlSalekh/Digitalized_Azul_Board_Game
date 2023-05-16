@@ -114,6 +114,7 @@ public class Wall {
         Map targetrow ;
         List<String> listOFTargetRow ;
         // count tiles above
+        // TODO: Refactor to own method
         while (up >= 0 ) {
             targetrow = this.tiles[up];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());
@@ -122,6 +123,7 @@ public class Wall {
             up--;
         }
         // count tiles below
+        // TODO: Refactor to own method
         while (down < 5 ) {
             targetrow = this.tiles[down];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());

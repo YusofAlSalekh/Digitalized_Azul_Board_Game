@@ -9,25 +9,30 @@ import java.util.Arrays;
 @Data
 public class Player {
     // TODO: Refactor to remove playerboard and include it's attributes and methods for player
-    private PlayerBoard board;
-
+    private PatternLine patternLine;
+    private Wall wall;
+    private FloorLine floorLine;
+    private int scoreTrack;
     private Boolean firstPlayer;
 
     public Player() {
-        this.board = new PlayerBoard();
+        this.patternLine = new PatternLine();
+        this.wall = new Wall();
+        this.floorLine = new FloorLine();
+        this.scoreTrack = 0;
         this.firstPlayer = false;
     }
 
     /**
-     * Calculates the players boards floor lines score and adjusts the players boards score accordingly.
-     * Also sets the player as first player if a first player was found on the floor line.
+     * Calculates the boards floorlines score and reducts it from the scoretrack
+     * Mark player as first player if first player tile was found on the floorline
      */
     public void calculateFloorLineScore() {
-        Boolean foundFirstPlayerTile = this.board.calculateFloorLineScore();
-        this.firstPlayer = foundFirstPlayerTile;
+        this.scoreTrack -= floorLine.getTotalFloorScore();
+        this.firstPlayer = floorLine.clearFloorLine();
     }
 
-    /***
+    /**
      * Method to get given tiles from the tiletable
      * @param tileTable table to take tiles from
      * @param pickedTile tile to be picked
@@ -35,12 +40,12 @@ public class Player {
      */
     public void getFactoryOfferFromTileTable(TileTable tileTable, Tile pickedTile, Integer rowNum) {
         ArrayList<Tile> tilesFromTable = tileTable.takeTiles(pickedTile.getType());
-        this.board.addTiles(tilesFromTable, rowNum);
+        this.addTiles(tilesFromTable, rowNum);
     }
 
     public boolean hasFilledRow() {
         for (int i = 0; i < 5; i++) {
-            if (this.board.getWall().isRowFilled(i)) {
+            if (this.wall.isRowFilled(i)) {
                 return true;
             }
         }
@@ -56,7 +61,7 @@ public class Player {
         // Check for full rows
         // TODO: Refactor to own method
         for (int i = 0; i < 5; i++) {
-            if (this.board.getWall().isRowFilled(i)) {
+            if (this.getWall().isRowFilled(i)) {
                 totalBonusPoints += 2; // Add 2 points for each full row
             }
         }
@@ -67,7 +72,7 @@ public class Player {
                 Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW));
 
         for (int i = 0; i < 5; i++) {
-            if (this.board.getWall().isColumnFilled(i)) totalBonusPoints += 7; // Add 7 points for each full column
+            if (this.getWall().isColumnFilled(i)) totalBonusPoints += 7; // Add 7 points for each full column
         }
     
         // Check for tile type sets
@@ -76,7 +81,7 @@ public class Player {
             tempTile = new Tile(type);
             counter = 0;
             for (int i = 0; i < 5; i++) {
-                if (this.board.getWall().isTileFilled(tempTile, i)) {
+                if (this.getWall().isTileFilled(tempTile, i)) {
                     counter++;
                 }
             }
@@ -86,8 +91,43 @@ public class Player {
         }
     
         // Add up all the bonuses to the score
-        this.board.addScore(totalBonusPoints);
+        this.addScore(totalBonusPoints);
 
-        return this.board.getScoreTrack();
+        return this.getScoreTrack();
+    }
+
+    public void addScore(int value) {
+        this.scoreTrack += value;
+    }
+
+    // TODO: implement method
+    public void subtractScore(int value) {
+    }
+
+    /**
+     * Method to add given tiles to the player boards pattern line
+     * Excess tiles are added to the players floorline or the gameboxlid
+     * @param tiles tiles to be added
+     * @param rowNum row to add tiles to
+     */
+    public void addTiles(ArrayList<Tile> tiles, Integer rowNum) {
+        // If first player to take from table, add first token to floor
+        if (tiles.get(0).getType() == TileType.FIRST_PLAYER) {
+            this.floorLine.addTile(tiles.remove(0));
+        }
+
+        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum, wall);
+
+        // Add excess tiles to the floor or game box lid if floor is full
+        Boolean prevWasAddedToFloor = true;
+        ArrayList<Tile> tilesToLid = new ArrayList<>();
+        for (int i = 0; i < excessTiles.size(); i++) {
+            prevWasAddedToFloor = floorLine.addTile(excessTiles.get(i));
+            if (!prevWasAddedToFloor) {
+                tilesToLid.add(excessTiles.get(i));
+            }
+        }
+
+        Game.getInstance().addTilesToGameBoxLid(tilesToLid);
     }
 }

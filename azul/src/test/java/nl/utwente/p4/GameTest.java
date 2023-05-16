@@ -153,10 +153,10 @@ public class GameTest {
         FloorLine floorLine = new FloorLine();
         //Put 6 tiles to the floor line
         floorLine.setTiles(tiles1);
-        player.getBoard().setFloorLine(floorLine);
+        player.setFloorLine(floorLine);
 
         //Testing that floor line contains 6 tiles
-        assertEquals(6, player.getBoard().getFloorLine().getTiles().size());
+        assertEquals(6, player.getFloorLine().getTiles().size());
 
         TileTable tileTable = new TileTable();
         game.setTileTable(tileTable);
@@ -167,14 +167,14 @@ public class GameTest {
 
         //Testing that after applying pickTilesFromFactory
         //there is only one tile in the first row
-        assertEquals(1, player.getBoard().getPatternLine().getTileLines().get(0).getTiles().size());
+        assertEquals(1, player.getPatternLine().getTileLines().get(0).getTiles().size());
 
         //Testing that after applying pickTilesFromFactory
         //2 tiles will be in the tile table(FIRST_PLAYER and Blue)
         assertEquals(2, tileTable.getTiles().size());
 
         //Testing that 1 of two excess Black tiles goes to the floor line and now there are 7 tiles in the floor line
-        assertEquals(7, player.getBoard().getFloorLine().getTiles().size());
+        assertEquals(7, player.getFloorLine().getTiles().size());
 
         //Testing that the third Black tile goes to Box lid
         assertEquals(1, game.getGameBoxLid().getTiles().size());
