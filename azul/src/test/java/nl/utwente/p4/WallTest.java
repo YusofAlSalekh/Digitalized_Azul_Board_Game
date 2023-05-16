@@ -57,12 +57,12 @@ class WallTest {
     }
 
     //test with a player instance
-    // note the  player1.getBoard().getFloorLine().getTotalFloorScore() is assumed to be 0 in this test
+    // note the  player1.getFloorLine().getTotalFloorScore() is assumed to be 0 in this test
     @Test
     void testWallWithPlayerInstance(){
         Player player1 = new Player();
-        Wall wall = player1.getBoard().getWall();
-        PatternLine patternLine = player1.getBoard().getPatternLine();
+        Wall wall = player1.getWall();
+        PatternLine patternLine = player1.getPatternLine();
 
         ArrayList<Tile> tiles1 = new ArrayList<>();
         Tile tile1 = new Tile(TileType.RED);
@@ -82,9 +82,9 @@ class WallTest {
         patternLine.addTiles(tiles1,0,wall);
         patternLine.addTiles(tiles2,1,wall);
         patternLine.addTiles(tiles3,2,wall);
-         int score = wall.addFromPatterLineToWall(patternLine , player1.getBoard().getFloorLine().getTotalFloorScore());
-         player1.getBoard().addScore(score);
-         assertEquals(4 , player1.getBoard().getScoreTrack());
+         int score = wall.addFromPatterLineToWall(patternLine , player1.getFloorLine().getTotalFloorScore());
+         player1.addScore(score);
+         assertEquals(4 , player1.getScoreTrack());
     }
     @Test
     void  checkIfTileIsFilled(){

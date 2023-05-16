@@ -102,7 +102,7 @@ public class Game {
 
         factories.get(factoryIdx).getRemainingTiles().forEach(t -> tileTable.addTile(t));
 
-        player.getBoard().addTiles(pickedTiles, row);
+        player.addTiles(pickedTiles, row);
     }
 
     // TODO: implement method
@@ -202,8 +202,8 @@ public class Game {
         player1.getFactoryOfferFromTileTable(tileTable, tileTable.getTiles().get(1), 0);
 
         System.out.println("Checking first player pattern lines");
-        for (int i = 0; i < player1.getBoard().getPatternLine().getTileLines().size(); i++) {
-            TileLine tileLine = player1.getBoard().getPatternLine().getTileLines().get(i);
+        for (int i = 0; i < player1.getPatternLine().getTileLines().size(); i++) {
+            TileLine tileLine = player1.getPatternLine().getTileLines().get(i);
             System.out.println("Found tile line with size " + tileLine.getLineSize() + " and filled with " + tileLine.getTiles().size() + " tiles!");
             ArrayList<Tile> tiles = tileLine.getTiles();
             System.out.println("Tile line " + i + " includes following tiles:");
@@ -214,7 +214,7 @@ public class Game {
             System.out.println("");
         }
 
-        ArrayList<Tile> floorTiles = player1.getBoard().getFloorLine().getTiles();
+        ArrayList<Tile> floorTiles = player1.getFloorLine().getTiles();
         System.out.println("Checking first player floor line, which contains " + floorTiles.size() + " tiles");
         for (int i = 0; i < floorTiles.size(); i++) {
             System.out.println("Floor tile index " + i + " with type " + floorTiles.get(i).getType());
