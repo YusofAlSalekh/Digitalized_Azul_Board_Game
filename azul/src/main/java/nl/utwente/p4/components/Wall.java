@@ -136,8 +136,8 @@ public class Wall {
     }
 
     //add tiles from the patterline to the wall
-    //extra tiles are added in an array and returned so they cna be added to the gameBoxLid
-    public ArrayList<Tile> addFromPatterLineToWall(PatternLine patternLine){
+    //extra tiles are added in an array and then added to the games gameBoxLid
+    public void addFromPatterLineToWall(PatternLine patternLine){
         int index = 0;
         ArrayList<Tile> extraTiles = new ArrayList<>();
         for (TileLine row: patternLine.getTileLines()) {
@@ -149,7 +149,7 @@ public class Wall {
            }
            index ++;
         }
-        return extraTiles;
+        Game.getInstance().addTilesToGameBoxLid(extraTiles);
     }
 
 

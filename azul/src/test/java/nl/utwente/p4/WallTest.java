@@ -48,7 +48,7 @@ class WallTest {
         p.addTiles(tiles2,1,wall);
         p.addTiles(tiles3,2,wall);
 
-        ArrayList<Tile> T = wall.addFromPatterLineToWall(p);
+        wall.addFromPatterLineToWall(p);
 
         assertEquals(tile1.getType(), wall.getTiles()[0].get(tile1.getType()));
         assertEquals(tile2.getType(), wall.getTiles()[1].get(tile2.getType()));
