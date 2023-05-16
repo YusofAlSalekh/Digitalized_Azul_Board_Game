@@ -65,12 +65,9 @@ public class Player {
         // TODO: Refactor to own method
         ArrayList<TileType> tileTypes = new ArrayList<>(
                 Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW));
-        for (TileType type : tileTypes) {
-            tempTile = new Tile(type);
-            counter = 1 + this.board.getWall().countVerticalTiles(tempTile, 0);
-            if (counter == 5) {
-                totalBonusPoints += 7; // Add 7 points for each full column
-            }
+
+        for (int i = 0; i < 5; i++) {
+            if (this.board.getWall().isColumnFilled(i)) totalBonusPoints += 7; // Add 7 points for each full column
         }
     
         // Check for tile type sets

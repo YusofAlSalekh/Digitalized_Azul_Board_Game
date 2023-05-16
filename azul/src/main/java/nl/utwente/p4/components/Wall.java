@@ -24,7 +24,6 @@ public class Wall {
         set[0] = lastSetElement;
         return set;
     }
-
     public Wall() {
         this.tiles = new HashMap[5];
         TileType[] set = WallSet();
@@ -38,7 +37,6 @@ public class Wall {
         }
         setTiles(this.tiles);
     }
-
     public  Map<TileType, TileType>  addTile(Tile tile, int row) {
         // check if tile is not filled in row, then add to row
 
@@ -57,7 +55,6 @@ public class Wall {
         Map<TileType, TileType> targetRow = this.tiles[row];
         return targetRow.containsValue(tile.getType());
     }
-
     public boolean isRowFilled(int row) {
 
         Map<TileType, TileType> targetRow = this.tiles[row];
@@ -66,7 +63,20 @@ public class Wall {
         }
         return true;
     }
-
+    // Check if column is filled
+    //  requires params of the column you want to check if filled
+    public boolean isColumnFilled(int column){
+        Map targetRow ;
+        int rowIndex = 0;
+        List<String> listOFTargetRow ;
+        while (rowIndex < 5){
+            targetRow = this.tiles[rowIndex];
+            listOFTargetRow = new ArrayList<>(targetRow.keySet());
+            if(targetRow.get(listOFTargetRow.get(column)) == null) return false;
+            rowIndex++;
+        }
+        return true;
+    }
     private int getTileIndex(Tile tile,int row) {
             int i = 0;
             Map<TileType, TileType> targetRow = this.tiles[row];
@@ -78,7 +88,6 @@ public class Wall {
             }
         return -1; // Tile was not found
     }
-
     private int countHorizontalTiles(Tile tile,int row) {
         int count = 0;
         int left = getTileIndex(tile,row) - 1;
@@ -97,7 +106,6 @@ public class Wall {
         }
         return count;
     }
-
     public int countVerticalTiles(Tile tile,int row) {
         int count = 0;
         int up =  row - 1;
@@ -106,7 +114,6 @@ public class Wall {
         Map targetrow ;
         List<String> listOFTargetRow ;
         // count tiles above
-        // TODO: Refactor to own method
         while (up >= 0 ) {
             targetrow = this.tiles[up];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());
@@ -115,7 +122,6 @@ public class Wall {
             up--;
         }
         // count tiles below
-        // TODO: Refactor to own method
         while (down < 5 ) {
             targetrow = this.tiles[down];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());
@@ -125,16 +131,33 @@ public class Wall {
         }
         return count;
     }
-
     private  int getScoreFromTile(Tile tile,int row){
         return countHorizontalTiles(tile,row) + countVerticalTiles(tile,row);
     }
 
-    //STILL WORK IN PROGRESS
+    //add tiles from the patterline to the wall
+    //extra tiles are added in an array and then added to the games gameBoxLid
+    public int addFromPatterLineToWall(PatternLine patternLine, int getTotalFloorScore){
+        int index = 0;
+        setTotalScore(0);
+        ArrayList<Tile> extraTiles = new ArrayList<>();
+        for (TileLine row: patternLine.getTileLines()) {
+           if(row.isFilled()){
+             addTile(row.getTiles().get(row.getLineSize()-1),index);
+             for (int j = 0; j < row.getLineSize() -1 ; j++) {
+                 extraTiles.add(new Tile(row.getLineType()));
+             }
+           }
+           index ++;
+        }
+        Game.getInstance().addTilesToGameBoxLid(extraTiles);
+        return deductScoreFromFloorLine(getTotalFloorScore);
+    }
+
     public int deductScoreFromFloorLine(int getTotalFloorScore){
         int total =  Math.max(0 , getTotalScore() - getTotalFloorScore ) ;
         setTotalScore(total);
-        return total;
+        return getTotalScore();
     }
 
 
