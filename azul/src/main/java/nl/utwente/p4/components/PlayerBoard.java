@@ -24,7 +24,8 @@ public class PlayerBoard {
      }
     
     // TODO: implement method
-    public void subtractScore(int value) { }
+    public void subtractScore(int value) {
+    }
 
     /**
      * Calculates the boards floorlines score and reducts it from the scoretrack
@@ -48,7 +49,7 @@ public class PlayerBoard {
             this.floorLine.addTile(tiles.remove(0));
         }
 
-        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
+        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum, wall);
 
         // Add excess tiles to the floor or game box lid if floor is full
         Boolean prevWasAddedToFloor = true;
