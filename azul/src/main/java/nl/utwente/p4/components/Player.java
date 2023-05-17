@@ -118,16 +118,7 @@ public class Player {
 
         ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum, wall);
 
-        // Add excess tiles to the floor or game box lid if floor is full
-        Boolean prevWasAddedToFloor = true;
-        ArrayList<Tile> tilesToLid = new ArrayList<>();
-        for (int i = 0; i < excessTiles.size(); i++) {
-            prevWasAddedToFloor = floorLine.addTile(excessTiles.get(i));
-            if (!prevWasAddedToFloor) {
-                tilesToLid.add(excessTiles.get(i));
-            }
-        }
-
-        Game.getInstance().addTilesToGameBoxLid(tilesToLid);
+        excessTiles.forEach(tile ->
+                this.floorLine.addTile(tile));
     }
 }

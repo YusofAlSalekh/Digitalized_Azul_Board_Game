@@ -15,14 +15,17 @@ public class FloorLine {
     }
 
     /**
-     * Add tile to floorline, if the floor isn't yet full
-     * @param tile tile to add to the floorline
-     * @return true if tile was added, false if floor is full
+     * Add tile to floorline, if the floor isn't yet full, otherwise add tile to game box lid
+     * @param tile tile to add
      */
-    public boolean addTile(Tile tile) {
-        if (tiles.size() >= 7) return false;
-        this.tiles.add(tile);
-        return true;
+    public void addTile(Tile tile) {
+        if (tiles.size() < 7) {
+            this.tiles.add(tile);
+        } else {
+            ArrayList<Tile> tileToAdd = new ArrayList<>();
+            tileToAdd.add(tile);
+            Game.getInstance().addTilesToGameBoxLid(tileToAdd);
+        }
     }
 
     /**
