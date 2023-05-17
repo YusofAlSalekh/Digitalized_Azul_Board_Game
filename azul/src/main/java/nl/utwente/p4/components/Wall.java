@@ -95,44 +95,66 @@ public class Wall {
         Map targetrow = this.tiles[row];
         List<String> listOFTargetRow = new ArrayList<>(targetrow.keySet());
         // count tiles to the left
-        while (left >= 0 && targetrow.get(listOFTargetRow.get(left)) != null) {
-            count++;
-            left--;
-        }
+        count += countTilesLeft(left,targetrow,listOFTargetRow);
         // count tiles to the right
-        while (right < 5 && targetrow.get(listOFTargetRow.get(right)) != null) {
-            count++;
-            right++;
-        }
+        count += countTilesRight(right,targetrow,listOFTargetRow);
         return count;
     }
+    private int countTilesLeft(int left,Map targetrow, List<String> listOFTargetRow){
+        int result = 0;
+        while (left >= 0 && targetrow.get(listOFTargetRow.get(left)) != null) {
+            result++;
+            left--;
+        }
+        return result;
+    }
+    private int countTilesRight(int right,Map targetrow, List<String> listOFTargetRow){
+        int result = 0;
+        while (right < 5 && targetrow.get(listOFTargetRow.get(right)) != null) {
+            result++;
+            right++;
+        }
+        return result;
+    }
+
     public int countVerticalTiles(Tile tile,int row) {
         int count = 0;
         int up =  row - 1;
         int down = row + 1;
         int index = getTileIndex(tile,row);
+        // count tiles above
+        count += countTilesUp(up,index);
+        // count tiles below
+        count += countTilesDown(down,index);
+        return count;
+    }
+    private int countTilesUp(int up,int index){
+        int result = 0;
         Map targetrow ;
         List<String> listOFTargetRow ;
-        // count tiles above
-        // TODO: Refactor to own method
         while (up >= 0 ) {
             targetrow = this.tiles[up];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());
             if (targetrow.get(listOFTargetRow.get(index)) == null) break;
-            count++;
+            result++;
             up--;
         }
-        // count tiles below
-        // TODO: Refactor to own method
+        return result;
+    }
+    private int countTilesDown(int down,int index){
+        int result = 0;
+        Map targetrow ;
+        List<String> listOFTargetRow ;
         while (down < 5 ) {
             targetrow = this.tiles[down];
             listOFTargetRow = new ArrayList<>(targetrow.keySet());
             if (targetrow.get(listOFTargetRow.get(index)) == null)  break;
-            count++;
+            result++;
             down++;
         }
-        return count;
+        return result;
     }
+
     private  int getScoreFromTile(Tile tile,int row){
         return countHorizontalTiles(tile,row) + countVerticalTiles(tile,row);
     }
@@ -140,21 +162,26 @@ public class Wall {
     //add tiles from the patterline to the wall
     //extra tiles are added in an array and then added to the games gameBoxLid
     public int addFromPatterLineToWall(PatternLine patternLine, int getTotalFloorScore){
-        int index = 0;
         setTotalScore(0);
-        ArrayList<Tile> extraTiles = new ArrayList<>();
-        for (TileLine row: patternLine.getTileLines()) {
-           if(row.isFilled()){
-             addTile(row.getTiles().get(row.getLineSize()-1),index);
-             for (int j = 0; j < row.getLineSize() -1 ; j++) {
-                 extraTiles.add(new Tile(row.getLineType()));
-             }
-           }
-           index ++;
-        }
+        ArrayList<Tile> extraTiles = checkBeforeAddingToWall(patternLine);
         Game.getInstance().addTilesToGameBoxLid(extraTiles);
         return deductScoreFromFloorLine(getTotalFloorScore);
     }
+    public ArrayList<Tile> checkBeforeAddingToWall(PatternLine patternLine){
+        int index = 0;
+        ArrayList<Tile> extraTiles = new ArrayList<>();
+        for (TileLine row: patternLine.getTileLines()) {
+            if(row.isFilled()){
+                addTile(row.getTiles().get(row.getLineSize()-1),index);
+                for (int j = 0; j < row.getLineSize() -1 ; j++) {
+                    extraTiles.add(new Tile(row.getLineType()));
+                }
+            }
+            index ++;
+        }
+        return  extraTiles;
+    }
+
 
     public int deductScoreFromFloorLine(int getTotalFloorScore){
         int total =  Math.max(0 , getTotalScore() - getTotalFloorScore ) ;
