@@ -208,6 +208,35 @@ public class GameTest {
         assertEquals(4, game.getFactories().get(3).getTiles().size());
         assertEquals(4, game.getFactories().get(4).getTiles().size());
         assertEquals(0, game.getGameBoxLid().getTiles().size());
+    }
 
+    @Test
+    void createStartingTiles_StartingTilesCreated_true() {
+        // act
+        Game game = Game.getInstance();
+        ArrayList<Tile> tiles = game.createStartingTiles();
+
+        // Check that there are 20 tiles per type and 100 tiles in total
+        assertEquals(100, tiles.size());
+        assertEquals(20, tiles.stream().filter(t -> t.getType() == TileType.BLACK).count());
+        assertEquals(20, tiles.stream().filter(t -> t.getType() == TileType.YELLOW).count());
+        assertEquals(20, tiles.stream().filter(t -> t.getType() == TileType.BLUE).count());
+        assertEquals(20, tiles.stream().filter(t -> t.getType() == TileType.RED).count());
+        assertEquals(20, tiles.stream().filter(t -> t.getType() == TileType.WHITE).count());
+    }
+
+    @Test
+    void createStartingFactories_StartingFactoriesCreated_true() {
+        // act
+        Game game = Game.getInstance();
+        int numOfPlayers = game.getNumOfPlayers();
+        ArrayList<Factory> factories = game.createStartingFactories();
+
+        // Check that the number of factories is the same as number of players times two plus 1
+        assertEquals(2 * numOfPlayers + 1, factories.size());
+        // Check that all factories contain correct number of tiles
+        for (Factory f: factories) {
+            assertEquals(4, f.getTiles().size());
+        }
     }
 }
