@@ -3,6 +3,8 @@ package nl.utwente.p4.components;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 @Data
@@ -14,13 +16,9 @@ public class TileBag {
     }
 
     public Tile getRandomTile() {
-        if (this.tiles.size() == 0) {
-            return null;
-        }
-
-        Random rand = new Random();
-        int idx = rand.nextInt(this.tiles.size());
-        return this.tiles.remove(idx);
+        if (this.tiles.isEmpty()) return null;
+        Collections.shuffle(this.tiles);
+        return this.tiles.remove(0);
     }
 
     public void addTiles(ArrayList<Tile> tiles) {
