@@ -43,20 +43,24 @@ public class TileLine {
      * @return excess tiles
      */
     public ArrayList<Tile> addTilesToLine(ArrayList<Tile> tilesToAdd) {
-        ArrayList<Tile> excess = new ArrayList<>();
+        if (tilesToAdd.size() < 1 || isFilled()) return tilesToAdd;
+        checkAndSetLineType(tilesToAdd.get(0).getType());
 
-        if (tiles.size() == 0 && lineType == TileType.NULL) this.lineType = tilesToAdd.get(0).getType();
-        if (lineType == tilesToAdd.get(0).getType()) {
-            int freeSlots = lineSize - tiles.size();
-            for (int i = 0; i < tilesToAdd.size(); i++) {
-                if (freeSlots > i) {
-                    tiles.add(tilesToAdd.get(i));
-                } else {
-                    excess.add(tilesToAdd.get(i));
-                }
+        while (this.lineSize - tiles.size() > 0 && tilesToAdd.size() > 0) {
+            if (this.lineType == tilesToAdd.get(0).getType()) {
+                this.tiles.add(tilesToAdd.remove(0));
             }
         }
-        return excess;
+
+        return tilesToAdd;
+    }
+
+    /**
+     * Change tileline type to input type if tileline type is null, input is not null and tileline is empty
+     * @param type type to change tile line to
+     */
+    public void checkAndSetLineType(TileType type) {
+        if (this.tiles.size() == 0 && type != TileType.NULL) this.lineType = type;
     }
 
     public boolean isFilled() {
