@@ -5,6 +5,7 @@ default:
 stages:
   - build
   - test
+  - test-coverage
   - report
 
 build:
@@ -25,27 +26,22 @@ test:
     reports:
       junit:
         - azul/target/surefire-reports/TEST-*.xml
-
-sigridci:
-  stage: report
-  image:
-    name: softwareimprovementgroup/sigridci
-  tags:
-    - pppp
-
-  script:
-    - sigridci.py --customer utst --system P42023T06 --source . 
-  allow_failure: true
-  artifacts:
     paths:
-      - "sigrid-ci-output/*"
+      - azul/target/site/jacoco/jacoco.xml
+
+# reference from: https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html
+test-coverage:
+  stage: test-coverage
+  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.7
+  script:
+    - python /opt/cover2cover.py azul/target/site/jacoco/jacoco.xml $CI_PROJECT_DIR/src/main/java/ > azul/target/site/cobertura.xml
+  needs: [ "test" ]
+  artifacts:
     reports:
-      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
-    expire_in: 1 week
-    when: always
-  rules:
-    - if: $CI_MERGE_REQUEST_ID
-    
+      coverage_report:
+        coverage_format: cobertura
+        path: azul/target/site/cobertura.xml
+
 sigridpublish:
   stage: report
   image:
