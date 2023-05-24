@@ -22,7 +22,7 @@ test:
   script:
     - cd azul
     - mvn test
-    - grep -oE 'Total<\/td><td\ class="bar">([^<])*<\/td><td\ class="ctr2">([^<])*<\/td>' azul/target/site/jacoco/index.html
+    - grep -oE 'Total<\/td><td\ class="bar">([^<])*<\/td><td\ class="ctr2">([^<])*<\/td>' azul/target/site/jacoco/index.html || true
   artifacts:
     when: always
     reports:
