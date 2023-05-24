@@ -5,6 +5,7 @@ default:
 stages:
   - build
   - test
+  - test-coverage
   - report
 
 build:
@@ -30,10 +31,9 @@ test:
 
 # reference from: https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html
 test-coverage:
-  stage: visualize
+  stage: test-coverage
   image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.7
   script:
-    # convert report from jacoco to cobertura, using relative project path
     - python /opt/cover2cover.py target/site/jacoco/jacoco.xml $CI_PROJECT_DIR/src/main/java/ > target/site/cobertura.xml
   needs: [ "test" ]
   artifacts:
