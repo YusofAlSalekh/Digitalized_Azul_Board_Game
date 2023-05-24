@@ -41,7 +41,27 @@ test-coverage:
       coverage_report:
         coverage_format: cobertura
         path: azul/target/site/cobertura.xml
-    
+
+sigridci:
+  stage: report
+  image:
+    name: softwareimprovementgroup/sigridci
+  tags:
+    - pppp
+
+  script:
+    - sigridci.py --customer utst --system P42023T06 --source .
+  allow_failure: true
+  artifacts:
+    paths:
+      - "sigrid-ci-output/*"
+    reports:
+      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
+    expire_in: 1 week
+    when: always
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+
 sigridpublish:
   stage: report
   image:
