@@ -3,6 +3,7 @@ package nl.utwente.p4;
 import nl.utwente.p4.components.FloorLine;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Tile;
+import nl.utwente.p4.components.TileBag;
 import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +30,7 @@ public class FloorLineTest {
     void addTile_tileAdded_false() { // methodName_behaviorToBeTested_expectedResult
         // arrange
         Game game = Game.getInstance();
+        game.setGameBoxLid(new TileBag());
         game.getTileBag().setTiles(new ArrayList<Tile>());
         FloorLine floorLine = new FloorLine();
         Tile tile1 = new Tile(TileType.BLACK);

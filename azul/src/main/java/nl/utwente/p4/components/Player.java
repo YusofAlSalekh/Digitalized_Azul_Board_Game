@@ -43,6 +43,23 @@ public class Player {
         this.addTiles(tilesFromTable, rowNum);
     }
 
+    /***
+     * Method to Pick all tiles of the same color from any one Factory,
+     * then move the remaining tiles from this Factory to the center of the table
+     * and afterwards add given tiles to the player board pattern line.
+     * Excess tiles are added to the players Floorline or the BoxLid
+     *
+     * @param factory the factory which tile is taken from
+     * @param tileTable table to place excess tiles from factory
+     * @param color the colour(type) of tiles that player take
+     * @param row the row in which player put tiles
+     */
+    public void getFactoryOfferFromFactory(Factory factory, TileTable tileTable, TileType color, int row) {
+        ArrayList<Tile> pickedTiles = factory.takeTiles(color);
+        factory.getRemainingTiles().forEach(tileTable::addTile);
+        this.addTiles(pickedTiles, row);
+    }
+
     public boolean hasFilledRow() {
         for (int i = 0; i < 5; i++) {
             if (this.wall.isRowFilled(i)) {
