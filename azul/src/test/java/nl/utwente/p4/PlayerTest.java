@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
     @Test
@@ -86,5 +86,25 @@ public class PlayerTest {
         assertEquals(7, playerBoard.getFloorLine().getTiles().size());
         // Test that game box lid contains all excess tiles from floor, so a 1 tile
         assertEquals(1, Game.getInstance().getGameBoxLid().getTiles().size());
+    }
+    @Test
+    void calculateFloorLineScore(){
+        Player player = new Player();
+        player.calculateFloorLineScore();
+    }
+    @Test
+    void checkIfRowIsFilled_True(){
+        Player player = new Player();
+        player.getWall().addTile(new Tile(TileType.BLUE),0);
+        player.getWall().addTile(new Tile(TileType.RED),0);
+        player.getWall().addTile(new Tile(TileType.BLACK),0);
+        player.getWall().addTile(new Tile(TileType.WHITE),0);
+        player.getWall().addTile(new Tile(TileType.YELLOW),0);
+        assertTrue(player.hasFilledRow());
+    }
+    @Test
+    void checkIfRowIsFilled_false(){
+        Player player = new Player();
+        assertFalse(player.hasFilledRow());
     }
 }
