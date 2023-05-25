@@ -145,23 +145,23 @@ public class Wall {
         int left = getTileIndex(tile,row) - 1;
         int right = getTileIndex(tile,row) + 1;
         Map targetrow = this.tiles[row];
-        List<String> listOFTargetRow = new ArrayList<>(targetrow.keySet());
+//        List<String> listOFTargetRow = new ArrayList<>(targetrow.keySet());
+        List<Map.Entry<String, String>> listOFTargetRow = new ArrayList<Map.Entry<String, String>>(targetrow.entrySet());
         // count tiles to the left
-        count += countTilesLeft(left,targetrow,listOFTargetRow);
+        count += countTilesLeft(left,listOFTargetRow);
         // count tiles to the right
-        count += countTilesRight(right,targetrow,listOFTargetRow);
+        count += countTilesRight(right,listOFTargetRow);
         return count;
     }
 
     /**
      * @param left get the index of the hashmap to the left of the newly added tile.
-     * @param targetrow get the row where the tile was added in.
-     * @param listOFTargetRow get the Arraylist of the hashmap(in order to find the position of the tile that was added using the index)
+     * @param listOFTargetRow get the Arraylist of the hashmap(in order to find the position of the tile that was added using its index)
      * @return return the points gained from the left of the tile.
      */
-    private int countTilesLeft(int left,Map targetrow, List<String> listOFTargetRow){
+    private int countTilesLeft(int left, List<Map.Entry<String, String>> listOFTargetRow){
         int result = 0;
-        while (left >= 0 && targetrow.get(listOFTargetRow.get(left)) != null) {
+        while (left >= 0 && listOFTargetRow.get(left).getValue() != null) {
             result++;
             left--;
         }
@@ -170,25 +170,25 @@ public class Wall {
 
     /**
      * @param right get the index of the hashmap to the right of the newly added tile.
-     * @param targetrow get the row where the tile was added in.
      * @param listOFTargetRow get the Arraylist of the hashmap(in order to find the position of the tile that was added using the index)
      * @return return the points gained from the left of the tile.
      */
-    private int countTilesRight(int right,Map targetrow, List<String> listOFTargetRow){
+    private int countTilesRight(int right,List<Map.Entry<String, String>> listOFTargetRow){
         int result = 0;
-        while (right < 5 && targetrow.get(listOFTargetRow.get(right)) != null) {
+        while (right < 5 && listOFTargetRow.get(right).getValue() != null) {
             result++;
             right++;
         }
         return result;
     }
 
+
     /**
      * @param tile get the tile that was added.
      * @param row get the row that the tile was added in.
      * @return the points gained from adding the tile into the wall vertically.
      */
-    public int countVerticalTiles(Tile tile,int row) {
+    private int countVerticalTiles(Tile tile,int row) {
         int count = 0;
         int up =  row - 1;
         int down = row + 1;
