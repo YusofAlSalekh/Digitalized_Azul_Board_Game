@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PatternLineTest {
 
@@ -120,6 +119,28 @@ public class PatternLineTest {
 
         assertThrows(TileColourNotMatchedWallTileColourException.class,
                 () -> patternLine.addTiles(tiles, 4, wall));
+    }
+    @Test
+    void checkIfPatterLineRowIsFilled() {
+        // arrange
+        PatternLine patternLine = new PatternLine();
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(TileType.BLACK));
+        // act
+        patternLine.addTiles(tiles, 0, new Wall());
+        assertTrue(patternLine.isRowFilled(0));
+       }
+    @Test
+    void resetPatterLineRow() {
+        // arrange
+        PatternLine patternLine = new PatternLine();
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(TileType.BLACK));
+        // act
+        patternLine.addTiles(tiles, 0, new Wall());
+        assertEquals(1,patternLine.getTileLines().get(0).getTiles().size());
+        patternLine.clearPatterLineRow(0);
+        assertEquals(0,patternLine.getTileLines().get(0).getTiles().size());
     }
 
 }
