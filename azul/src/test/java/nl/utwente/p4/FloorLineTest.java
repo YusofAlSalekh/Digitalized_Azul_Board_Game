@@ -106,4 +106,12 @@ public class FloorLineTest {
         // assert
         assertEquals(true, firstPlayerFound);
     }
+    //since the logic has yet to be added we just check that the result is 0
+    @Test
+    void getFloorLineScore() {
+        // arrange
+        FloorLine floorLine = new FloorLine();
+        // assert
+        assertEquals(0, floorLine.getTotalFloorScore());
+    }
 }
