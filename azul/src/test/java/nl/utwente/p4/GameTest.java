@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeSet;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
@@ -238,5 +241,40 @@ public class GameTest {
         for (Factory f: factories) {
             assertEquals(4, f.getTiles().size());
         }
+    }
+    @Test
+    void checkIfPlayerHasFilledRow_True() {
+      Game game = Game.getInstance();
+      game.getPlayers().clear();
+      game.play(2);
+      var player = game.getPlayers().get(0);
+      var array = new Tile[]{new Tile(TileType.BLUE),new Tile(TileType.RED),
+              new Tile(TileType.WHITE), new Tile(TileType.BLACK),
+              new Tile(TileType.YELLOW),};
+        for (var item : array) {
+            ArrayList<Tile> t = new ArrayList<>();
+            t.add(item);
+            player.addTiles(t,0);
+            int score = player.getWall().addFromPatterLineToWall(player.getPatternLine(),player.getFloorLine().getTotalFloorScore());
+            player.addScore(score);
+            player.getPatternLine().clearPatterLineRow(0);
+        }
+      assertTrue(game.endGame());
+      assertEquals(13,game.getHighestScore());
+    }
+    @Test
+    void checkIfPlayerHasFilledRow_False() {
+        Game game = Game.getInstance();
+        game.getPlayers().clear();
+        game.play(2);
+        assertFalse(game.endGame());
+        assertEquals(-1,game.getHighestScore());
+    }
+    @Test
+    void getTilesFromLid_Empty() {
+        Game game = Game.getInstance();
+        game.getPlayers().clear();
+        game.play(2);
+        assertEquals(0,game.getTilesFromGameBoxLid().size());
     }
 }

@@ -17,6 +17,8 @@ public class Game {
     private int numOfPlayers;
     static final int tilesPerFactory = 4;
 
+    private int highestScore = -1;
+
     private Game() {
         this.tileBag = new TileBag();
         this.gameBoxLid = new TileBag();
@@ -161,12 +163,13 @@ public class Game {
     }
 
     // TODO: implement method
-    public void endGame() {
+    public boolean endGame() {
         if (!hasAnyPlayerFilledRow()) {
-            return;
+            return false;
         }
 
         calculateHighestScore();
+        return true;
     }
 
     private boolean hasAnyPlayerFilledRow() {
@@ -179,14 +182,13 @@ public class Game {
     }
 
     private int calculateHighestScore() {
-        int highestScore = -1;
         for (Player player : players) {
             int score = player.calculateFinalScore();
-            if (score > highestScore) {
-                highestScore = score;
+            if (score > getHighestScore()) {
+                setHighestScore(score);
             }
         }
-        return highestScore;
+        return getHighestScore();
     }
 }
     
