@@ -1,6 +1,7 @@
 package nl.utwente.p4.ui;
 
 import nl.utwente.p4.ui.gametable.FactoryView;
+import nl.utwente.p4.ui.gametable.TileTableView;
 import nl.utwente.p4.ui.playerboard.BoardView;
 
 import javax.swing.*;
@@ -25,6 +26,9 @@ public class GameView extends JFrame {
 
         var factoryView = new FactoryView();
         layout.add(factoryView, BorderLayout.CENTER);
+
+        var tileTableView = new TileTableView();
+        layout.add(tileTableView, BorderLayout.EAST);
 
         add(layout);
     }
