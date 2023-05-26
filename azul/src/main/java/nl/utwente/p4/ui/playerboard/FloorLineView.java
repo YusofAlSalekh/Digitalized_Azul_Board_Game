@@ -17,7 +17,7 @@ public class FloorLineView extends JPanel {
             label.setText(Integer.toString(i));
             label.setHorizontalAlignment(JLabel.CENTER);
             label.setSize(new Dimension(20, 20));
-            layout.add(new JLabel(Integer.toString(i), JLabel.CENTER));
+            layout.add(label);
         }
 
         for (int i = 0; i < 7; i++) {

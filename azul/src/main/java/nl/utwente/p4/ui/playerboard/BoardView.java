@@ -16,6 +16,9 @@ public class BoardView extends JPanel {
             boardLayout.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             boardLayout.setPreferredSize(new Dimension(450,250));
 
+            var scoreTrackView = new ScoreTrackView(player);
+            boardLayout.add(scoreTrackView, BorderLayout.NORTH);
+
             var patternLineView = new PatternLineView(player);
             boardLayout.add(patternLineView, BorderLayout.WEST);
 
