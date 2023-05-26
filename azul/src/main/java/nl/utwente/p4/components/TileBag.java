@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Random;
 
 @Data
-public class TileBag {
+public class TileBag extends TileStash {
     private ArrayList<Tile> tiles;
 
     public TileBag() {
