@@ -1,7 +1,6 @@
 package nl.utwente.p4.ui.playerboard;
 
-import nl.utwente.p4.components.FloorLine;
-import nl.utwente.p4.constants.FloorLineScores;
+import nl.utwente.p4.components.Player;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.helper.ColorConverter;
 
@@ -9,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FloorLineView extends JPanel {
-    public FloorLineView() {
+    public FloorLineView(Player player) {
         JPanel layout = new JPanel();
         layout.setLayout(new GridLayout(2, 7, 5, 0));
 
-        for (int i : FloorLineScores.values) {
+        for (int i : player.getFloorLine().getFloorScores()) {
             JLabel label = new JLabel();
             label.setText(Integer.toString(i));
             label.setHorizontalAlignment(JLabel.CENTER);
