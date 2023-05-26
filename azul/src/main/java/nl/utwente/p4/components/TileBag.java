@@ -11,7 +11,7 @@ import java.util.Random;
 public class TileBag extends TileStash {
 
     public TileBag() {
-        this.tiles = new ArrayList<>();
+        super();
     }
 
     public Tile getRandomTile() {

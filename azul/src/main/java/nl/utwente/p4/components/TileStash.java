@@ -8,4 +8,7 @@ import java.util.ArrayList;
 public class TileStash {
     protected ArrayList<Tile> tiles;
 
+    public TileStash() {
+        this.tiles = new ArrayList<>();
+    }
 }
