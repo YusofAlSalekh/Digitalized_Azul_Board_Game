@@ -24,6 +24,7 @@ public class FloorLineView extends JPanel {
             JButton floorLineButton = new JButton(" ");
             floorLineButton.setBackground(ColorConverter.convert(TileType.NULL));
             floorLineButton.setSize(new Dimension(20, 20));
+            floorLineButton.setEnabled(false);
             layout.add(floorLineButton);
         }
 

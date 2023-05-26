@@ -20,7 +20,7 @@ public class FactoryView extends JPanel {
     private void createFactories() {
         for (int i = 0; i < Game.getInstance().numOfFactories(); i++) {
             JPanel factory = new JPanel();
-            factory.setLayout(new GridLayout(2, 2));
+            factory.setLayout(new GridLayout(2, 2, 2, 2));
 
             Factory f = Game.getInstance().getFactories().get(i);
             for (int j = 0; j < 4; j++) {

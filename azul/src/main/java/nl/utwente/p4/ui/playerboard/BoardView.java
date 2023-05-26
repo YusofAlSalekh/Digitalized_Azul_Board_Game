@@ -16,6 +16,9 @@ public class BoardView extends JPanel {
             boardLayout.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             boardLayout.setPreferredSize(new Dimension(450,250));
 
+            var wallView = new WallView(player);
+            boardLayout.add(wallView, BorderLayout.EAST);
+
             var floorLineView = new FloorLineView(player);
             boardLayout.add(floorLineView, BorderLayout.SOUTH);
 
