@@ -5,8 +5,7 @@ import nl.utwente.p4.ui.GameView;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Azul");
-//        Game.getInstance().play(2);
+        Game.getInstance().play(2);
         new GameView();
     }
 }

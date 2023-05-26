@@ -1,23 +1,29 @@
 package nl.utwente.p4.ui;
 
+import nl.utwente.p4.ui.gametable.FactoryView;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameView extends JFrame {
-    private final JPanel mainLayout;
+    private final JPanel layout;
 
     public GameView() {
         this.setTitle("Azul");
-        mainLayout = new JPanel();
+        layout = new JPanel();
         setupLayout();
         showFrame();
     }
 
     private void setupLayout() {
-        mainLayout.setPreferredSize(new Dimension(1200,720));
-        mainLayout.setBackground(new Color(30,36,40));
-        mainLayout.setLayout(new BorderLayout());
-        add(mainLayout);
+        layout.setPreferredSize(new Dimension(1200,720));
+        layout.setBackground(new Color(30,36,40));
+        layout.setLayout(new BorderLayout());
+
+        var factoryView = new FactoryView();
+        layout.add(factoryView, BorderLayout.CENTER);
+
+        add(layout);
     }
 
     private void showFrame() {
