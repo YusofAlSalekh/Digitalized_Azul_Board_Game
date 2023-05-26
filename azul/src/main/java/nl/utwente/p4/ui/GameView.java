@@ -31,7 +31,6 @@ public class GameView extends JFrame {
 
     private void showFrame() {
         setVisible(true);
-        setResizable(false);
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }

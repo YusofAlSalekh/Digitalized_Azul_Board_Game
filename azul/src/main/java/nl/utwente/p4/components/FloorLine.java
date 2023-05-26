@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 @Data
 public class FloorLine {
-    private static final int[] floorScores = {-1, -1, -2, -2, -2, -3, -3};
     private ArrayList<Tile> tiles;
 
     public FloorLine() {

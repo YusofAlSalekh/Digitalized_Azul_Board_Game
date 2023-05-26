@@ -8,8 +8,13 @@ public class BoardView extends JPanel {
 
     public BoardView() {
         layout = new JPanel();
+        layout.setLayout(new BorderLayout());
+        layout.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         layout.setPreferredSize(new Dimension(450,250));
-        layout.setBackground(new Color(78, 79, 80));
+
+        var floorLineView = new FloorLineView();
+        layout.add(floorLineView, BorderLayout.SOUTH);
+
         add(layout);
     }
 }
