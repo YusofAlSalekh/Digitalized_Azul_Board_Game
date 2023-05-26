@@ -189,7 +189,7 @@ public class GameTest {
         Game game = Game.getInstance();
         game.setPlayers(new ArrayList<>());
         game.startGame();
-        game.getTileBag().getAndRemoveTiles();
+        game.setTileBag(new TileBag());
         for (Factory f : game.getFactories()) {
             f.takeAllTiles();
         }

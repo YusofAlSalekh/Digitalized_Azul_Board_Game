@@ -14,16 +14,13 @@ public class TileBag extends TileStash {
         super();
     }
 
+    /**
+     * Return a random tile from the tilebag if it's not empty
+     * @return a random tile from the bag
+     */
     public Tile getRandomTile() {
         if (this.tiles.isEmpty()) return null;
         Collections.shuffle(this.tiles);
         return this.tiles.remove(0);
     }
-
-    public ArrayList<Tile> getAndRemoveTiles() {
-        ArrayList<Tile> tilesToReturn = this.tiles;
-        this.tiles = new ArrayList<>();
-        return tilesToReturn;
-    }
-
 }

@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Data
 public class Game {
     private TileBag tileBag;
-    private TileBag gameBoxLid;
+    private GameBoxLid gameBoxLid;
     private TileTable tileTable;
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
@@ -21,7 +21,7 @@ public class Game {
 
     private Game() {
         this.tileBag = new TileBag();
-        this.gameBoxLid = new TileBag();
+        this.gameBoxLid = new GameBoxLid();
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
