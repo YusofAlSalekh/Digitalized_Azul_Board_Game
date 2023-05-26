@@ -10,17 +10,24 @@ import java.util.Map;
 
 public class WallView extends JPanel {
     public WallView(Player player) {
-        JPanel layout = new JPanel();
-        layout.setLayout(new GridLayout(5, 5, 5, 5));
+        Box layout = Box.createVerticalBox();
 
         for (Map<TileType, TileType> map : player.getWall().getTiles()) {
+            Box wallLayout = Box.createHorizontalBox();
+
             for (TileType tileType : map.keySet()) {
                 JButton wallButton = new JButton(" ");
+
                 wallButton.setBackground(ColorConverter.convertDisabled(tileType));
                 wallButton.setSize(new Dimension(20, 20));
                 wallButton.setEnabled(false);
-                layout.add(wallButton);
+
+                wallLayout.add(wallButton);
+                wallLayout.add(Box.createHorizontalStrut(5));
             }
+
+            layout.add(wallLayout);
+            layout.add(Box.createVerticalStrut(5));
         }
 
         add(layout);

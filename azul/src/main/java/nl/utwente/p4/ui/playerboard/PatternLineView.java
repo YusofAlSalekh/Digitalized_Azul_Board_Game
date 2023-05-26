@@ -18,12 +18,15 @@ public class PatternLineView extends JPanel {
 
             for (int i = 0; i < tileLine.getLineSize(); i++) {
                 JButton patternLineButton = new JButton(" ");
+
                 patternLineButton.setBackground(ColorConverter.convertDisabled(TileType.NULL));
                 patternLineButton.setSize(new Dimension(20, 20));
                 patternLineButton.setEnabled(false);
+
                 tileLineLayout.add(patternLineButton);
                 tileLineLayout.add(Box.createHorizontalStrut(5));
             }
+
             layout.add(tileLineLayout);
             layout.add(Box.createVerticalStrut(5));
         }
