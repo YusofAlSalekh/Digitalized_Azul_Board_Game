@@ -20,16 +20,10 @@ public class TileBag extends TileStash {
         return this.tiles.remove(0);
     }
 
-    public void addTiles(ArrayList<Tile> tiles) {
-        this.tiles.addAll(tiles);
-    }
-
     public ArrayList<Tile> getAndRemoveTiles() {
         ArrayList<Tile> tilesToReturn = this.tiles;
         this.tiles = new ArrayList<>();
         return tilesToReturn;
     }
 
-    // TODO: implement method
-    public boolean isEmpty() { return false; }
 }

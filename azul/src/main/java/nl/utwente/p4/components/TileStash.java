@@ -11,4 +11,10 @@ public class TileStash {
     public TileStash() {
         this.tiles = new ArrayList<>();
     }
+
+    public void addTiles(ArrayList<Tile> tiles) {
+        this.tiles.addAll(tiles);
+    }
+
+    public boolean isEmpty() { return this.tiles.size() == 0; }
 }
