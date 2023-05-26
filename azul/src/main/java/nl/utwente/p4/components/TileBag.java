@@ -9,7 +9,6 @@ import java.util.Random;
 
 @Data
 public class TileBag extends TileStash {
-    private ArrayList<Tile> tiles;
 
     public TileBag() {
         this.tiles = new ArrayList<>();
