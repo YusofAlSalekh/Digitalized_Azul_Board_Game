@@ -87,4 +87,63 @@ public class PlayerTest {
         // Test that game box lid contains all excess tiles from floor, so a 1 tile
         assertEquals(1, Game.getInstance().getGameBoxLid().getTiles().size());
     }
+    @Test
+    void testCalculateFinalScore_NoFullRowsOrColumns() {
+        // Arrange
+        // Set up the player's wall to have no full rows or columns
+        Wall wall = player.getWall();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                wall.placeTile(new Tile(TileType.RED), i, j);
+            }
+        }
+
+        // Act
+        int finalScore = player.calculateFinalScore();
+
+        // Assert
+        // Since no rows or columns are filled, the total bonus points should be 0
+        Assert.assertEquals(0, finalScore);
+    }
+
+    @Test
+    void testCalculateFinalScore_FullRowsAndColumns() {
+        // Arrange
+        // Set up the player's wall to have full rows and columns
+        Wall wall = player.getWall();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                wall.placeTile(new Tile(TileType.RED), i, j);
+            }
+            wall.placeTile(new Tile(TileType.BLUE), i, i);
+        }
+
+        // Act
+        int finalScore = player.calculateFinalScore();
+
+        // Assert
+        // Each full row gives 2 bonus points, each full column gives 7 bonus points
+        // In this case, there are 5 full rows and 5 full columns, so the total bonus points should be 5 * 2 + 5 * 7 = 45
+        Assert.assertEquals(45, finalScore);
+    }
+
+    @Test
+    void testCalculateFinalScore_FullTileTypeSet() {
+        // Arrange
+        // Set up the player's wall to have a full tile type set (RED, BLUE, BLACK, WHITE, YELLOW)
+        Wall wall = player.getWall();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                wall.placeTile(new Tile(TileType.values()[i]), i, j);
+            }
+        }
+
+        // Act
+        int finalScore = player.calculateFinalScore();
+
+        // Assert
+        // A full tile type set gives 10 bonus points
+        // In this case, there is a full tile type set, so the total bonus points should be 10
+        Assert.assertEquals(10, finalScore);
+    }
 }
