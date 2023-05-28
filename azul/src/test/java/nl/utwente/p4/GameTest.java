@@ -239,4 +239,37 @@ public class GameTest {
             assertEquals(4, f.getTiles().size());
         }
     }
+
+    @Test
+    void testEndGame_NoPlayerFilledRow(){
+        //arrange
+        Player player1 = new Player();
+        Player player2 = new Player();
+        Game game = new Game();
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+
+        // Act
+        game.endGame();
+
+        // Assert
+        assertFalse(game.hasGameEnded());
+    }
+
+    @Test
+    void testEndGame_PlayerHasFilledRow() {
+        // Arrange
+        Player player1 = new Player();
+        Player player2 = new Player();
+        player2.fillRow();
+        Game game = new Game();
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+
+        // Act
+        game.endGame();
+
+        // Assert
+        assertTrue(game.hasGameEnded());
+    }
 }
