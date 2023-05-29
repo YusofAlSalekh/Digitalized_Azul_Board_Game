@@ -15,6 +15,7 @@ public class Game {
     private ArrayList<Player> players;
     private static Game instance;
     private int numOfPlayers;
+    private int currPlayerIdx;
     static final int tilesPerFactory = 4;
 
     private Game() {
@@ -23,6 +24,7 @@ public class Game {
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
+        this.currPlayerIdx = 0;
     }
 
     public static Game getInstance() {
@@ -45,16 +47,16 @@ public class Game {
         this.numOfPlayers = numOfPlayers;
         startGame();
 
-        int currPlayerIdx = 0;
+        this.currPlayerIdx = 0;
 
         while (true) {
-            factoryOffer(currPlayerIdx);
-            wallTiling();
+//            factoryOffer(currPlayerIdx);
+//            wallTiling();
 
             if (hasAnyPlayerFilledRow()) {
                 break;
             }
-            currPlayerIdx = prepareNextRound(currPlayerIdx);
+//            this.currPlayerIdx = prepareNextRound(currPlayerIdx);
         }
         endGame();
     }
