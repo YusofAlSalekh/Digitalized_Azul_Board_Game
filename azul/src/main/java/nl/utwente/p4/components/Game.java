@@ -180,8 +180,12 @@ public class Game {
         }
         return false;
     }
-
-        
+    
+    if (!hasGameEnded) {
+        // If nobody has completed a horizontal line of 5 consecutive tiles on their wall Prepare next round
+        prepareNextRound();
+        return;
+    }    
 
     private int calculateHighestScore() {
         for (Player player : players) {
