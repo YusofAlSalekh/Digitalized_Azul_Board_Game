@@ -181,11 +181,7 @@ public class Game {
         return false;
     }
 
-        if (!hasGameEnded) {
-            // If nobody has completed a horizontal line of 5 consecutive tiles on their wall Prepare next round
-            prepareNextRound();
-            return;
-        }
+        
 
     private int calculateHighestScore() {
         for (Player player : players) {
@@ -195,6 +191,32 @@ public class Game {
             }
         }
         return getHighestScore();
+    }
+
+    int HighestScore = calculateHighestScore();
+    int maxCompleteLines = -1;
+    Player winningPlayer = null;
+    boolean isTie = false;
+
+    for (Player player : players) {
+        int score = player.calculateFinalScore();
+        int completeLines = player.CompleteHorizontalLines();
+
+        if (score == highestScore) {
+            if (completeLines > maxCompleteLines) {
+                maxCompleteLines = completeLines;
+                winningPlayer = player;
+                isTie = false;
+            } else if (completeLines == maxCompleteLines) {
+                isTie = true;
+            }
+        }
+    }
+
+    if (winningPlayer != null && !isTie) {
+        System.out.println("Player " + winningPlayer.Players() + " wins the game!");
+    } else {
+        System.out.println("The game ends in a tie.");
     }
 }
     
