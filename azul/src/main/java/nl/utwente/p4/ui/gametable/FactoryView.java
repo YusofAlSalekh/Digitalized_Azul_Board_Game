@@ -5,6 +5,7 @@ import nl.utwente.p4.components.Factory;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
+import nl.utwente.p4.ui.GameView;
 import nl.utwente.p4.ui.helper.ColorConverter;
 
 import javax.swing.*;
@@ -50,7 +51,7 @@ public class FactoryView extends JPanel {
     private void selectFactoryTile(Factory factory, Tile tile) {
         Game.getInstance().setCurrSelectedFactory(factory);
         Game.getInstance().setCurrSelectedFactoryTile(tile);
-        Game.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
+        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
     }
 
     public void refresh() {

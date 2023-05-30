@@ -21,7 +21,7 @@ public class ColorConverter {
         put(TileType.BLUE, new Color(0, 0, 255, 77));
         put(TileType.YELLOW, new Color(255, 255, 0, 77));
         put(TileType.RED, new Color(255, 0, 0, 77));
-        put(TileType.NULL, new Color(92, 92, 92));
+        put(TileType.NULL, new Color(199, 199, 199));
     }};
 
     public static HashMap<TileType, Color> getColorMapEnabled() {

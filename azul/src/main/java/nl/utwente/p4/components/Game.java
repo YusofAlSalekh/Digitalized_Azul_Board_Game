@@ -3,16 +3,12 @@ package nl.utwente.p4.components;
 import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
-import nl.utwente.p4.ui.gametable.FactoryCollectionView;
 import nl.utwente.p4.ui.gametable.FactoryView;
-import nl.utwente.p4.ui.playerboard.*;
 
 import java.util.ArrayList;
 
 @Data
 public class Game {
-    private GameView gameView;
-    private ArrayList<BoardView> boardViews;
     private ArrayList<FactoryView> factoryViews;
     private Factory currSelectedFactory;
     private Tile currSelectedFactoryTile;
@@ -37,7 +33,6 @@ public class Game {
         this.players = new ArrayList<>();
         this.currPlayerIdx = 0;
 
-        this.boardViews = new ArrayList<>();
         this.factoryViews = new ArrayList<>();
     }
 
@@ -63,7 +58,7 @@ public class Game {
 
         this.currPlayerIdx = 0;
 
-        this.gameView = new GameView();
+        GameView.getInstance();
 
 //        while (true) {
 //            factoryOffer(currPlayerIdx);

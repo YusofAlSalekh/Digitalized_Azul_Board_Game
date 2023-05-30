@@ -2,6 +2,7 @@ package nl.utwente.p4.ui.playerboard;
 
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
+import nl.utwente.p4.ui.GameView;
 import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.helper.ColorConverter;
 
@@ -68,7 +69,7 @@ public class PatternLineView extends JPanel {
 
             this.refresh(row);
 
-            for (FactoryView factoryView : Game.getInstance().getFactoryViews()) {
+            for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
                 factoryView.refresh();
             }
 
@@ -79,6 +80,7 @@ public class PatternLineView extends JPanel {
         // else notif no tiles selected
 
         toggleEnable(false);
+        GameView.getInstance().getTileTableView().refresh();
         Game.getInstance().nextPlayer();
     }
 
@@ -118,7 +120,7 @@ public class PatternLineView extends JPanel {
             patternLineButton.setBackground(colorMap.get(TileType.NULL));
         } else {
             if (col < tiles.size()) {
-                patternLineButton.setBackground(colorMap.get(lineType));
+                patternLineButton.setBackground(ColorConverter.convert(lineType));
             } else {
                 patternLineButton.setBackground(colorMap.get(TileType.NULL));
             }
