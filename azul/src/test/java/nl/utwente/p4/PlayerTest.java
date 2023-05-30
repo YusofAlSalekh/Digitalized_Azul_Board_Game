@@ -93,7 +93,7 @@ public class PlayerTest {
 
         // arrange
         Game game = Game.getInstance();
-        game.setGameBoxLid(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
 
         Player player = new Player();
 
