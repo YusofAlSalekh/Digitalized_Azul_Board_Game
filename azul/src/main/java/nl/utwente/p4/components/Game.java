@@ -49,16 +49,16 @@ public class Game {
 
         this.currPlayerIdx = 0;
 
-        while (true) {
+//        while (true) {
 //            factoryOffer(currPlayerIdx);
 //            wallTiling();
-
-            if (hasAnyPlayerFilledRow()) {
-                break;
-            }
-//            this.currPlayerIdx = prepareNextRound(currPlayerIdx);
-        }
-        endGame();
+//
+//            if (hasAnyPlayerFilledRow()) {
+//                break;
+//            }
+//            prepareNextRound();
+//        }
+//        endGame();
     }
 
     public void startGame() {
@@ -120,7 +120,7 @@ public class Game {
     }
 
 
-    public int prepareNextRound(int currPlayerIdx) {
+    public void prepareNextRound() {
         for (Factory f : this.factories) {
             boolean noMoreTiles = false;
             for (int i = 0; i < 4; i++) {
@@ -136,10 +136,11 @@ public class Game {
         }
         resetFirstState();
 
-        if (currPlayerIdx + 1 == this.players.size()) {
-            return 0;
+        if (this.currPlayerIdx + 1 == this.players.size()) {
+            this.currPlayerIdx = 0;
+        } else {
+            this.currPlayerIdx += 1;
         }
-        return currPlayerIdx + 1;
     }
 
     private boolean addRandomTileToFactory(Factory factory) {

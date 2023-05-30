@@ -45,7 +45,7 @@ public class GameTest {
         game.getTileTable().setFirstHasBeenTaken(true);
 
         // act
-        game.prepareNextRound(0);
+        game.prepareNextRound();
 
         // assert
         assertFalse(game.getTileTable().isFirstHasBeenTaken());
@@ -70,7 +70,7 @@ public class GameTest {
         game.setFactories(factories);
 
         // act
-        game.prepareNextRound(0);
+        game.prepareNextRound();
 
         // assert tile bag
         assertEquals(0, game.getTileBag().getTiles().size());
@@ -102,7 +102,7 @@ public class GameTest {
         game.setFactories(factories);
 
         // act
-        game.prepareNextRound(0);
+        game.prepareNextRound();
 
         // assert tile bag
         assertEquals(0, game.getTileBag().getTiles().size());
@@ -135,7 +135,7 @@ public class GameTest {
         game.addTilesToGameBoxLid(tiles);
 
         // act
-        game.prepareNextRound(0);
+        game.prepareNextRound();
 
         // Check that all factories are full and game box lid is empty
         assertEquals(4, game.getFactories().get(0).getTiles().size());
