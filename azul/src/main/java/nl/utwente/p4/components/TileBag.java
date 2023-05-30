@@ -8,29 +8,19 @@ import java.util.Collections;
 import java.util.Random;
 
 @Data
-public class TileBag {
-    private ArrayList<Tile> tiles;
+public class TileBag extends TileStash {
 
     public TileBag() {
-        this.tiles = new ArrayList<>();
+        super();
     }
 
+    /**
+     * Return a random tile from the tilebag if it's not empty
+     * @return a random tile from the bag
+     */
     public Tile getRandomTile() {
         if (this.tiles.isEmpty()) return null;
         Collections.shuffle(this.tiles);
         return this.tiles.remove(0);
     }
-
-    public void addTiles(ArrayList<Tile> tiles) {
-        this.tiles.addAll(tiles);
-    }
-
-    public ArrayList<Tile> getAndRemoveTiles() {
-        ArrayList<Tile> tilesToReturn = this.tiles;
-        this.tiles = new ArrayList<>();
-        return tilesToReturn;
-    }
-
-    // TODO: implement method
-    public boolean isEmpty() { return false; }
 }

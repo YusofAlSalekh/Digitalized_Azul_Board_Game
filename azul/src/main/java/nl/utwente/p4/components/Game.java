@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Data
 public class Game {
     private TileBag tileBag;
-    private TileBag gameBoxLid;
+    private GameBoxLid gameBoxLid;
     private TileTable tileTable;
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
@@ -18,9 +18,11 @@ public class Game {
     private int currPlayerIdx;
     static final int tilesPerFactory = 4;
 
+    private int highestScore = -1;
+
     private Game() {
         this.tileBag = new TileBag();
-        this.gameBoxLid = new TileBag();
+        this.gameBoxLid = new GameBoxLid();
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -169,9 +171,13 @@ public class Game {
     }
 
     // TODO: combine method with GUI
-    public void endGame() {
-        System.out.println(calculateHighestScore());
-        System.exit(0);
+    public boolean endGame() {
+        if (!hasAnyPlayerFilledRow()) {
+            return false;
+        }
+
+        calculateHighestScore();
+        return true;
     }
 
     private boolean hasAnyPlayerFilledRow() {
@@ -184,14 +190,13 @@ public class Game {
     }
 
     private int calculateHighestScore() {
-        int highestScore = -1;
         for (Player player : players) {
             int score = player.calculateFinalScore();
-            if (score > highestScore) {
-                highestScore = score;
+            if (score > getHighestScore()) {
+                setHighestScore(score);
             }
         }
-        return highestScore;
+        return getHighestScore();
     }
 }
     

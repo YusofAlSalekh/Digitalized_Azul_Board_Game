@@ -30,7 +30,12 @@ public class FloorLineTest {
     void addTile_tileAdded_false() { // methodName_behaviorToBeTested_expectedResult
         // arrange
         Game game = Game.getInstance();
-        game.setGameBoxLid(new TileBag());
+
+        // set the Lid to an empty array since  FloorLinetest class conflicts with the
+        // Gametest class when running all tests/
+        ArrayList<Tile> empty = new ArrayList<>();
+        game.getGameBoxLid().setTiles(empty);
+
         game.getTileBag().setTiles(new ArrayList<Tile>());
         FloorLine floorLine = new FloorLine();
         Tile tile1 = new Tile(TileType.BLACK);
@@ -54,7 +59,7 @@ public class FloorLineTest {
 
         // assert
         assertEquals(7, floorLine.getTiles().size());
-        assertEquals(1, Game.getInstance().getGameBoxLid().getTiles().size());
+        assertEquals(1, game.getGameBoxLid().getTiles().size());
     }
 
     @Test
@@ -107,5 +112,13 @@ public class FloorLineTest {
 
         // assert
         assertEquals(true, firstPlayerFound);
+    }
+    //since the logic has yet to be added we just check that the result is 0
+    @Test
+    void getFloorLineScore() {
+        // arrange
+        FloorLine floorLine = new FloorLine();
+        // assert
+        assertEquals(0, floorLine.getTotalFloorScore());
     }
 }

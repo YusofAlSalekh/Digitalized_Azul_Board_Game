@@ -11,6 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TileLineTest {
     @Test
+    void createTileLineWithSize_0() {
+
+        TileLine tileLine = new TileLine();
+
+        assertEquals(0, tileLine.getLineSize());
+    }
+    @Test
     void addTilesToLine_tilesAddedToLine_true() {
         // arrange
         TileLine tileLine = new TileLine(2);

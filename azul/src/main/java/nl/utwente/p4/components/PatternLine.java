@@ -53,6 +53,10 @@ public class PatternLine {
         return tileLines.get(row).isFilled();
     }
 
+    // this logic was forgotten so i added it to make the game playable
+    public void clearPatterLineRow(int row){
+        tileLines.set( row,new TileLine(this.tileLines.get(row).getLineSize()));
+    }
 
     // TODO: implement method
     public Tile getFilledRow(int row) {
