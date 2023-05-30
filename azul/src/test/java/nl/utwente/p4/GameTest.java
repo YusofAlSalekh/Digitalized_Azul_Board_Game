@@ -244,38 +244,6 @@ public class GameTest {
     }
 
     @Test
-    void testEndGame_NoPlayerFilledRow(){
-        //arrange
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Game game = new Game();
-        game.addPlayer(player1);
-        game.addPlayer(player2);
-
-        // Act
-        game.endGame();
-
-        // Assert
-        assertFalse(game.hasGameEnded());
-    }
-
-    @Test
-    void testEndGame_PlayerHasFilledRow() {
-        // Arrange
-        Player player1 = new Player();
-        Player player2 = new Player();
-        player2.fillRow();
-        Game game = new Game();
-        game.addPlayer(player1);
-        game.addPlayer(player2);
-
-        // Act
-        game.endGame();
-
-        // Assert
-        assertTrue(game.hasGameEnded());
-    }
-    @Test
     void checkIfPlayerHasFilledRow_True() {
       Game game = Game.getInstance();
       game.getPlayers().clear();
@@ -310,4 +278,42 @@ public class GameTest {
         game.play(2);
         assertEquals(0,game.getTilesFromGameBoxLid().size());
     }
+
+    @Test
+    void testEndGame_NoPlayerFilledRow() {
+        // Arrange
+        game.getPlayers();
+
+        players.add(player1);
+        players.add(player2);
+
+        // Act
+        game.endGame();
+
+        // Assert
+        // Since no player has filled a row, the highest score should still be -99999
+        Assert.assertEquals(-99999, game.getHighestScore());
+    }
+
+    @Test
+    void testEndGame_PlayerFilledRow() {
+        // Arrange
+        game.getPlayers();
+
+        players.add(player1);
+        players.add(player2);
+
+        // Simulate a player having filled a row
+        player2.setHasFilledRow(true);
+
+        // Act
+        game.endGame();
+
+        // Assert
+        // Since player2 has filled a row, the highest score should be based on player2's score
+        int expectedHighestScore = player2.calculateFinalScore();
+        Assert.assertEquals(expectedHighestScore, game.getHighestScore());
+    }
+    
+    
 }
