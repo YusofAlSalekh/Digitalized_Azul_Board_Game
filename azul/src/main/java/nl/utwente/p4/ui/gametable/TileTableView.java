@@ -13,6 +13,7 @@ public class TileTableView extends JPanel {
         JButton firstTileButton = new JButton("-1");
         firstTileButton.setBackground(ColorConverter.convert(TileType.WHITE));
         firstTileButton.setSize(new Dimension(20, 20));
+        firstTileButton.setEnabled(false);
         layout.add(firstTileButton);
 
         add(layout);

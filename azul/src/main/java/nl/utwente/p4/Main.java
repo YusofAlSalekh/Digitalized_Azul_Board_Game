@@ -6,6 +6,5 @@ import nl.utwente.p4.ui.GameView;
 public class Main {
     public static void main(String[] args) {
         Game.getInstance().play(2);
-        new GameView();
     }
 }

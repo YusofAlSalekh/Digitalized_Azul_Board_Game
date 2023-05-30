@@ -2,12 +2,21 @@ package nl.utwente.p4.components;
 
 import lombok.Data;
 import nl.utwente.p4.constants.TileType;
+import nl.utwente.p4.ui.GameView;
+import nl.utwente.p4.ui.gametable.FactoryCollectionView;
+import nl.utwente.p4.ui.gametable.FactoryView;
+import nl.utwente.p4.ui.playerboard.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Data
 public class Game {
+    private GameView gameView;
+    private ArrayList<BoardView> boardViews;
+    private ArrayList<FactoryView> factoryViews;
+    private Factory currSelectedFactory;
+    private Tile currSelectedFactoryTile;
+
     private TileBag tileBag;
     private GameBoxLid gameBoxLid;
     private TileTable tileTable;
@@ -27,6 +36,9 @@ public class Game {
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
         this.currPlayerIdx = 0;
+
+        this.boardViews = new ArrayList<>();
+        this.factoryViews = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -51,6 +63,8 @@ public class Game {
 
         this.currPlayerIdx = 0;
 
+        this.gameView = new GameView();
+
 //        while (true) {
 //            factoryOffer(currPlayerIdx);
 //            wallTiling();
@@ -61,6 +75,14 @@ public class Game {
 //            prepareNextRound();
 //        }
 //        endGame();
+    }
+
+    public void nextPlayer() {
+        if (this.currPlayerIdx + 1 == this.players.size()) {
+            this.currPlayerIdx = 0;
+        } else {
+            this.currPlayerIdx += 1;
+        }
     }
 
     public void startGame() {
@@ -145,11 +167,7 @@ public class Game {
         }
         resetFirstState();
 
-        if (this.currPlayerIdx + 1 == this.players.size()) {
-            this.currPlayerIdx = 0;
-        } else {
-            this.currPlayerIdx += 1;
-        }
+        this.currPlayerIdx = 0;
     }
 
     private boolean addRandomTileToFactory(Factory factory) {

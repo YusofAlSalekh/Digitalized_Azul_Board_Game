@@ -1,37 +1,52 @@
 package nl.utwente.p4.ui.playerboard;
 
+import lombok.Data;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Player;
 
 import javax.swing.*;
 import java.awt.*;
 
+@Data
 public class BoardView extends JPanel {
-    public BoardView() {
-        Box layout = Box.createVerticalBox();
+    private JPanel boardLayout;
+    private ScoreTrackView scoreTrackView;
+    private PatternLineView patternLineView;
+    private WallView wallView;
+    private FloorLineView floorLineView;
 
-        for (Player player : Game.getInstance().getPlayers()) {
-            JPanel boardLayout = new JPanel();
-            boardLayout.setLayout(new BorderLayout());
-            boardLayout.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            boardLayout.setPreferredSize(new Dimension(450,250));
+    public BoardView(Player player) {
+        createBoardLayout();
+        createScoreTrackView(player);
+        createPatternLineView(player);
+        createWallView(player);
+        createFloorLineView(player);
+    }
 
-            var scoreTrackView = new ScoreTrackView(player);
-            boardLayout.add(scoreTrackView, BorderLayout.NORTH);
+    private void createBoardLayout() {
+        boardLayout = new JPanel();
+        boardLayout.setLayout(new BorderLayout());
+        boardLayout.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        boardLayout.setPreferredSize(new Dimension(450,250));
+    }
 
-            var patternLineView = new PatternLineView(player);
-            boardLayout.add(patternLineView, BorderLayout.WEST);
+    private void createScoreTrackView(Player player) {
+        scoreTrackView = new ScoreTrackView(player);
+        boardLayout.add(scoreTrackView, BorderLayout.NORTH);
+    }
 
-            var wallView = new WallView(player);
-            boardLayout.add(wallView, BorderLayout.EAST);
+    private void createPatternLineView(Player player) {
+        patternLineView = new PatternLineView(player);
+        boardLayout.add(patternLineView, BorderLayout.WEST);
+    }
 
-            var floorLineView = new FloorLineView(player);
-            boardLayout.add(floorLineView, BorderLayout.SOUTH);
+    private void createWallView(Player player) {
+        wallView = new WallView(player);
+        boardLayout.add(wallView, BorderLayout.EAST);
+    }
 
-            layout.add(boardLayout);
-            layout.add(Box.createVerticalStrut(20));
-        }
-
-        add(layout);
+    private void createFloorLineView(Player player) {
+        floorLineView = new FloorLineView(player);
+        boardLayout.add(floorLineView, BorderLayout.SOUTH);
     }
 }

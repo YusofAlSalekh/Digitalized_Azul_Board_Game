@@ -1,6 +1,5 @@
 package nl.utwente.p4.ui.helper;
 
-import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
 
 import java.awt.*;
@@ -13,7 +12,7 @@ public class ColorConverter {
         put(TileType.BLUE, Color.BLUE);
         put(TileType.YELLOW, Color.YELLOW);
         put(TileType.RED, Color.RED);
-        put(TileType.NULL, Color.GRAY);
+        put(TileType.NULL, new Color(238, 238, 238));
     }};
 
     private static final HashMap<TileType, Color> disabled = new HashMap<>() {{
@@ -22,8 +21,16 @@ public class ColorConverter {
         put(TileType.BLUE, new Color(0, 0, 255, 77));
         put(TileType.YELLOW, new Color(255, 255, 0, 77));
         put(TileType.RED, new Color(255, 0, 0, 77));
-        put(TileType.NULL, Color.GRAY);
+        put(TileType.NULL, new Color(92, 92, 92));
     }};
+
+    public static HashMap<TileType, Color> getColorMapEnabled() {
+        return enabled;
+    }
+
+    public static HashMap<TileType, Color> getColorMapDisabled() {
+        return disabled;
+    }
 
     public static Color convert(TileType tileType) {
         return enabled.get(tileType);
