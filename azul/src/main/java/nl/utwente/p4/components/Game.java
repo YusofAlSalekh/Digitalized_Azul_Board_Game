@@ -15,6 +15,7 @@ public class Game {
     private ArrayList<Player> players;
     private static Game instance;
     private int numOfPlayers;
+    private int currPlayerIdx;
     static final int tilesPerFactory = 4;
 
     private int highestScore = -1;
@@ -25,6 +26,7 @@ public class Game {
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
+        this.currPlayerIdx = 0;
     }
 
     public static Game getInstance() {
@@ -42,11 +44,23 @@ public class Game {
         this.gameBoxLid.addTiles(tiles);
     }
 
-    // TODO: add overall game logic here
+    // TODO: combine game logic with GUI
     public void play(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         startGame();
-        prepareNextRound();
+
+        this.currPlayerIdx = 0;
+
+//        while (true) {
+//            factoryOffer(currPlayerIdx);
+//            wallTiling();
+//
+//            if (hasAnyPlayerFilledRow()) {
+//                break;
+//            }
+//            prepareNextRound();
+//        }
+//        endGame();
     }
 
     public void startGame() {
@@ -58,28 +72,7 @@ public class Game {
         this.tileBag.addTiles(createStartingTiles());
 
         ArrayList<Factory> initialFactories = createStartingFactories();
-        for (Factory f:initialFactories) this.factories.add(f);
-
-    }
-
-    /***
-     * Method to Pick all tiles of the same color from any one Factory,
-     * then move the remaining tiles from this Factory to the center of the table
-     * and afterwards add given tiles to the player board pattern line.
-     * Excess tiles are added to the players Floorline or the BoxLid
-     *
-     * @param factoryIdx id factory from which player take tiles
-     * @param color the colour(type) of tiles that player take
-     * @param player the player who takes tiles
-     * @param row the row in which player put tiles
-     */
-    public void pickTilesFromFactory(int factoryIdx, TileType color, Player player, int row) {
-
-        ArrayList<Tile> pickedTiles = factories.get(factoryIdx).takeTiles(color);
-
-        factories.get(factoryIdx).getRemainingTiles().forEach(t -> tileTable.addTile(t));
-
-        player.addTiles(pickedTiles, row);
+        this.factories.addAll(initialFactories);
     }
 
     /**
@@ -115,6 +108,15 @@ public class Game {
         return initialFactories;
     }
 
+    // TODO: combine method with GUI
+    public void factoryOffer(int currPlayerIdx) {
+        // player picks tile from factory
+        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), this.tileTable, TileType.BLACK, 0);
+
+        // player picks tile from tile table
+        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(this.tileTable, new Tile(TileType.BLACK), 0);
+    }
+
     // TODO: implement method
     public void wallTiling() {
     }
@@ -135,6 +137,12 @@ public class Game {
             }
         }
         resetFirstState();
+
+        if (this.currPlayerIdx + 1 == this.players.size()) {
+            this.currPlayerIdx = 0;
+        } else {
+            this.currPlayerIdx += 1;
+        }
     }
 
     private boolean addRandomTileToFactory(Factory factory) {
@@ -162,7 +170,7 @@ public class Game {
         this.tileTable.setFirstHasBeenTaken(false);
     }
 
-    // TODO: implement method
+    // TODO: combine method with GUI
     public boolean endGame() {
         if (!hasAnyPlayerFilledRow()) {
             return false;
