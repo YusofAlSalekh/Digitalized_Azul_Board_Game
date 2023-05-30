@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Data
 public class Game {
     private TileBag tileBag;
-    private TileBag gameBoxLid;
+    private GameBoxLid gameBoxLid;
     private TileTable tileTable;
     private ArrayList<Factory> factories;
     private ArrayList<Player> players;
@@ -17,9 +17,11 @@ public class Game {
     private int numOfPlayers;
     static final int tilesPerFactory = 4;
 
+    private int highestScore = -1;
+
     private Game() {
         this.tileBag = new TileBag();
-        this.gameBoxLid = new TileBag();
+        this.gameBoxLid = new GameBoxLid();
         this.tileTable = new TileTable();
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -117,38 +119,67 @@ public class Game {
     public void wallTiling() {
     }
 
-    // TODO: Refactor to 15 lines
+
     public void prepareNextRound() {
         for (Factory f : this.factories) {
+            boolean noMoreTiles = false;
             for (int i = 0; i < 4; i++) {
-                Tile newTile = this.tileBag.getRandomTile();
-                if (newTile != null) {
-                    f.addTile(newTile);
-                } else { // If tile bag is empty, fill it from the game box lid
-                    ArrayList<Tile> gameBoxLidTiles = this.gameBoxLid.getAndRemoveTiles();
-                    this.tileBag.addTiles(gameBoxLidTiles);
-                    newTile = this.tileBag.getRandomTile();
-                    if (newTile != null) {
-                        f.addTile(newTile);
-                    } else { // If random tile is still null, stop loop
-                        break;
-                    }
+                if (!addRandomTileToFactory(f)) {
+                    noMoreTiles = true;
+                    break;
                 }
             }
+            // just in case it does not break in the first loop
+            if (noMoreTiles) {
+                break;
+            }
         }
+        resetFirstState();
+    }
+
+    private boolean addRandomTileToFactory(Factory factory) {
+        Tile newTile = this.tileBag.getRandomTile();
+        if (newTile != null) {
+            factory.addTile(newTile);
+            return true;
+        } else {
+            fillTileBagFromGameBoxLid();
+            newTile = this.tileBag.getRandomTile();
+            if (newTile != null) {
+                factory.addTile(newTile);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void fillTileBagFromGameBoxLid() {
+        ArrayList<Tile> gameBoxLidTiles = this.gameBoxLid.getAndRemoveTiles();
+        this.tileBag.addTiles(gameBoxLidTiles);
+    }
+
+    private void resetFirstState() {
         this.tileTable.setFirstHasBeenTaken(false);
     }
 
     // TODO: implement method
-    public void endGame() {
-        boolean hasGameEnded = false;
+    public boolean endGame() {
+        if (!hasAnyPlayerFilledRow()) {
+            return false;
+        }
 
-        for (Player p : players) {
-            if (p.hasFilledRow()) {
-                hasGameEnded = true;
-                break;
+        calculateHighestScore();
+        return true;
+    }
+
+    private boolean hasAnyPlayerFilledRow() {
+        for (Player player : players) {
+            if (player.hasFilledRow()) {
+                return true;
             }
         }
+        return false;
+    }
 
         if (!hasGameEnded) {
             // If nobody has completed a horizontal line of 5 consecutive tiles on their wall Prepare next round
@@ -156,16 +187,14 @@ public class Game {
             return;
         }
 
-        // TODO: Refactor calculating scores to own method
-        int highestScore = -99999;
-        for (Player p : players) {
-            int score = p.calculateFinalScore();
-
-            // check if this score was highest
-            if (score > highestScore) {
-                highestScore = score;
+    private int calculateHighestScore() {
+        for (Player player : players) {
+            int score = player.calculateFinalScore();
+            if (score > getHighestScore()) {
+                setHighestScore(score);
             }
         }
+        return getHighestScore();
     }
 }
     

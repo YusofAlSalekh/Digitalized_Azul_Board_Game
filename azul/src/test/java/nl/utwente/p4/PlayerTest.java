@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
     @Test
@@ -145,5 +145,25 @@ public class PlayerTest {
         // A full tile type set gives 10 bonus points
         // In this case, there is a full tile type set, so the total bonus points should be 10
         Assert.assertEquals(10, finalScore);
+    }
+    @Test
+    void calculateFloorLineScore(){
+        Player player = new Player();
+        player.calculateFloorLineScore();
+    }
+    @Test
+    void checkIfRowIsFilled_True(){
+        Player player = new Player();
+        player.getWall().addTile(new Tile(TileType.BLUE),0);
+        player.getWall().addTile(new Tile(TileType.RED),0);
+        player.getWall().addTile(new Tile(TileType.BLACK),0);
+        player.getWall().addTile(new Tile(TileType.WHITE),0);
+        player.getWall().addTile(new Tile(TileType.YELLOW),0);
+        assertTrue(player.hasFilledRow());
+    }
+    @Test
+    void checkIfRowIsFilled_false(){
+        Player player = new Player();
+        assertFalse(player.hasFilledRow());
     }
 }
