@@ -2,7 +2,7 @@ package nl.utwente.p4.components;
 
 import nl.utwente.p4.gamestate.TileLineAdapter;
 
-public class TileLineFactory {
+public class TileLineBuilder {
     public static GeneralTileLine createTileLine(int size) {
         if (System.getProperties().containsKey("externalTileLine")) {
             return new TileLineAdapter(size);

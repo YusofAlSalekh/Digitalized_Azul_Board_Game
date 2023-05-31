@@ -16,7 +16,7 @@ public class PatternLine {
         // Initialize lines with tileLines of sizes from 1 to 5
         this.tileLines = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
-            this.tileLines.add(TileLineFactory.createTileLine(i));
+            this.tileLines.add(TileLineBuilder.createTileLine(i));
         }
     }
 
@@ -57,7 +57,7 @@ public class PatternLine {
 
     // this logic was forgotten so i added it to make the game playable
     public void clearPatterLineRow(int row) {
-        tileLines.set(row, TileLineFactory.createTileLine(this.tileLines.get(row).getLineSize()));
+        tileLines.set(row, TileLineBuilder.createTileLine(this.tileLines.get(row).getLineSize()));
     }
 
 

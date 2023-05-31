@@ -3,6 +3,8 @@ package nl.utwente.p4.gamestate;
 import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
+import nl.utwente.p4.exceptions.PatternLineFilledException;
+import nl.utwente.p4.exceptions.WrongTileType;
 
 import java.util.ArrayList;
 
@@ -29,8 +31,8 @@ public class TileLineAdapter implements GeneralTileLine {
             return TileType.BLUE;
         if (v == nl.utwente.p4.gamestate.TileType.YELLOW)
             return TileType.YELLOW;
-        //TODO
-        return null;
+
+        throw new WrongTileType("Wrong Tile Type");
     }
 
     @Override
@@ -124,6 +126,6 @@ public class TileLineAdapter implements GeneralTileLine {
                 return nl.utwente.p4.gamestate.TileType.RED;
             }
         }
-        return null;
+        throw new WrongTileType("Wrong Tile Type");
     }
 }
