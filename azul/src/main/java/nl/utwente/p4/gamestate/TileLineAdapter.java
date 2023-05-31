@@ -18,6 +18,11 @@ public class TileLineAdapter implements GeneralTileLine {
         line = new PatternLine(size);
     }
 
+    /**
+     * Converts the TileType of Team 5 to our TileType and
+     *
+     * @return tile of a certain color
+     */
     @Override
     public TileType getLineType() {
         nl.utwente.p4.gamestate.TileType v = line.getTileType();
@@ -53,6 +58,11 @@ public class TileLineAdapter implements GeneralTileLine {
         return temp;
     }
 
+    /***
+     * Add tiles to the tile line. If the line is empty, set the line type according to the tiles to be added
+     * @param tilesToAdd tiles to add
+     * @return excess tiles
+     */
     @Override
     public ArrayList<Tile> addTilesToLine(ArrayList<Tile> tilesToAdd) {
         if (tilesToAdd.size() < 1 || isFilled()) return tilesToAdd;
@@ -102,6 +112,11 @@ public class TileLineAdapter implements GeneralTileLine {
             line.setTileType(nl.utwente.p4.gamestate.TileType.YELLOW);
     }
 
+    /**
+     * Converts our TileType to the TileType of Team 5 and
+     *
+     * @return tile of a certain color
+     */
     private nl.utwente.p4.gamestate.TileType gePatternLineType(TileType tileType) {
 
         switch (tileType) {
