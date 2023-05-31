@@ -70,48 +70,59 @@ public class Player {
         return false;
     }
 
-    // TODO: Refactor to use multiple methods
+
     public int calculateFinalScore() {
         int totalBonusPoints = 0;
-        int counter = 0;
-        Tile tempTile = null;
     
-        // Check for full rows
-        // TODO: Refactor to own method
-        for (int i = 0; i < 5; i++) {
-            if (this.getWall().isRowFilled(i)) {
-                totalBonusPoints += 2; // Add 2 points for each full row
-            }
-        }
-    
-        // Check for full columns
-        // TODO: Refactor to own method
+
+        totalBonusPoints += calculateFullRowsbonusPoints();
+        totalBonusPoints += calculateFullColumnsBonusPoints();
+        totalBonusPoints += calculateTileTypeSetsBonusPoints();
+
+        // Add up all the bonuses to the score
+        addScore(totalBonusPoints);
+
+        return getScoreTrack();
+    }
+
+    private int calculateTileTypeSetsBonusPoints() {
+        int bonusPoints = 0;
         ArrayList<TileType> tileTypes = new ArrayList<>(
                 Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW));
 
-        for (int i = 0; i < 5; i++) {
-            if (this.getWall().isColumnFilled(i)) totalBonusPoints += 7; // Add 7 points for each full column
-        }
-    
-        // Check for tile type sets
-        // TODO: Refactor to own method
         for (TileType type : tileTypes){
-            tempTile = new Tile(type);
-            counter = 0;
+           Tile tempTile = new Tile(type);
+            int counter = 0;
             for (int i = 0; i < 5; i++) {
                 if (this.getWall().isTileFilled(tempTile, i)) {
                     counter++;
                 }
             }
             if (counter == 5) {
-                totalBonusPoints += 10; // Add 10 points for each full tile type set
+                bonusPoints += 10; // Add 10 points for each full tile type set
             }
         }
-    
-        // Add up all the bonuses to the score
-        this.addScore(totalBonusPoints);
+        return bonusPoints;
+    }
 
-        return this.getScoreTrack();
+    private int calculateFullColumnsBonusPoints() {
+        int bonusPoints = 0;
+        // Check for full columns
+        for (int i = 0; i < 5; i++) {
+            if (this.getWall().isColumnFilled(i))
+                bonusPoints += 7; // Add 7 points for each full column
+        }
+        return bonusPoints;
+    }
+
+    private int calculateFullRowsbonusPoints() {
+        int bonusPoints = 0;
+        for (int i = 0; i < 5; i++) {
+            if (this.getWall().isRowFilled(i)) {
+                bonusPoints += 2; // Add 2 points for each full row
+            }
+        }
+        return bonusPoints;
     }
 
     public int completeHorizontalLines(){

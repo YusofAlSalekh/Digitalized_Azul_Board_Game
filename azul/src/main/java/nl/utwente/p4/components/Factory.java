@@ -41,6 +41,7 @@ public class Factory {
         this.tiles.add(tile);
     }
 
+    //Tiles should also be removed from the factory, instead of just returning them.
     public ArrayList<Tile> getRemainingTiles() {
         return tiles;
     }
