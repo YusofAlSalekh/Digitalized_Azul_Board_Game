@@ -6,7 +6,7 @@ import nl.utwente.p4.constants.TileType;
 import java.util.ArrayList;
 
 @Getter
-public class TileLine {
+public class TileLine implements GeneralTileLine {
     private ArrayList<Tile> tiles;
     private int lineSize;
 
@@ -24,14 +24,17 @@ public class TileLine {
         this.lineType = TileType.NULL;
     }
 
+    @Override
     public TileType getLineType() {
         return this.lineType;
     }
 
+    @Override
     public int getLineSize() {
         return this.lineSize;
     }
 
+    @Override
     public ArrayList<Tile> getTiles() {
         return this.tiles;
     }
@@ -42,6 +45,7 @@ public class TileLine {
      * @param tilesToAdd tiles to add
      * @return excess tiles
      */
+    @Override
     public ArrayList<Tile> addTilesToLine(ArrayList<Tile> tilesToAdd) {
         if (tilesToAdd.size() < 1 || isFilled()) return tilesToAdd;
         checkAndSetLineType(tilesToAdd.get(0).getType());
@@ -57,12 +61,15 @@ public class TileLine {
 
     /**
      * Change tileline type to input type if tileline type is null, input is not null and tileline is empty
+     *
      * @param type type to change tile line to
      */
+    @Override
     public void checkAndSetLineType(TileType type) {
         if (this.tiles.size() == 0 && type != TileType.NULL) this.lineType = type;
     }
 
+    @Override
     public boolean isFilled() {
         return lineSize == tiles.stream().filter(t -> t.getType() != TileType.NULL).count();
     }

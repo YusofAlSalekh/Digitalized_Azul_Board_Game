@@ -6,16 +6,17 @@ import nl.utwente.p4.exceptions.PatternLineFilledException;
 import nl.utwente.p4.exceptions.TileColourNotMatchedWallTileColourException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class PatternLine {
-    private ArrayList<TileLine> tileLines;
+    private List<GeneralTileLine> tileLines;
 
     public PatternLine() {
         // Initialize lines with tileLines of sizes from 1 to 5
         this.tileLines = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
-            this.tileLines.add(new TileLine(i));
+            this.tileLines.add(TileLineFactory.createTileLine(i));
         }
     }
 
@@ -28,7 +29,7 @@ public class PatternLine {
      */
     public ArrayList<Tile> addTiles(ArrayList<Tile> tilesToAdd, int row) {
 
-        TileLine tileLine = this.tileLines.get(row);
+        GeneralTileLine tileLine = this.tileLines.get(row);
         Game game = Game.getInstance();
         Wall currentPlayerWall = game.getCurrentPlayer().getWall();
 
@@ -55,8 +56,8 @@ public class PatternLine {
     }
 
     // this logic was forgotten so i added it to make the game playable
-    public void clearPatterLineRow(int row){
-        tileLines.set( row,new TileLine(this.tileLines.get(row).getLineSize()));
+    public void clearPatterLineRow(int row) {
+        tileLines.set(row, TileLineFactory.createTileLine(this.tileLines.get(row).getLineSize()));
     }
 
 
