@@ -43,8 +43,8 @@ public class Factory {
 
     //Tiles should also be removed from the factory, instead of just returning them.
     public ArrayList<Tile> getRemainingTiles() {
-        ArrayList<Tile> temp = tiles;
+        ArrayList<Tile> newList = new ArrayList<>(tiles);
         tiles.clear();
-        return temp;
+        return newList;
     }
 }
