@@ -8,7 +8,6 @@ import java.util.Arrays;
 
 @Data
 public class Player {
-    // TODO: Refactor to remove playerboard and include it's attributes and methods for player
     private PatternLine patternLine;
     private Wall wall;
     private FloorLine floorLine;

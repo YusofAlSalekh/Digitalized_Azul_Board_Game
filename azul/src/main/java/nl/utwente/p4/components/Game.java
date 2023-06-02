@@ -92,13 +92,20 @@ public class Game {
     }
 
     /**
+     * Calculate number of factories based on number of players
+     * @return number of factories
+     */
+    public int numOfFactories() {
+        return 2 * this.numOfPlayers + 1;
+    }
+
+    /**
      * Initialize array of factories for the game, containing random tiles from tilebag
      * @return factory array
      */
     public ArrayList<Factory> createStartingFactories() {
         ArrayList<Factory> initialFactories = new ArrayList<>();
-        int numOfFactories = 2 * this.numOfPlayers + 1;
-        for (int i = 0; i < numOfFactories; i++) {
+        for (int i = 0; i < numOfFactories(); i++) {
             ArrayList<Tile> initialFactoryTiles = new ArrayList<>();
             for (int j = 0; j < tilesPerFactory; j++) {
                 initialFactoryTiles.add(this.tileBag.getRandomTile());
