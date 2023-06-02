@@ -44,6 +44,15 @@ public class Game {
         this.gameBoxLid.addTiles(tiles);
     }
 
+    /**
+     * Return the player whose turn it is. (Current player)
+     * @return Player whose turn it is, null if there are no players
+     */
+    public Player getCurrentPlayer() {
+        if (this.players.size() < 1) return null;
+        return this.players.get(this.currPlayerIdx);
+    }
+
     // TODO: combine game logic with GUI
     public void play(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
@@ -118,10 +127,10 @@ public class Game {
     // TODO: combine method with GUI
     public void factoryOffer(int currPlayerIdx) {
         // player picks tile from factory
-        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), this.tileTable, TileType.BLACK, 0);
+        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), TileType.BLACK, 0);
 
         // player picks tile from tile table
-        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(this.tileTable, new Tile(TileType.BLACK), 0);
+        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 0);
     }
 
     // TODO: implement method
