@@ -93,10 +93,11 @@ public class PlayerTest {
 
         // arrange
         Game game = Game.getInstance();
-        game.play(2);
+        game.setNumOfPlayers(2);
+        game.startGame();
         game.setGameBoxLid(new GameBoxLid());
-
-        Player player = new Player();
+        game.setTileTable(new TileTable());
+        Player player = game.getCurrentPlayer();
 
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -137,7 +138,7 @@ public class PlayerTest {
 
         //Testing that after applying getFactoryOfferFromFactory
         //2 tiles will be in the tile table(FIRST_PLAYER and Blue)
-        assertEquals(3, tileTable.getTiles().size());
+        assertEquals(2, tileTable.getTiles().size());
 
         //Testing that 1 of two excess Black tiles goes to the floor line and now there are 7 tiles in the floor line
         assertEquals(7, player.getFloorLine().getTiles().size());
