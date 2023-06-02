@@ -1,6 +1,8 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
@@ -116,9 +118,6 @@ public class Player {
         this.scoreTrack += value;
     }
 
-    // TODO: implement method
-    public void subtractScore(int value) {
-    }
 
     /**
      * Method to add given tiles to the player boards pattern line
