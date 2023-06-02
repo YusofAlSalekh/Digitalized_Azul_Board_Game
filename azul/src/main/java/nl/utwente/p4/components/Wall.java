@@ -2,12 +2,13 @@ package nl.utwente.p4.components;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.*;
 
-@Data
+@Getter
 public class Wall {
     @Setter(AccessLevel.PRIVATE)
     private Map<TileType, TileType>[] tiles;
@@ -118,11 +119,11 @@ public class Wall {
             Map<TileType, TileType> targetRow = this.tiles[row];
             for (Map.Entry<TileType, TileType> entry : targetRow.entrySet()) {
                 if (entry.getKey() == tile.getType() && entry.getValue() == tile.getType()) {
-                    return i;
+                    break;
                 }
                 i++;
             }
-        return -1; // Tile was not found
+        return i; // Tile was not found
     }
 
 
