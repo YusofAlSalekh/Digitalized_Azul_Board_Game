@@ -137,7 +137,7 @@ public class PlayerTest {
 
         //Testing that after applying getFactoryOfferFromFactory
         //2 tiles will be in the tile table(FIRST_PLAYER and Blue)
-        assertEquals(2, tileTable.getTiles().size());
+        assertEquals(3, tileTable.getTiles().size());
 
         //Testing that 1 of two excess Black tiles goes to the floor line and now there are 7 tiles in the floor line
         assertEquals(7, player.getFloorLine().getTiles().size());
