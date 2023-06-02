@@ -1,8 +1,6 @@
 package nl.utwente.p4;
 
-import nl.utwente.p4.components.PatternLine;
-import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.Wall;
+import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.exceptions.PatternLineFilledException;
 import nl.utwente.p4.exceptions.TileColourNotMatchedException;
@@ -18,6 +16,7 @@ public class PatternLineTest {
     @Test
     void addTiles_tilesAdded_true() {
         // arrange
+        Game.getInstance().play(2);
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -31,8 +30,8 @@ public class PatternLineTest {
         tiles2.add(new Tile(TileType.WHITE));
 
         // act
-        ArrayList<Tile> excess1 = patternLine.addTiles(tiles, 0, new Wall());
-        ArrayList<Tile> excess2 = patternLine.addTiles(tiles2, 4, new Wall());
+        ArrayList<Tile> excess1 = patternLine.addTiles(tiles, 0);
+        ArrayList<Tile> excess2 = patternLine.addTiles(tiles2, 4);
 
         // Test that correct amount of tiles is returned as excess tiles
         assertEquals(2, excess1.size());
@@ -44,8 +43,8 @@ public class PatternLineTest {
 
     @Test
     void addTilesToTheTileLineWhenTtIsAlreadyFilled() {
-
         // arrange
+        Game.getInstance().play(2);
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -60,8 +59,8 @@ public class PatternLineTest {
 
         // make the tile lines filled
 
-        patternLine.addTiles(tiles, 2, new Wall());
-        patternLine.addTiles(tiles2, 3, new Wall());
+        patternLine.addTiles(tiles, 2);
+        patternLine.addTiles(tiles2, 3);
 
         // Test that tile lines are filled
         assertEquals(3, patternLine.getTileLines().get(2).getTiles().size());
@@ -70,43 +69,38 @@ public class PatternLineTest {
 
         // Test that there will be an exception when we try to add more tiles to the filled tile lines
 
-        assertThrows(PatternLineFilledException.class, () -> patternLine.addTiles(tiles, 2, new Wall()));
-        assertThrows(PatternLineFilledException.class, () -> patternLine.addTiles(tiles, 3, new Wall()));
+        assertThrows(PatternLineFilledException.class, () -> patternLine.addTiles(tiles, 2));
+        assertThrows(PatternLineFilledException.class, () -> patternLine.addTiles(tiles, 3));
     }
 
     @Test
     void AddTilesOfOneColourToTheTileLineWhenItAlreadyContainsTilesOfDifferentColour() {
-
         // arrange
+        Game.getInstance().play(2);
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
         tiles.add(new Tile(TileType.BLACK));
 
-
         // fill fourth row with two black tiles
-        patternLine.addTiles(tiles, 3, new Wall());
-
+        patternLine.addTiles(tiles, 3);
 
         // Test that fourth row contains two tiles
         assertEquals(2, patternLine.getTileLines().get(3).getTiles().size());
-
 
         // Test that there will be an exception when we try to Add Tiles Of other colours
         ArrayList<Tile> tiles2 = new ArrayList<>();
         tiles2.add(new Tile(TileType.BLUE));
 
         assertThrows(TileColourNotMatchedException.class,
-                () -> patternLine.addTiles(tiles2, 3, new Wall()));
+                () -> patternLine.addTiles(tiles2, 3));
     }
 
     @Test
     void addTilesToTheTileLineWhenTileOfThisColorIsAlreadyOnTheWall() {
-
         // arrange
-
-        Wall wall = new Wall();
-        wall.addTile(new Tile(TileType.BLACK), 4);
+        Game.getInstance().play(2);
+        Game.getInstance().getCurrentPlayer().getWall().addTile(new Tile(TileType.BLACK), 4);
 
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -114,30 +108,32 @@ public class PatternLineTest {
         tiles.add(new Tile(TileType.BLACK));
         tiles.add(new Tile(TileType.BLACK));
 
-
         //Test that there will be an exception when we try to Add Tiles Of colours that the wall already contains
-
         assertThrows(TileColourNotMatchedWallTileColourException.class,
-                () -> patternLine.addTiles(tiles, 4, wall));
+                () -> patternLine.addTiles(tiles, 4));
     }
     @Test
     void checkIfPatterLineRowIsFilled() {
         // arrange
+        Game.getInstance().play(2);
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
+
         // act
-        patternLine.addTiles(tiles, 0, new Wall());
+        patternLine.addTiles(tiles, 0);
         assertTrue(patternLine.isRowFilled(0));
        }
     @Test
     void resetPatterLineRow() {
         // arrange
+        Game.getInstance().play(2);
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
+
         // act
-        patternLine.addTiles(tiles, 0, new Wall());
+        patternLine.addTiles(tiles, 0);
         assertEquals(1,patternLine.getTileLines().get(0).getTiles().size());
         patternLine.clearPatterLineRow(0);
         assertEquals(0,patternLine.getTileLines().get(0).getTiles().size());

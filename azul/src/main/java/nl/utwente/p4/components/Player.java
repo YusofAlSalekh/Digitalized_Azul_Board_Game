@@ -132,9 +132,8 @@ public class Player {
             this.floorLine.addTile(tiles.remove(0));
         }
 
-        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum, wall);
+        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
 
-        excessTiles.forEach(tile ->
-                this.floorLine.addTile(tile));
+        excessTiles.forEach(tile -> this.floorLine.addTile(tile));
     }
 }

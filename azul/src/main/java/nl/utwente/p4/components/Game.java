@@ -44,6 +44,15 @@ public class Game {
         this.gameBoxLid.addTiles(tiles);
     }
 
+    /**
+     * Return the player whose turn it is. (Current player)
+     * @return Player whose turn it is, null if there are no players
+     */
+    public Player getCurrentPlayer() {
+        if (this.players.size() < 1) return null;
+        return this.players.get(this.currPlayerIdx);
+    }
+
     // TODO: combine game logic with GUI
     public void play(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
