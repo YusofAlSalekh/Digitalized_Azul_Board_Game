@@ -73,4 +73,19 @@ public class TileLine implements GeneralTileLine {
     public boolean isFilled() {
         return lineSize == tiles.stream().filter(t -> t.getType() != TileType.NULL).count();
     }
+
+    @Override
+    public void setTiles(ArrayList<Tile> tiles) {
+
+    }
+
+    @Override
+    public void setLineSize(int lineSize) {
+
+    }
+
+    @Override
+    public void setLineType(TileType lineType) {
+
+    }
 }

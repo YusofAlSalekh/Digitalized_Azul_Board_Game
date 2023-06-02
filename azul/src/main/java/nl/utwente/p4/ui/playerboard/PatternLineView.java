@@ -1,6 +1,8 @@
 package nl.utwente.p4.ui.playerboard;
 
-import nl.utwente.p4.components.*;
+import nl.utwente.p4.components.GeneralTileLine;
+import nl.utwente.p4.components.Player;
+import nl.utwente.p4.components.TileLine;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
 import nl.utwente.p4.ui.gametable.FactoryView;
@@ -26,7 +28,7 @@ public class PatternLineView extends JPanel {
 
     private void createPatternLineView(Player player) {
         for (int i = 0; i < player.getPatternLine().getTileLines().size(); i++) {
-            TileLine tileLine = player.getPatternLine().getTileLines().get(i);
+            GeneralTileLine tileLine = player.getPatternLine().getTileLines().get(i);
             Box tileLineLayout = Box.createHorizontalBox();
             tileLineLayout.setAlignmentX(RIGHT_ALIGNMENT);
 
