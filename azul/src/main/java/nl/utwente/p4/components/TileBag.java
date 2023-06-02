@@ -1,13 +1,14 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
-@Data
+@Getter
 public class TileBag extends TileStash {
 
     public TileBag() {
