@@ -45,7 +45,7 @@ public class Game {
     }
 
     /**
-     * Return the player whose turn it is. (Current players)
+     * Return the player whose turn it is. (Current player)
      * @return Player whose turn it is, null if there are no players
      */
     public Player getCurrentPlayer() {
