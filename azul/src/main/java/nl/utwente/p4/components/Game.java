@@ -121,7 +121,7 @@ public class Game {
         this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), this.tileTable, TileType.BLACK, 0);
 
         // player picks tile from tile table
-        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(this.tileTable, new Tile(TileType.BLACK), 0);
+        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 0);
     }
 
     // TODO: implement method

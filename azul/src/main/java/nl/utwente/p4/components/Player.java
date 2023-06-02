@@ -32,12 +32,12 @@ public class Player {
     }
 
     /**
-     * Method to get given tiles from the tiletable
-     * @param tileTable table to take tiles from
+     * Method to get given tiles from the games tiletable
      * @param pickedTile tile to be picked
      * @param rowNum row number to add picked tiles to
      */
-    public void getFactoryOfferFromTileTable(TileTable tileTable, Tile pickedTile, Integer rowNum) {
+    public void getFactoryOfferFromTileTable(Tile pickedTile, Integer rowNum) {
+        TileTable tileTable = Game.getInstance().getTileTable();
         ArrayList<Tile> tilesFromTable = tileTable.takeTiles(pickedTile.getType());
         this.addTiles(tilesFromTable, rowNum);
     }
