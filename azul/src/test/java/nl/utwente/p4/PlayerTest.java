@@ -93,9 +93,11 @@ public class PlayerTest {
 
         // arrange
         Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.startGame();
         game.setGameBoxLid(new GameBoxLid());
-
-        Player player = new Player();
+        game.setTileTable(new TileTable());
+        Player player = game.getCurrentPlayer();
 
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -143,8 +145,33 @@ public class PlayerTest {
 
         //Testing that the third Black tile goes to Box lid
         assertEquals(1, game.getGameBoxLid().getTiles().size());
+        //Testing if player is first to go
+        assertFalse( game.getPlayers().get(0).getFirstPlayer());
     }
+    @Test
+    void setScore(){
+        Player player = new Player();
+        player.setScoreTrack(200);
+        assertEquals(200,player.getScoreTrack());
+    }
+    @Test
+    void calculateFinalScore(){
+        Player player = new Player();
+        assertEquals(0,player.calculateFinalScore());
+        // wall tiles horizantally
+        player.getWall().addTile(new Tile(TileType.BLUE),0);
+        player.getWall().addTile(new Tile(TileType.RED),0);
+        player.getWall().addTile(new Tile(TileType.WHITE),0);
+        player.getWall().addTile(new Tile(TileType.YELLOW),0);
+        player.getWall().addTile(new Tile(TileType.BLACK),0);
+        // wall tiles vertically
+        player.getWall().addTile(new Tile(TileType.WHITE),1);
+        player.getWall().addTile(new Tile(TileType.BLACK),2);
+        player.getWall().addTile(new Tile(TileType.RED),3);
+        player.getWall().addTile(new Tile(TileType.YELLOW),4);
 
+        assertEquals(9,player.calculateFinalScore());
+    }
     @Test
     void calculateFloorLineScore(){
         Player player = new Player();

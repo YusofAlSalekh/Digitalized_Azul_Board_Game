@@ -1,13 +1,13 @@
 package nl.utwente.p4.components;
 
-import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.exceptions.TileColourNotMatchedException;
 import nl.utwente.p4.exceptions.PatternLineFilledException;
 import nl.utwente.p4.exceptions.TileColourNotMatchedWallTileColourException;
 
 import java.util.ArrayList;
 
-@Data
+@Getter
 public class PatternLine {
     private ArrayList<TileLine> tileLines;
 
@@ -59,10 +59,5 @@ public class PatternLine {
         tileLines.set( row,new TileLine(this.tileLines.get(row).getLineSize()));
     }
 
-    // TODO: implement method
-    public Tile getFilledRow(int row) {
-        // remove all tiles from row
-        // return 1 tile
-        return null;
-    }
+
 }

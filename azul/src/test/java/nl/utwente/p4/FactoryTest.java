@@ -10,19 +10,31 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FactoryTest {
-
     @Test
-    void addTile_tileAdded_true() {
-        // arrange
+    void getTileFromFactory() {
         ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile(TileType.BLACK));
         Factory factory = new Factory(tiles);
+        tiles.add(new Tile(TileType.BLACK));
+        tiles.add(new Tile(TileType.YELLOW));
+        tiles.add(new Tile(TileType.BLACK));
+        factory.setTiles(tiles);
+        assertEquals(TileType.BLACK, factory.getTiles().get(0).getType());
+        assertEquals(TileType.YELLOW, factory.getTiles().get(1).getType());
+        assertEquals(TileType.BLACK, factory.getTiles().get(2).getType());
+    }
+    @Test
+    void addTile_TakeTile_getRemaining() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        Factory factory = new Factory(tiles);
+        factory.addTile(new Tile(TileType.BLACK));
+        factory.addTile(new Tile(TileType.YELLOW));
+        factory.addTile(new Tile(TileType.BLACK));
+        factory.takeTiles(TileType.YELLOW);
+        assertEquals(2,factory.getRemainingTiles().size());
+        assertEquals(TileType.BLACK, factory.takeAllTiles().get(0).getType());
+        assertEquals(0, factory.getRemainingTiles().size());
 
-        // act
-        factory.addTile(new Tile(TileType.BLUE));
 
-        // assert
-        assertEquals(2, factory.getTiles().size());
-        assertEquals(TileType.BLUE, factory.getTiles().get(factory.getTiles().size() - 1).getType());
+
     }
 }

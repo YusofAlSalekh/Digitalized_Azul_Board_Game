@@ -157,6 +157,7 @@ class WallTest {
         wall.addTile(new Tile(TileType.BLACK), 3);
         assertEquals(10,wall.getTotalScore());
     }
+
     @Test
     void  checkWallScoreP12(){
         Wall wall = new Wall();
