@@ -127,7 +127,7 @@ public class Game {
     // TODO: combine method with GUI
     public void factoryOffer(int currPlayerIdx) {
         // player picks tile from factory
-        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), this.tileTable, TileType.BLACK, 0);
+        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), TileType.BLACK, 0);
 
         // player picks tile from tile table
         this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 0);

@@ -124,11 +124,11 @@ public class PlayerTest {
         //Testing that floor line contains 6 tiles
         assertEquals(6, player.getFloorLine().getTiles().size());
 
-        TileTable tileTable = new TileTable();
+        TileTable tileTable = Game.getInstance().getTileTable();
 
         //Testing a method getFactoryOfferFromFactory
         //in which we take Black tiles from the factory with an index of 0 and place them in the first row
-        player.getFactoryOfferFromFactory(factories.get(0), tileTable, TileType.BLACK, 0);
+        player.getFactoryOfferFromFactory(factories.get(0), TileType.BLACK, 0);
 
         //Testing that after applying getFactoryOfferFromFactory
         //there is only one tile in the first row
