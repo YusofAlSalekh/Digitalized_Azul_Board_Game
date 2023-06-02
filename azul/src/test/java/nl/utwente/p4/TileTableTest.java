@@ -34,6 +34,7 @@ public class TileTableTest {
         expected.add(new Tile(TileType.BLACK));
         assertEquals(expected, takenTiles);
         assertEquals(TileType.FIRST_PLAYER, takenTiles.get(0).getType());
+        assertEquals(TileType.YELLOW, tileTable.getTiles().get(0).getType());
         assertEquals(TileType.BLACK, takenTiles.get(1).getType());
         assertEquals(true, tileTable.isFirstHasBeenTaken());
     }
