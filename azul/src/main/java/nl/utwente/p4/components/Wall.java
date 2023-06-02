@@ -123,7 +123,7 @@ public class Wall {
                 }
                 i++;
             }
-        return i; // Tile was not found
+        return i;
     }
 
 

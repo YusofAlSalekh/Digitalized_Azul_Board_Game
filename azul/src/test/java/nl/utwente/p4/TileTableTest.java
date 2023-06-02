@@ -14,7 +14,6 @@ public class TileTableTest {
     void takeTiles_tilesTaken_true() {
         // arrange
         TileTable tileTable = new TileTable();
-        ArrayList<Tile> tiles = new ArrayList<>();
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
@@ -36,7 +35,7 @@ public class TileTableTest {
         assertEquals(TileType.FIRST_PLAYER, takenTiles.get(0).getType());
         assertEquals(TileType.YELLOW, tileTable.getTiles().get(0).getType());
         assertEquals(TileType.BLACK, takenTiles.get(1).getType());
-        assertEquals(true, tileTable.isFirstHasBeenTaken());
+        assertTrue(tileTable.isFirstHasBeenTaken());
     }
 
     @Test
