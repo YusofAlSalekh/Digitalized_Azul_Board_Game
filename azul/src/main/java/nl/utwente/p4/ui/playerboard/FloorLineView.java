@@ -8,26 +8,34 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FloorLineView extends JPanel {
+    private JPanel floorLineLayout;
     public FloorLineView(Player player) {
-        JPanel layout = new JPanel();
-        layout.setLayout(new GridLayout(2, 7, 5, 0));
+        floorLineLayout = new JPanel();
+        floorLineLayout.setLayout(new GridLayout(2, 7, 5, 0));
 
+        createFloorScoreView(player);
+        createFloorTilesView(player);
+
+        add(floorLineLayout);
+    }
+
+    private void createFloorScoreView(Player player) {
         for (int i : player.getFloorLine().getFloorScores()) {
             JLabel label = new JLabel();
             label.setText(Integer.toString(i));
             label.setHorizontalAlignment(JLabel.CENTER);
             label.setSize(new Dimension(20, 20));
-            layout.add(label);
+            floorLineLayout.add(label);
         }
+    }
 
+    private void createFloorTilesView(Player player) {
         for (int i = 0; i < 7; i++) {
             JButton floorLineButton = new JButton(" ");
             floorLineButton.setBackground(ColorConverter.convert(TileType.NULL));
             floorLineButton.setSize(new Dimension(20, 20));
             floorLineButton.setEnabled(false);
-            layout.add(floorLineButton);
+            floorLineLayout.add(floorLineButton);
         }
-
-        add(layout);
     }
 }

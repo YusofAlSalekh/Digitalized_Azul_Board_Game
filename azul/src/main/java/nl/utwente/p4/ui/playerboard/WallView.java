@@ -9,27 +9,33 @@ import java.awt.*;
 import java.util.Map;
 
 public class WallView extends JPanel {
-    public WallView(Player player) {
-        Box layout = Box.createVerticalBox();
+    private static Box wallLayout;
 
+    public WallView(Player player) {
+        wallLayout = Box.createVerticalBox();
+        createWallView(player);
+        add(wallLayout);
+    }
+
+    private void createWallView(Player player) {
         for (Map<TileType, TileType> map : player.getWall().getTiles()) {
             Box wallLayout = Box.createHorizontalBox();
 
             for (TileType tileType : map.keySet()) {
-                JButton wallButton = new JButton(" ");
-
-                wallButton.setBackground(ColorConverter.convertDisabled(tileType));
-                wallButton.setSize(new Dimension(20, 20));
-                wallButton.setEnabled(false);
-
-                wallLayout.add(wallButton);
+                wallLayout.add(createWallButtonView(tileType));
                 wallLayout.add(Box.createHorizontalStrut(5));
             }
 
-            layout.add(wallLayout);
-            layout.add(Box.createVerticalStrut(5));
+            WallView.wallLayout.add(wallLayout);
+            WallView.wallLayout.add(Box.createVerticalStrut(5));
         }
+    }
 
-        add(layout);
+    private JButton createWallButtonView(TileType tileType) {
+        JButton wallButton = new JButton(" ");
+        wallButton.setBackground(ColorConverter.convertDisabled(tileType));
+        wallButton.setSize(new Dimension(20, 20));
+        wallButton.setEnabled(false);
+        return wallButton;
     }
 }

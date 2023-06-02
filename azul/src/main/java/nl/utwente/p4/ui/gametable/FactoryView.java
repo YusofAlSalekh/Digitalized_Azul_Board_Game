@@ -22,33 +22,35 @@ public class FactoryView extends JPanel {
         this.idx = idx;
         factoryTileButtons = new ArrayList<>();
 
-        factoryLayout = new JPanel();
-        factoryLayout.setLayout(new GridLayout(2, 2, 2, 2));
-
-
-        createFactory();
+        createFactoryLayout();
+        createFactoryView();
     }
 
-    private void createFactory() {
+    private void createFactoryLayout() {
+        factoryLayout = new JPanel();
+        factoryLayout.setLayout(new GridLayout(2, 2, 2, 2));
+    }
+
+    private void createFactoryView() {
         Factory factory = Game.getInstance().getFactories().get(idx);
         for (int j = 0; j < 4; j++) {
             Tile tile = factory.getTiles().get(j);
-            JButton factoryTileButton = createFactoryTile(tile.getType());
-            factoryTileButton.addActionListener(e -> selectFactoryTile(factory, tile));
+            JButton factoryTileButton = createFactoryTileView(tile.getType());
+            factoryTileButton.addActionListener(e -> selectFactoryTileView(factory, tile));
 
             factoryTileButtons.add(factoryTileButton);
             factoryLayout.add(factoryTileButton);
         }
     }
 
-    private JButton createFactoryTile(TileType tileType) {
+    private JButton createFactoryTileView(TileType tileType) {
         JButton factoryTileButton = new JButton(" ");
         factoryTileButton.setBackground(ColorConverter.convert(tileType));
         factoryTileButton.setSize(new Dimension(20, 20));
         return factoryTileButton;
     }
 
-    private void selectFactoryTile(Factory factory, Tile tile) {
+    private void selectFactoryTileView(Factory factory, Tile tile) {
         Game.getInstance().setCurrSelectedFactory(factory);
         Game.getInstance().setCurrSelectedFactoryTile(tile);
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);

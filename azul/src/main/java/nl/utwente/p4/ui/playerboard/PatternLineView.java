@@ -8,24 +8,23 @@ import nl.utwente.p4.ui.helper.ColorConverter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PatternLineView extends JPanel {
     private final ArrayList<ArrayList<JButton>> patternLineButtons;
-    private final Box layout;
+    private final Box patternLineLayout;
 
     public PatternLineView(Player player) {
         patternLineButtons = new ArrayList<>();
-        layout = Box.createVerticalBox();
-        createPatternLine(player);
-        add(layout);
+        patternLineLayout = Box.createVerticalBox();
+
+        createPatternLineView(player);
+
+        add(patternLineLayout);
     }
 
-    private void createPatternLine(Player player) {
+    private void createPatternLineView(Player player) {
         for (int i = 0; i < player.getPatternLine().getTileLines().size(); i++) {
             TileLine tileLine = player.getPatternLine().getTileLines().get(i);
             Box tileLineLayout = Box.createHorizontalBox();
@@ -33,55 +32,52 @@ public class PatternLineView extends JPanel {
 
             ArrayList<JButton> tileLineButtons = new ArrayList<>();
             for (int j = 0; j < tileLine.getLineSize(); j++) {
-                JButton patternLineButton = createTile();
-                int finalI = i;
-                patternLineButton.addActionListener(e -> fillTile(player, finalI));
-
+                JButton patternLineButton = createPatternLineTileView(player, i);
                 tileLineButtons.add(patternLineButton);
-
                 tileLineLayout.add(patternLineButton);
                 tileLineLayout.add(Box.createHorizontalStrut(5));
             }
-            patternLineButtons.add(tileLineButtons);
 
-            layout.add(tileLineLayout);
-            layout.add(Box.createVerticalStrut(5));
+            patternLineButtons.add(tileLineButtons);
+            patternLineLayout.add(tileLineLayout);
+            patternLineLayout.add(Box.createVerticalStrut(5));
         }
     }
 
-    private JButton createTile() {
+    private JButton createPatternLineTileView(Player player, int row) {
         JButton patternLineButton = new JButton(" ");
         patternLineButton.setBackground(ColorConverter.convertDisabled(TileType.NULL));
         patternLineButton.setSize(new Dimension(20, 20));
         patternLineButton.setEnabled(false);
+        patternLineButton.addActionListener(e -> fillTileView(player, row));
         return patternLineButton;
     }
 
-    private void fillTile(Player currPlayer, int row) {
-        Factory currSelectedFactory = Game.getInstance().getCurrSelectedFactory();
-        Tile currSelectedFactoryTile = Game.getInstance().getCurrSelectedFactoryTile();
-
-        if (currSelectedFactory != null && currSelectedFactoryTile != null) {
-            currPlayer.getFactoryOfferFromFactory(currSelectedFactory,
-                    Game.getInstance().getTileTable(),
-                    currSelectedFactoryTile.getType(),
-                    row);
-
-            this.refresh(row);
-
-            for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
-                factoryView.refresh();
-            }
-
-            Game.getInstance().setCurrSelectedFactory(null);
-            Game.getInstance().setCurrSelectedFactoryTile(null);
+    private void fillTileView(Player currPlayer, int row) {
+        if (Game.getInstance().getCurrSelectedFactory() != null && Game.getInstance().getCurrSelectedFactoryTile() != null) {
+            fillTileFromFactoryView(currPlayer, row);
         }
         // else if currSelectedTileTable get factory offer from tile table
         // else notif no tiles selected
 
+        refresh(row);
         toggleEnable(false);
         GameView.getInstance().getTileTableView().refresh();
         Game.getInstance().nextPlayer();
+    }
+
+    private void fillTileFromFactoryView(Player currPlayer, int row) {
+        currPlayer.getFactoryOfferFromFactory(Game.getInstance().getCurrSelectedFactory(),
+                Game.getInstance().getTileTable(),
+                Game.getInstance().getCurrSelectedFactoryTile().getType(),
+                row);
+
+        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
+            factoryView.refresh();
+        }
+
+        Game.getInstance().setCurrSelectedFactory(null);
+        Game.getInstance().setCurrSelectedFactoryTile(null);
     }
 
     public void toggleEnable(boolean isEnabled) {

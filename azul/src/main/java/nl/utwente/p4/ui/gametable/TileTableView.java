@@ -13,11 +13,11 @@ public class TileTableView extends JPanel {
     private static Box layout;
     public TileTableView() {
         layout = Box.createVerticalBox();
-        createTileTable();
+        createTileTableView();
         add(layout);
     }
 
-    public void createTileTable() {
+    public void createTileTableView() {
         layout.removeAll();
 
         for (Tile tile : Game.getInstance().getTileTable().getTiles()) {
@@ -39,7 +39,7 @@ public class TileTableView extends JPanel {
     }
 
     public void refresh() {
-        createTileTable();
+        createTileTableView();
         revalidate();
     }
 }

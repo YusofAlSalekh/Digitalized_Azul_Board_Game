@@ -87,8 +87,4 @@ public class GameView extends JFrame {
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
-
-    public void refresh() {
-        this.repaint();
-    }
 }

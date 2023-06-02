@@ -1,7 +1,6 @@
 package nl.utwente.p4.ui.playerboard;
 
 import lombok.Data;
-import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Player;
 
 import javax.swing.*;
