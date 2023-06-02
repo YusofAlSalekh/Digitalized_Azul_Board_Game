@@ -182,7 +182,8 @@ public class GameTest {
     void checkIfPlayerHasFilledRow_True() {
       Game game = Game.getInstance();
       game.getPlayers().clear();
-      game.play(2);
+      game.setNumOfPlayers(2);
+      game.startGame();
       var player = game.getPlayers().get(0);
       var array = new Tile[]{new Tile(TileType.BLUE),new Tile(TileType.RED),
               new Tile(TileType.WHITE), new Tile(TileType.BLACK),
@@ -202,7 +203,8 @@ public class GameTest {
     void checkIfPlayerHasFilledRow_False() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
-        game.play(2);
+        game.setNumOfPlayers(2);
+        game.startGame();
         assertFalse(game.endGame());
         assertEquals(-1,game.getHighestScore());
     }
@@ -210,7 +212,8 @@ public class GameTest {
     void getTilesFromLid_Empty() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
-        game.play(2);
+        game.setNumOfPlayers(2);
+        game.startGame();
         assertEquals(0,game.getTilesFromGameBoxLid().size());
     }
 }
