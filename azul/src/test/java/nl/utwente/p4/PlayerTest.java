@@ -13,7 +13,7 @@ public class PlayerTest {
     void getFactoryOfferFromTileTable_factoryOfferTakenFromTable_true() {
         // arrange
         Player player = new Player();
-        TileTable tileTable = new TileTable();
+        TileTable tileTable = Game.getInstance().getTileTable();
 
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
@@ -22,7 +22,7 @@ public class PlayerTest {
         tileTable.addTile(new Tile(TileType.WHITE));
 
         // Get black tiles from tile table and add to row index 1, which has size 2
-        player.getFactoryOfferFromTileTable(tileTable, new Tile(TileType.BLACK), 1);
+        player.getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 1);
 
         // Test that player floorline contains correct tile amount and first player tile
         assertEquals(2, player.getFloorLine().getTiles().size());
