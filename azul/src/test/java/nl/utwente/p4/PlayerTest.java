@@ -13,7 +13,7 @@ public class PlayerTest {
     void getFactoryOfferFromTileTable_factoryOfferTakenFromTable_true() {
         // arrange
         Player player = new Player();
-        TileTable tileTable = new TileTable();
+        TileTable tileTable = Game.getInstance().getTileTable();
 
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
@@ -22,7 +22,7 @@ public class PlayerTest {
         tileTable.addTile(new Tile(TileType.WHITE));
 
         // Get black tiles from tile table and add to row index 1, which has size 2
-        player.getFactoryOfferFromTileTable(tileTable, new Tile(TileType.BLACK), 1);
+        player.getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 1);
 
         // Test that player floorline contains correct tile amount and first player tile
         assertEquals(2, player.getFloorLine().getTiles().size());
@@ -124,11 +124,11 @@ public class PlayerTest {
         //Testing that floor line contains 6 tiles
         assertEquals(6, player.getFloorLine().getTiles().size());
 
-        TileTable tileTable = new TileTable();
+        TileTable tileTable = Game.getInstance().getTileTable();
 
         //Testing a method getFactoryOfferFromFactory
         //in which we take Black tiles from the factory with an index of 0 and place them in the first row
-        player.getFactoryOfferFromFactory(factories.get(0), tileTable, TileType.BLACK, 0);
+        player.getFactoryOfferFromFactory(factories.get(0), TileType.BLACK, 0);
 
         //Testing that after applying getFactoryOfferFromFactory
         //there is only one tile in the first row
