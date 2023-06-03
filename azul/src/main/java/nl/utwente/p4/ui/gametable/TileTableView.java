@@ -22,25 +22,34 @@ public class TileTableView extends JPanel {
         layout.removeAll();
 
         for (Tile tile : Game.getInstance().getTileTable().getTiles()) {
-            JButton tileButton = createTileTableButtonView(tile.getType());
+            JButton tileButton = createTableTileButtonView(tile);
             layout.add(tileButton);
             layout.add(Box.createVerticalStrut(5));
         }
     }
 
-    private JButton createTileTableButtonView(TileType tileType) {
+    private JButton createTableTileButtonView(Tile tile) {
         JButton tileButton = new JButton();
         tileButton.setSize(new Dimension(20, 20));
-        tileButton.setEnabled(true);
 
-        if (tileType == TileType.FIRST_PLAYER) {
+        if (tile.getType() == TileType.FIRST_PLAYER) {
             tileButton.setText("-1");
             tileButton.setBackground(ColorConverter.convert(TileType.WHITE));
+            tileButton.setEnabled(false);
         } else {
             tileButton.setText(" ");
-            tileButton.setBackground(ColorConverter.convert(tileType));
+            tileButton.setBackground(ColorConverter.convert(tile.getType()));
+            tileButton.setEnabled(true);
         }
+        tileButton.addActionListener(e -> selectTableTileView(tile));
         return tileButton;
+    }
+
+    private void selectTableTileView(Tile tile) {
+        Game.getInstance().setCurrSelectedTableTile(tile);
+        Game.getInstance().setCurrSelectedFactory(null);
+        Game.getInstance().setCurrSelectedFactoryTile(null);
+        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
     }
 
     public void refresh() {

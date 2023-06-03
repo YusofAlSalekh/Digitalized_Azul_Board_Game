@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Game {
     private Factory currSelectedFactory;
     private Tile currSelectedFactoryTile;
+    private Tile currSelectedTableTile;
 
     private TileBag tileBag;
     private GameBoxLid gameBoxLid;
