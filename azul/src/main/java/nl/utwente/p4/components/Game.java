@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 @Data
 public class Game {
-    private ArrayList<FactoryView> factoryViews;
     private Factory currSelectedFactory;
     private Tile currSelectedFactoryTile;
 
@@ -32,8 +31,6 @@ public class Game {
         this.factories = new ArrayList<>();
         this.players = new ArrayList<>();
         this.currPlayerIdx = 0;
-
-        this.factoryViews = new ArrayList<>();
     }
 
     public static Game getInstance() {
@@ -130,15 +127,6 @@ public class Game {
             initialFactories.add(new Factory(initialFactoryTiles));
         }
         return initialFactories;
-    }
-
-    // TODO: combine method with GUI
-    public void factoryOffer(int currPlayerIdx) {
-        // player picks tile from factory
-        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), this.tileTable, TileType.BLACK, 0);
-
-        // player picks tile from tile table
-        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(this.tileTable, new Tile(TileType.BLACK), 0);
     }
 
     // TODO: implement method
