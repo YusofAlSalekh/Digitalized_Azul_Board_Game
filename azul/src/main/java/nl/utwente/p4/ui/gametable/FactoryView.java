@@ -1,6 +1,6 @@
 package nl.utwente.p4.ui.gametable;
 
-import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.components.Factory;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Tile;
@@ -12,11 +12,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-@Data
 public class FactoryView extends JPanel {
-    private int idx;
+    private final int idx;
+
+    @Getter
     private JPanel factoryLayout;
-    private ArrayList<JButton> factoryTileButtons;
+    private final ArrayList<JButton> factoryTileButtons;
 
     public FactoryView(int idx) {
         this.idx = idx;
