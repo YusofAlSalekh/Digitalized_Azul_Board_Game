@@ -3,7 +3,6 @@ package nl.utwente.p4.components;
 import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
-import nl.utwente.p4.ui.gametable.FactoryView;
 
 import java.util.ArrayList;
 
@@ -47,6 +46,15 @@ public class Game {
 
     public void addTilesToGameBoxLid(ArrayList<Tile> tiles) {
         this.gameBoxLid.addTiles(tiles);
+    }
+
+    /**
+     * Return the player whose turn it is. (Current player)
+     * @return Player whose turn it is, null if there are no players
+     */
+    public Player getCurrentPlayer() {
+        if (this.players.size() < 1) return null;
+        return this.players.get(this.currPlayerIdx);
     }
 
     // TODO: combine game logic with GUI

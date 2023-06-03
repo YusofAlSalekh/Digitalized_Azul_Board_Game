@@ -55,12 +55,12 @@ public class PatternLineView extends JPanel {
 
     private void fillTileView(Player currPlayer, int row) {
         if (Game.getInstance().getCurrSelectedFactory() != null && Game.getInstance().getCurrSelectedFactoryTile() != null) {
-            currPlayer.getFactoryOfferFromFactory(Game.getInstance().getCurrSelectedFactory(),
-                    Game.getInstance().getTileTable(),
+            currPlayer.getFactoryOfferFromFactory(
+                    Game.getInstance().getCurrSelectedFactory(),
                     Game.getInstance().getCurrSelectedFactoryTile().getType(),
                     row);
         } else if (Game.getInstance().getCurrSelectedTableTile() != null) {
-            currPlayer.getFactoryOfferFromTileTable(Game.getInstance().getTileTable(),
+            currPlayer.getFactoryOfferFromTileTable(
                     Game.getInstance().getCurrSelectedTableTile(),
                     row);
         }

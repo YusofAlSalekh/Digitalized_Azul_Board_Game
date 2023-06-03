@@ -1,6 +1,8 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
@@ -32,12 +34,12 @@ public class Player {
     }
 
     /**
-     * Method to get given tiles from the tiletable
-     * @param tileTable table to take tiles from
+     * Method to get given tiles from the games tiletable
      * @param pickedTile tile to be picked
      * @param rowNum row number to add picked tiles to
      */
-    public void getFactoryOfferFromTileTable(TileTable tileTable, Tile pickedTile, Integer rowNum) {
+    public void getFactoryOfferFromTileTable(Tile pickedTile, Integer rowNum) {
+        TileTable tileTable = Game.getInstance().getTileTable();
         ArrayList<Tile> tilesFromTable = tileTable.takeTiles(pickedTile.getType());
         this.addTiles(tilesFromTable, rowNum);
     }
@@ -49,11 +51,11 @@ public class Player {
      * Excess tiles are added to the players Floorline or the BoxLid
      *
      * @param factory the factory which tile is taken from
-     * @param tileTable table to place excess tiles from factory
      * @param color the colour(type) of tiles that player take
      * @param row the row in which player put tiles
      */
-    public void getFactoryOfferFromFactory(Factory factory, TileTable tileTable, TileType color, int row) {
+    public void getFactoryOfferFromFactory(Factory factory, TileType color, int row) {
+        TileTable tileTable = Game.getInstance().getTileTable();
         ArrayList<Tile> pickedTiles = factory.takeTiles(color);
         factory.getRemainingTiles().forEach(tileTable::addTile);
         this.addTiles(pickedTiles, row);
@@ -116,9 +118,6 @@ public class Player {
         this.scoreTrack += value;
     }
 
-    // TODO: implement method
-    public void subtractScore(int value) {
-    }
 
     /**
      * Method to add given tiles to the player boards pattern line
@@ -132,9 +131,8 @@ public class Player {
             this.floorLine.addTile(tiles.remove(0));
         }
 
-        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum, wall);
+        ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
 
-        excessTiles.forEach(tile ->
-                this.floorLine.addTile(tile));
+        excessTiles.forEach(tile -> this.floorLine.addTile(tile));
     }
 }

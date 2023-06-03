@@ -1,9 +1,6 @@
 package nl.utwente.p4;
 
-import nl.utwente.p4.components.PatternLine;
-import nl.utwente.p4.components.Player;
-import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.Wall;
+import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +25,9 @@ class WallTest {
     //This is the correct way of adding tiles to the wall
     @Test
     void  addTileToWallCorrect(){
+        Game.getInstance().setNumOfPlayers(2);
+        Game.getInstance().startGame();
         PatternLine p = new PatternLine();
-        Wall wall = new Wall();
         ArrayList<Tile> tiles1 = new ArrayList<>();
         Tile tile1 = new Tile(TileType.RED);
         tiles1.add(tile1);
@@ -45,24 +43,32 @@ class WallTest {
         tiles3.add(tile3);
         tiles3.add(tile3);
 
-        p.addTiles(tiles1,0,wall);
-        p.addTiles(tiles2,1,wall);
-        p.addTiles(tiles3,2,wall);
+        p.addTiles(tiles1,0);
+        p.addTiles(tiles2,1);
+        p.addTiles(tiles3,2);
 
-        wall.addFromPatterLineToWall(p,0);
+        Wall currentWall = Game.getInstance().getCurrentPlayer().getWall();
+        currentWall.addFromPatterLineToWall(p,0);
 
-        assertEquals(tile1.getType(), wall.getTiles()[0].get(tile1.getType()));
-        assertEquals(tile2.getType(), wall.getTiles()[1].get(tile2.getType()));
-        assertEquals(tile3.getType(), wall.getTiles()[2].get(tile3.getType()));
+        assertEquals(tile1.getType(), currentWall.getTiles()[0].get(tile1.getType()));
+        assertEquals(tile2.getType(), currentWall.getTiles()[1].get(tile2.getType()));
+        assertEquals(tile3.getType(), currentWall.getTiles()[2].get(tile3.getType()));
     }
 
     //test with a player instance
     // note the  player1.getFloorLine().getTotalFloorScore() is assumed to be 0 in this test
     @Test
     void testWallWithPlayerInstance(){
-        Player player1 = new Player();
-        Wall wall = player1.getWall();
-        PatternLine patternLine = player1.getPatternLine();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(new Player());
+        players.add(new Player());
+        Game.getInstance().setPlayers(players);
+        Game.getInstance().setNumOfPlayers(2);
+        Game.getInstance().startGame();
+        
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+        Wall wall = currentPlayer.getWall();
+        PatternLine patternLine = currentPlayer.getPatternLine();
 
         ArrayList<Tile> tiles1 = new ArrayList<>();
         Tile tile1 = new Tile(TileType.RED);
@@ -79,12 +85,14 @@ class WallTest {
         tiles3.add(tile3);
         tiles3.add(tile3);
 
-        patternLine.addTiles(tiles1,0,wall);
-        patternLine.addTiles(tiles2,1,wall);
-        patternLine.addTiles(tiles3,2,wall);
-         int score = wall.addFromPatterLineToWall(patternLine , player1.getFloorLine().getTotalFloorScore());
-         player1.addScore(score);
-         assertEquals(4 , player1.getScoreTrack());
+        patternLine.addTiles(tiles1,0);
+        patternLine.addTiles(tiles2,1);
+        patternLine.addTiles(tiles3,2);
+
+        int score = wall.addFromPatterLineToWall(patternLine , currentPlayer.getFloorLine().getTotalFloorScore());
+        currentPlayer.addScore(score);
+
+        assertEquals(4 , currentPlayer.getScoreTrack());
     }
     @Test
     void  checkIfTileIsFilled(){
@@ -151,6 +159,7 @@ class WallTest {
         wall.addTile(new Tile(TileType.BLACK), 3);
         assertEquals(10,wall.getTotalScore());
     }
+
     @Test
     void  checkWallScoreP12(){
         Wall wall = new Wall();
