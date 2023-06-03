@@ -11,6 +11,7 @@ import java.awt.*;
 
 public class TileTableView extends JPanel {
     private static Box layout;
+
     public TileTableView() {
         layout = Box.createVerticalBox();
         createTileTableView();
@@ -21,21 +22,25 @@ public class TileTableView extends JPanel {
         layout.removeAll();
 
         for (Tile tile : Game.getInstance().getTileTable().getTiles()) {
-            JButton tileButton = new JButton();
-            tileButton.setSize(new Dimension(20, 20));
-            tileButton.setEnabled(true);
-
-            if (tile.getType() == TileType.FIRST_PLAYER) {
-                tileButton.setText("-1");
-                tileButton.setBackground(ColorConverter.convert(TileType.WHITE));
-            } else {
-                tileButton.setText(" ");
-                tileButton.setBackground(ColorConverter.convert(tile.getType()));
-            }
-
+            JButton tileButton = createTileTableButtonView(tile.getType());
             layout.add(tileButton);
             layout.add(Box.createVerticalStrut(5));
         }
+    }
+
+    private JButton createTileTableButtonView(TileType tileType) {
+        JButton tileButton = new JButton();
+        tileButton.setSize(new Dimension(20, 20));
+        tileButton.setEnabled(true);
+
+        if (tileType == TileType.FIRST_PLAYER) {
+            tileButton.setText("-1");
+            tileButton.setBackground(ColorConverter.convert(TileType.WHITE));
+        } else {
+            tileButton.setText(" ");
+            tileButton.setBackground(ColorConverter.convert(tileType));
+        }
+        return tileButton;
     }
 
     public void refresh() {

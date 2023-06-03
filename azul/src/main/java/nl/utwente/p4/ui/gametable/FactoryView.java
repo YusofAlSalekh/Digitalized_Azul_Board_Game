@@ -14,9 +14,7 @@ import java.util.ArrayList;
 
 public class FactoryView extends JPanel {
     private final int idx;
-
-    @Getter
-    private JPanel factoryLayout;
+    @Getter private JPanel factoryLayout;
     private final ArrayList<JButton> factoryTileButtons;
 
     public FactoryView(int idx) {
@@ -35,19 +33,17 @@ public class FactoryView extends JPanel {
     private void createFactoryView() {
         Factory factory = Game.getInstance().getFactories().get(idx);
         for (int j = 0; j < 4; j++) {
-            Tile tile = factory.getTiles().get(j);
-            JButton factoryTileButton = createFactoryTileView(tile.getType());
-            factoryTileButton.addActionListener(e -> selectFactoryTileView(factory, tile));
-
+            JButton factoryTileButton = createFactoryTileView(factory, factory.getTiles().get(j));
             factoryTileButtons.add(factoryTileButton);
             factoryLayout.add(factoryTileButton);
         }
     }
 
-    private JButton createFactoryTileView(TileType tileType) {
+    private JButton createFactoryTileView(Factory factory, Tile tile) {
         JButton factoryTileButton = new JButton(" ");
-        factoryTileButton.setBackground(ColorConverter.convert(tileType));
+        factoryTileButton.setBackground(ColorConverter.convert(tile.getType()));
         factoryTileButton.setSize(new Dimension(20, 20));
+        factoryTileButton.addActionListener(e -> selectFactoryTileView(factory, tile));
         return factoryTileButton;
     }
 
