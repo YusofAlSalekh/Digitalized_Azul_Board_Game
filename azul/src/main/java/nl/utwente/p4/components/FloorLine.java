@@ -3,13 +3,13 @@ package nl.utwente.p4.components;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import nl.utwente.p4.constants.FloorScore;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
 @Getter
 public class FloorLine {
-    private int[] floorScores = {-1, -1, -2, -2, -2, -3, -3};
     @Setter
     private ArrayList<Tile> tiles;
 
@@ -43,8 +43,15 @@ public class FloorLine {
         return firstPlayerFound;
     }
 
-    // TODO: implement method
+    /**
+     * Calculate total floor score based on fixed mapping.
+     * @return value of total floor score
+     */
     public int getTotalFloorScore() {
-        return 0;
+        int floorScore = 0;
+        for (int i = 0; i < tiles.size(); i++) {
+            floorScore += FloorScore.getValues()[i];
+        }
+        return floorScore;
     }
 }

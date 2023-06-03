@@ -31,7 +31,7 @@ class FactoryTest {
         factory.addTile(new Tile(TileType.BLACK));
 
         ArrayList<Tile> takenTiles = factory.takeTiles(TileType.YELLOW);
-        
+
         assertEquals(1, takenTiles.size());
         assertEquals(TileType.YELLOW, takenTiles.get(0).getType());
     }
