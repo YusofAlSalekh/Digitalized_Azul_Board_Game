@@ -68,7 +68,6 @@ public class PatternLineView extends JPanel {
 
     private void fillTileFromFactoryView(Player currPlayer, int row) {
         currPlayer.getFactoryOfferFromFactory(Game.getInstance().getCurrSelectedFactory(),
-                Game.getInstance().getTileTable(),
                 Game.getInstance().getCurrSelectedFactoryTile().getType(),
                 row);
 
