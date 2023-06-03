@@ -220,7 +220,8 @@ public class GameTest {
     @Test
     void getCurrentPlayer_Player1Returned_true() {
         // act
-        Game.getInstance().play(2);
+        Game.getInstance().setNumOfPlayers(2);
+        Game.getInstance().startGame();
         Player currentPlayer = Game.getInstance().getCurrentPlayer();
 
         // Check that the current player is the first player since it's still the first turn

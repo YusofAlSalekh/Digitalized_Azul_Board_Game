@@ -25,7 +25,8 @@ class WallTest {
     //This is the correct way of adding tiles to the wall
     @Test
     void  addTileToWallCorrect(){
-        Game.getInstance().play(2);
+        Game.getInstance().setNumOfPlayers(2);
+        Game.getInstance().startGame();
         PatternLine p = new PatternLine();
         ArrayList<Tile> tiles1 = new ArrayList<>();
         Tile tile1 = new Tile(TileType.RED);
@@ -62,7 +63,8 @@ class WallTest {
         players.add(new Player());
         players.add(new Player());
         Game.getInstance().setPlayers(players);
-        Game.getInstance().play(2);
+        Game.getInstance().setNumOfPlayers(2);
+        Game.getInstance().startGame();
         
         Player currentPlayer = Game.getInstance().getCurrentPlayer();
         Wall wall = currentPlayer.getWall();
