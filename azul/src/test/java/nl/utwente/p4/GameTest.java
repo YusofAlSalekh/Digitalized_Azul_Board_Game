@@ -216,4 +216,25 @@ public class GameTest {
         game.startGame();
         assertEquals(0,game.getTilesFromGameBoxLid().size());
     }
+
+    @Test
+    void getCurrentPlayer_Player1Returned_true() {
+        // act
+        Game.getInstance().play(2);
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+
+        // Check that the current player is the first player since it's still the first turn
+        assertEquals(Game.getInstance().getPlayers().get(0), currentPlayer);
+    }
+
+    @Test
+    void getCurrentPlayer_NoPlayerToReturn_true() {
+        // act
+        Game.getInstance().setPlayers(new ArrayList<>());
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+
+
+        // Check that we received null, since there were no players to return
+        assertEquals(null, currentPlayer);
+    }
 }

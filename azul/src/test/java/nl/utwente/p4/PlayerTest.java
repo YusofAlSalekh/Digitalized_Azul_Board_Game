@@ -13,7 +13,7 @@ public class PlayerTest {
     void getFactoryOfferFromTileTable_factoryOfferTakenFromTable_true() {
         // arrange
         Player player = new Player();
-        TileTable tileTable = new TileTable();
+        TileTable tileTable = Game.getInstance().getTileTable();
 
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
@@ -22,7 +22,7 @@ public class PlayerTest {
         tileTable.addTile(new Tile(TileType.WHITE));
 
         // Get black tiles from tile table and add to row index 1, which has size 2
-        player.getFactoryOfferFromTileTable(tileTable, new Tile(TileType.BLACK), 1);
+        player.getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 1);
 
         // Test that player floorline contains correct tile amount and first player tile
         assertEquals(2, player.getFloorLine().getTiles().size());
@@ -93,9 +93,11 @@ public class PlayerTest {
 
         // arrange
         Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.startGame();
         game.setGameBoxLid(new GameBoxLid());
-
-        Player player = new Player();
+        game.setTileTable(new TileTable());
+        Player player = game.getCurrentPlayer();
 
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -124,11 +126,11 @@ public class PlayerTest {
         //Testing that floor line contains 6 tiles
         assertEquals(6, player.getFloorLine().getTiles().size());
 
-        TileTable tileTable = new TileTable();
+        TileTable tileTable = Game.getInstance().getTileTable();
 
         //Testing a method getFactoryOfferFromFactory
         //in which we take Black tiles from the factory with an index of 0 and place them in the first row
-        player.getFactoryOfferFromFactory(factories.get(0), tileTable, TileType.BLACK, 0);
+        player.getFactoryOfferFromFactory(factories.get(0), TileType.BLACK, 0);
 
         //Testing that after applying getFactoryOfferFromFactory
         //there is only one tile in the first row
@@ -143,8 +145,33 @@ public class PlayerTest {
 
         //Testing that the third Black tile goes to Box lid
         assertEquals(1, game.getGameBoxLid().getTiles().size());
+        //Testing if player is first to go
+        assertFalse( game.getPlayers().get(0).getFirstPlayer());
     }
+    @Test
+    void setScore(){
+        Player player = new Player();
+        player.setScoreTrack(200);
+        assertEquals(200,player.getScoreTrack());
+    }
+    @Test
+    void calculateFinalScore(){
+        Player player = new Player();
+        assertEquals(0,player.calculateFinalScore());
+        // wall tiles horizantally
+        player.getWall().addTile(new Tile(TileType.BLUE),0);
+        player.getWall().addTile(new Tile(TileType.RED),0);
+        player.getWall().addTile(new Tile(TileType.WHITE),0);
+        player.getWall().addTile(new Tile(TileType.YELLOW),0);
+        player.getWall().addTile(new Tile(TileType.BLACK),0);
+        // wall tiles vertically
+        player.getWall().addTile(new Tile(TileType.WHITE),1);
+        player.getWall().addTile(new Tile(TileType.BLACK),2);
+        player.getWall().addTile(new Tile(TileType.RED),3);
+        player.getWall().addTile(new Tile(TileType.YELLOW),4);
 
+        assertEquals(9,player.calculateFinalScore());
+    }
     @Test
     void calculateFloorLineScore(){
         Player player = new Player();
