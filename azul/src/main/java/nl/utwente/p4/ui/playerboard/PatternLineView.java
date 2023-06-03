@@ -64,8 +64,6 @@ public class PatternLineView extends JPanel {
                     Game.getInstance().getCurrSelectedTableTile(),
                     row);
         }
-        // else if currSelectedTileTable get factory offer from tile table
-        // else notif no tiles selected
 
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
@@ -73,6 +71,7 @@ public class PatternLineView extends JPanel {
         refresh(row);
         toggleEnable(false);
         GameView.getInstance().getTileTableView().refresh();
+        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
 
         Game.getInstance().setCurrSelectedFactory(null);
         Game.getInstance().setCurrSelectedFactoryTile(null);

@@ -10,36 +10,32 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TileTableView extends JPanel {
-    private static Box layout;
+    private static Box tileTableLayout;
 
     public TileTableView() {
-        layout = Box.createVerticalBox();
+        tileTableLayout = Box.createVerticalBox();
+
         createTileTableView();
-        add(layout);
+
+        add(tileTableLayout);
     }
 
     public void createTileTableView() {
-        layout.removeAll();
-
         for (Tile tile : Game.getInstance().getTileTable().getTiles()) {
             JButton tileButton = createTableTileButtonView(tile);
-            layout.add(tileButton);
-            layout.add(Box.createVerticalStrut(5));
+            tileTableLayout.add(tileButton);
+            tileTableLayout.add(Box.createVerticalStrut(5));
         }
     }
 
     private JButton createTableTileButtonView(Tile tile) {
-        JButton tileButton = new JButton();
+        JButton tileButton = new JButton(" ");
         tileButton.setSize(new Dimension(20, 20));
-
+        tileButton.setEnabled(true);
+        tileButton.setBackground(ColorConverter.convert(tile.getType()));
         if (tile.getType() == TileType.FIRST_PLAYER) {
             tileButton.setText("-1");
-            tileButton.setBackground(ColorConverter.convert(TileType.WHITE));
             tileButton.setEnabled(false);
-        } else {
-            tileButton.setText(" ");
-            tileButton.setBackground(ColorConverter.convert(tile.getType()));
-            tileButton.setEnabled(true);
         }
         tileButton.addActionListener(e -> selectTableTileView(tile));
         return tileButton;
@@ -53,6 +49,7 @@ public class TileTableView extends JPanel {
     }
 
     public void refresh() {
+        tileTableLayout.removeAll();
         createTileTableView();
         revalidate();
     }
