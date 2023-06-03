@@ -55,29 +55,30 @@ public class PatternLineView extends JPanel {
 
     private void fillTileView(Player currPlayer, int row) {
         if (Game.getInstance().getCurrSelectedFactory() != null && Game.getInstance().getCurrSelectedFactoryTile() != null) {
-            fillTileFromFactoryView(currPlayer, row);
+            currPlayer.getFactoryOfferFromFactory(Game.getInstance().getCurrSelectedFactory(),
+                    Game.getInstance().getTileTable(),
+                    Game.getInstance().getCurrSelectedFactoryTile().getType(),
+                    row);
+        } else if (Game.getInstance().getCurrSelectedTableTile() != null) {
+            currPlayer.getFactoryOfferFromTileTable(Game.getInstance().getTileTable(),
+                    Game.getInstance().getCurrSelectedTableTile(),
+                    row);
         }
         // else if currSelectedTileTable get factory offer from tile table
         // else notif no tiles selected
 
-        refresh(row);
-        toggleEnable(false);
-        GameView.getInstance().getTileTableView().refresh();
-        Game.getInstance().nextPlayer();
-    }
-
-    private void fillTileFromFactoryView(Player currPlayer, int row) {
-        currPlayer.getFactoryOfferFromFactory(Game.getInstance().getCurrSelectedFactory(),
-                Game.getInstance().getTileTable(),
-                Game.getInstance().getCurrSelectedFactoryTile().getType(),
-                row);
-
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
         }
+        refresh(row);
+        toggleEnable(false);
+        GameView.getInstance().getTileTableView().refresh();
 
         Game.getInstance().setCurrSelectedFactory(null);
         Game.getInstance().setCurrSelectedFactoryTile(null);
+        Game.getInstance().setCurrSelectedTableTile(null);
+
+        Game.getInstance().nextPlayer();
     }
 
     public void toggleEnable(boolean isEnabled) {
