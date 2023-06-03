@@ -81,7 +81,7 @@ public class PatternLineView extends JPanel {
     }
 
     public void toggleEnable(boolean isEnabled) {
-        Player currPlayer = Game.getInstance().getPlayers().get(Game.getInstance().getCurrPlayerIdx());
+        Player currPlayer = Game.getInstance().getCurrentPlayer();
         ArrayList<TileLine> currPlayerTileLines = currPlayer.getPatternLine().getTileLines();
 
         for (int i = 0; i < patternLineButtons.size(); i++) {
@@ -94,7 +94,7 @@ public class PatternLineView extends JPanel {
     }
 
     public void refresh(int row) {
-        Player currPlayer = Game.getInstance().getPlayers().get(Game.getInstance().getCurrPlayerIdx());
+        Player currPlayer = Game.getInstance().getCurrentPlayer();
         TileLine tileLineToRefresh = currPlayer.getPatternLine().getTileLines().get(row);
 
         for (int col = 0; col < patternLineButtons.get(row).size(); col++) {

@@ -57,7 +57,6 @@ public class Game {
         return this.players.get(this.currPlayerIdx);
     }
 
-    // TODO: combine game logic with GUI
     public void play(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         startGame();
@@ -79,6 +78,19 @@ public class Game {
     }
 
     public void nextPlayer() {
+        boolean isAllFactoriesEmpty = true;
+        for (Factory factory : factories) {
+            if (!factory.getTiles().isEmpty()) {
+                isAllFactoriesEmpty = false;
+                break;
+            }
+        }
+
+        if (isAllFactoriesEmpty && tileTable.getTiles().isEmpty()) {
+            wallTiling();
+            return;
+        }
+
         if (this.currPlayerIdx + 1 == this.players.size()) {
             this.currPlayerIdx = 0;
         } else {
@@ -140,8 +152,8 @@ public class Game {
 
     // TODO: implement method
     public void wallTiling() {
+        System.out.println("wall tiling");
     }
-
 
     public void prepareNextRound() {
         for (Factory f : this.factories) {
