@@ -23,18 +23,16 @@ class FactoryTest {
         assertEquals(TileType.BLACK, factory.getTiles().get(2).getType());
     }
     @Test
-    void addTile_TakeTile_getRemaining() {
+    void takeTiles_tileTypeTaken_true() {
         ArrayList<Tile> tiles = new ArrayList<>();
         Factory factory = new Factory(tiles);
         factory.addTile(new Tile(TileType.BLACK));
         factory.addTile(new Tile(TileType.YELLOW));
         factory.addTile(new Tile(TileType.BLACK));
-        factory.takeTiles(TileType.YELLOW);
-        assertEquals(2,factory.getRemainingTiles().size());
-        assertEquals(TileType.BLACK, factory.takeAllTiles().get(0).getType());
-        assertEquals(0, factory.getRemainingTiles().size());
 
-
-
+        ArrayList<Tile> takenTiles = factory.takeTiles(TileType.YELLOW);
+        
+        assertEquals(1, takenTiles.size());
+        assertEquals(TileType.YELLOW, takenTiles.get(0).getType());
     }
 }
