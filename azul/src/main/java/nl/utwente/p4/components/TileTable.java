@@ -1,24 +1,21 @@
 package nl.utwente.p4.components;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 
-
-@Getter
 public class TileTable {
+    @Getter
     private ArrayList<Tile> tiles;
+    @Getter @Setter
     private boolean firstHasBeenTaken;
 
     public TileTable() {
-        this.tiles = new ArrayList<>(Arrays.asList(new Tile(TileType.FIRST_PLAYER)));
+        this.tiles = new ArrayList<>(List.of(new Tile(TileType.FIRST_PLAYER)));
         this.firstHasBeenTaken = false;
-    }
-
-    public void setFirstHasBeenTaken(boolean firstHasBeenTaken) {
-        this.firstHasBeenTaken = firstHasBeenTaken;
     }
 
     /***
@@ -57,5 +54,12 @@ public class TileTable {
      */
     public void addTile(Tile tile) {
         this.tiles.add(tile);
+    }
+
+    /**
+     * reset the tile table to initial state.
+     */
+    public void reset() {
+        this.tiles = new ArrayList<>(List.of(new Tile(TileType.FIRST_PLAYER)));
     }
 }

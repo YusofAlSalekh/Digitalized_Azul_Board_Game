@@ -3,6 +3,7 @@ package nl.utwente.p4.components;
 import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
+import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.playerboard.BoardView;
 
 import java.util.ArrayList;
@@ -184,8 +185,12 @@ public class Game {
             }
         }
         resetFirstState();
+        tileTable.reset();
 
-        this.currPlayerIdx = 0;
+        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
+            factoryView.refresh();
+        }
+        GameView.getInstance().getTileTableView().refresh();
     }
 
     private boolean addRandomTileToFactory(Factory factory) {
