@@ -266,6 +266,7 @@ public class Wall {
                 for (int j = 0; j < row.getLineSize() -1 ; j++) {
                     extraTiles.add(new Tile(row.getLineType()));
                 }
+                row.setTiles(new ArrayList<>());
             }
             index ++;
         }

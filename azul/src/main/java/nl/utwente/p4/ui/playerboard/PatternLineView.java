@@ -25,7 +25,7 @@ public class PatternLineView extends JPanel {
     }
 
     private void createPatternLineView(Player player) {
-        for (int i = 0; i < player.getPatternLine().getTileLines().size(); i++) {
+        for (int i = 0; i < 5; i++) {
             TileLine tileLine = player.getPatternLine().getTileLines().get(i);
             Box tileLineLayout = Box.createHorizontalBox();
             tileLineLayout.setAlignmentX(RIGHT_ALIGNMENT);
@@ -68,7 +68,7 @@ public class PatternLineView extends JPanel {
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
         }
-        refresh(row);
+        refreshRow(currPlayer, row);
         toggleEnable(false);
         GameView.getInstance().getTileTableView().refresh();
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
@@ -93,10 +93,14 @@ public class PatternLineView extends JPanel {
         }
     }
 
-    public void refresh(int row) {
-        Player currPlayer = Game.getInstance().getCurrentPlayer();
-        TileLine tileLineToRefresh = currPlayer.getPatternLine().getTileLines().get(row);
+    public void refresh(Player player) {
+        for (int i = 0; i < 5; i++) {
+            refreshRow(player, i);
+        }
+    }
 
+    public void refreshRow(Player player, int row) {
+        TileLine tileLineToRefresh = player.getPatternLine().getTileLines().get(row);
         for (int col = 0; col < patternLineButtons.get(row).size(); col++) {
             refreshColor(tileLineToRefresh, row, col, true);
         }
