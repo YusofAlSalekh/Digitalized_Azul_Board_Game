@@ -51,6 +51,7 @@ public class Game {
 
     /**
      * Return the player whose turn it is. (Current player)
+     *
      * @return Player whose turn it is, null if there are no players
      */
     public Player getCurrentPlayer() {
@@ -65,11 +66,9 @@ public class Game {
 
         this.currPlayerIdx = 0;
         this.tileLineIsExternal = tileLineIsExternal;
+        GameView.getInstance();
     }
 
-    public void play(int numOfPlayers) {
-        play(numOfPlayers, false);
-    }
 
     public void nextPlayer() {
         if (this.currPlayerIdx + 1 == this.players.size()) {
@@ -93,6 +92,7 @@ public class Game {
 
     /**
      * Initialize a tile array containing 20 tiles of each type
+     *
      * @return tile array
      */
     public ArrayList<Tile> createStartingTiles() {
@@ -109,6 +109,7 @@ public class Game {
 
     /**
      * Calculate number of factories based on number of players
+     *
      * @return number of factories
      */
     public int numOfFactories() {
@@ -117,6 +118,7 @@ public class Game {
 
     /**
      * Initialize array of factories for the game, containing random tiles from tilebag
+     *
      * @return factory array
      */
     public ArrayList<Factory> createStartingFactories() {
