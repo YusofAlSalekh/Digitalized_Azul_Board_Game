@@ -3,11 +3,10 @@ package nl.utwente.p4.components;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import lombok.Getter;
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
-
-@Getter
+@Data
 public class TileTable {
     private ArrayList<Tile> tiles;
     private boolean firstHasBeenTaken;
@@ -15,6 +14,10 @@ public class TileTable {
     public TileTable() {
         this.tiles = new ArrayList<>(Arrays.asList(new Tile(TileType.FIRST_PLAYER)));
         this.firstHasBeenTaken = false;
+    }
+
+    public boolean isFirstHasBeenTaken() {
+        return firstHasBeenTaken;
     }
 
     public void setFirstHasBeenTaken(boolean firstHasBeenTaken) {
@@ -29,12 +32,7 @@ public class TileTable {
     public ArrayList<Tile> takeTiles(TileType takenTileType) {
         ArrayList<Tile> takenTiles = new ArrayList<>();
 
-        // Add firstPlayerToTake tile if first player to take tiles
-        if (!isFirstHasBeenTaken()) {
-            Tile firstTile = this.tiles.remove(0);
-            takenTiles.add(firstTile);
-            setFirstHasBeenTaken(true);
-        }
+        takenTiles = addFirstPlayerTileIfFirstPlayerTakeTiles(takenTiles);
 
         // Find correct tiles to take by their type
         for (Tile tile : this.tiles) {
@@ -51,8 +49,18 @@ public class TileTable {
         return takenTiles;
     }
 
+    private ArrayList<Tile> addFirstPlayerTileIfFirstPlayerTakeTiles(ArrayList<Tile> takenTiles) {
+        // Add firstPlayerToTake tile if first player to take tiles
+        if (!isFirstHasBeenTaken()) {
+            Tile firstTile = this.tiles.remove(0);
+            takenTiles.add(firstTile);
+            setFirstHasBeenTaken(true);
+        }
+        return takenTiles;
+    }
+
     /***
-     * Add given tile to the tileTable
+     * Add given tile to the tiletable
      * @param tile tile to be added to the table
      */
     public void addTile(Tile tile) {
