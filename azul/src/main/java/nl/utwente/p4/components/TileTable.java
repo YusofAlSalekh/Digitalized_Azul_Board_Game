@@ -67,13 +67,4 @@ public class TileTable {
         this.tiles.add(tile);
     }
 
-    // TODO: implement method
-    public boolean firstPlayerTileTake() {
-        return false;
-    }
-
-    // TODO: implement method
-    public boolean isEmpty() {
-        return false;
-    }
 }
