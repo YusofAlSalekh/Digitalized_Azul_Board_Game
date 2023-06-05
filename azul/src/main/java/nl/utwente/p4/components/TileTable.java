@@ -32,7 +32,7 @@ public class TileTable {
     public ArrayList<Tile> takeTiles(TileType takenTileType) {
         ArrayList<Tile> takenTiles = new ArrayList<>();
 
-        addFirstPlayerTileIfFirstPlayerTakeTiles(takenTiles);
+        takenTiles = addFirstPlayerTileIfFirstPlayerTakeTiles(takenTiles);
 
         // Find correct tiles to take by their type
         for (Tile tile : this.tiles) {
@@ -49,13 +49,14 @@ public class TileTable {
         return takenTiles;
     }
 
-    private void addFirstPlayerTileIfFirstPlayerTakeTiles(ArrayList<Tile> takenTiles) {
+    private ArrayList<Tile> addFirstPlayerTileIfFirstPlayerTakeTiles(ArrayList<Tile> takenTiles) {
         // Add firstPlayerToTake tile if first player to take tiles
         if (!isFirstHasBeenTaken()) {
             Tile firstTile = this.tiles.remove(0);
             takenTiles.add(firstTile);
             setFirstHasBeenTaken(true);
         }
+        return takenTiles;
     }
 
     /***
@@ -67,8 +68,12 @@ public class TileTable {
     }
 
     // TODO: implement method
-    public boolean firstPlayerTileTake() { return false; }
+    public boolean firstPlayerTileTake() {
+        return false;
+    }
 
     // TODO: implement method
-    public boolean isEmpty() { return false; }
+    public boolean isEmpty() {
+        return false;
+    }
 }
