@@ -13,6 +13,10 @@ public class PlayerTest {
     void getFactoryOfferFromTileTable_factoryOfferTakenFromTable_true() {
         // arrange
         Player player = new Player();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
+        Game.getInstance().setPlayers(players);
+        Game.getInstance().setCurrPlayerIdx(0);
         TileTable tileTable = Game.getInstance().getTileTable();
 
         tileTable.addTile(new Tile(TileType.BLACK));
