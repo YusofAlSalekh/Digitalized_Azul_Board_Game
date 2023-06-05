@@ -5,12 +5,18 @@ import nl.utwente.p4.components.Player;
 import javax.swing.*;
 
 public class ScoreTrackView extends JPanel {
+    private JPanel scoreTrackLayout;
+
     public ScoreTrackView(Player player) {
-        JPanel layout = new JPanel();
+        scoreTrackLayout = new JPanel();
+        createScoreTrackView(player);
+        add(scoreTrackLayout);
+    }
+
+    private void createScoreTrackView(Player player) {
         JLabel label = new JLabel();
         label.setText("Score: " + player.getScoreTrack());
         label.setHorizontalAlignment(JLabel.CENTER);
-        layout.add(label);
-        add(layout);
+        scoreTrackLayout.add(label);
     }
 }

@@ -183,7 +183,8 @@ public class GameTest {
     void checkIfPlayerHasFilledRow_True() {
       Game game = Game.getInstance();
       game.getPlayers().clear();
-      game.play(2);
+      game.setNumOfPlayers(2);
+      game.startGame();
       var player = game.getPlayers().get(0);
       var array = new Tile[]{new Tile(TileType.BLUE),new Tile(TileType.RED),
               new Tile(TileType.WHITE), new Tile(TileType.BLACK),
@@ -203,7 +204,8 @@ public class GameTest {
     void checkIfPlayerHasFilledRow_False() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
-        game.play(2);
+        game.setNumOfPlayers(2);
+        game.startGame();
         assertFalse(game.endGame());
         assertEquals(game.getPlayers().get(0).getScoreTrack(), game.getWinningPlayer().getScoreTrack());
     }
@@ -211,14 +213,16 @@ public class GameTest {
     void getTilesFromLid_Empty() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
-        game.play(2);
+        game.setNumOfPlayers(2);
+        game.startGame();
         assertEquals(0,game.getTilesFromGameBoxLid().size());
     }
 
     @Test
     void getCurrentPlayer_Player1Returned_true() {
         // act
-        Game.getInstance().play(2);
+        Game.getInstance().setNumOfPlayers(2);
+        Game.getInstance().startGame();
         Player currentPlayer = Game.getInstance().getCurrentPlayer();
 
         // Check that the current player is the first player since it's still the first turn

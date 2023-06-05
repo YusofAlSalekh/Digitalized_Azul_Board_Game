@@ -2,12 +2,15 @@ package nl.utwente.p4.components;
 
 import lombok.Data;
 import nl.utwente.p4.constants.TileType;
+import nl.utwente.p4.ui.GameView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Data
 public class Game {
+    private Factory currSelectedFactory;
+    private Tile currSelectedFactoryTile;
+
     private TileBag tileBag;
     private GameBoxLid gameBoxLid;
     private TileTable tileTable;
@@ -58,6 +61,8 @@ public class Game {
 
         this.currPlayerIdx = 0;
 
+        GameView.getInstance();
+
 //        while (true) {
 //            factoryOffer(currPlayerIdx);
 //            wallTiling();
@@ -68,6 +73,14 @@ public class Game {
 //            prepareNextRound();
 //        }
 //        endGame();
+    }
+
+    public void nextPlayer() {
+        if (this.currPlayerIdx + 1 == this.players.size()) {
+            this.currPlayerIdx = 0;
+        } else {
+            this.currPlayerIdx += 1;
+        }
     }
 
     public void startGame() {
@@ -122,15 +135,6 @@ public class Game {
         return initialFactories;
     }
 
-    // TODO: combine method with GUI
-    public void factoryOffer(int currPlayerIdx) {
-        // player picks tile from factory
-        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), TileType.BLACK, 0);
-
-        // player picks tile from tile table
-        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 0);
-    }
-
     // TODO: implement method
     public void wallTiling() {
     }
@@ -152,11 +156,7 @@ public class Game {
         }
         resetFirstState();
 
-        if (this.currPlayerIdx + 1 == this.players.size()) {
-            this.currPlayerIdx = 0;
-        } else {
-            this.currPlayerIdx += 1;
-        }
+        this.currPlayerIdx = 0;
     }
 
     private boolean addRandomTileToFactory(Factory factory) {
