@@ -96,19 +96,15 @@ public class Player {
         return this.getScoreTrack();
     }
 
-    public int CompleteHorizontalLines(){
-        int completeHorizontalLines = 0;
-        int totalBonusPoints = 0;
+    public int completeHorizontalLines(){
         int counter = 0;
-
         for (int i = 0; i < 5; i++) {
             if (this.getWall().isRowFilled(i)) {
-                totalBonusPoints += 2; // Add 2 points for each full row
-                completeHorizontalLines++;
+                counter++;
             }
         }
-        return completeHorizontalLines;
-        }
+        return counter;
+    }
 
     public void addScore(int value) {
         this.scoreTrack += value;

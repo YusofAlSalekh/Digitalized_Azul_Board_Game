@@ -17,8 +17,6 @@ public class Game {
     private int numOfPlayers;
     static final int tilesPerFactory = 4;
 
-    private int highestScore = -1;
-
     private Game() {
         this.tileBag = new TileBag();
         this.gameBoxLid = new GameBoxLid();
@@ -168,7 +166,7 @@ public class Game {
             return false;
         }
 
-        calculateHighestScore();
+        System.out.println("The winner is: " + getWinningPlayer());
         return true;
     }
 
@@ -180,47 +178,23 @@ public class Game {
         }
         return false;
     }
-    
-    if (!hasGameEnded) {
-        // If nobody has completed a horizontal line of 5 consecutive tiles on their wall Prepare next round
-        prepareNextRound();
-        return;
-    }    
 
-    private int calculateHighestScore() {
-        for (Player player : players) {
+    private Player getWinningPlayer() {
+        Player winningPlayer = players.get(0);
+
+        for (int i = 1; i < players.size(); i++) {
+            Player player = players.get(i);
+
             int score = player.calculateFinalScore();
-            if (score > getHighestScore()) {
-                setHighestScore(score);
-            }
-        }
-        return getHighestScore();
-    }
+            int completeLines = player.completeHorizontalLines();
 
-    int HighestScore = calculateHighestScore();
-    int maxCompleteLines = -1;
-    Player winningPlayer = null;
-    boolean isTie = false;
-
-    for (Player player : players) {
-        int score = player.calculateFinalScore();
-        int completeLines = player.CompleteHorizontalLines();
-
-        if (score == highestScore) {
-            if (completeLines > maxCompleteLines) {
-                maxCompleteLines = completeLines;
+            if (score > winningPlayer.getScoreTrack()) {
                 winningPlayer = player;
-                isTie = false;
-            } else if (completeLines == maxCompleteLines) {
-                isTie = true;
+            } else if (score == winningPlayer.getScoreTrack() && completeLines > winningPlayer.completeHorizontalLines()) {
+                winningPlayer = player;
             }
         }
-    }
 
-    if (winningPlayer != null && !isTie) {
-        System.out.println("Player " + winningPlayer.Players() + " wins the game!");
-    } else {
-        System.out.println("The game ends in a tie.");
+        return winningPlayer;
     }
 }
-    
