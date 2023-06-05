@@ -34,7 +34,7 @@ public class TileTableView extends JPanel {
         tileButton.setEnabled(true);
         tileButton.setBackground(ColorConverter.convert(tile.getType()));
         if (tile.getType() == TileType.FIRST_PLAYER) {
-            tileButton.setText("-1");
+            tileButton.setText("FP");
             tileButton.setEnabled(false);
         }
         tileButton.addActionListener(e -> selectTableTileView(tile));
