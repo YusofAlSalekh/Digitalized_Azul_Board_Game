@@ -120,70 +120,6 @@ public class GameTest {
     }
 
     @Test
-    void pickTilesFromFactory() {
-
-        // arrange
-        Game game = Game.getInstance();
-
-        Player player = new Player();
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(player);
-        game.setPlayers(players);
-
-
-        ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile(TileType.BLACK));
-        tiles.add(new Tile(TileType.BLACK));
-        tiles.add(new Tile(TileType.BLACK));
-        tiles.add(new Tile(TileType.BLUE));
-
-        //Put 3 Black and 1 Blue tiles in the factory with an index of 0
-        Factory factory = new Factory(tiles);
-        ArrayList<Factory> factories = new ArrayList<>();
-        factories.add(factory);
-        game.setFactories(factories);
-
-
-        ArrayList<Tile> tiles1 = new ArrayList<>();
-        tiles1.add(new Tile(TileType.BLUE));
-        tiles1.add(new Tile(TileType.BLACK));
-        tiles1.add(new Tile(TileType.BLACK));
-        tiles1.add(new Tile(TileType.YELLOW));
-        tiles1.add(new Tile(TileType.RED));
-        tiles1.add(new Tile(TileType.BLUE));
-
-
-        FloorLine floorLine = new FloorLine();
-        //Put 6 tiles to the floor line
-        floorLine.setTiles(tiles1);
-        player.setFloorLine(floorLine);
-
-        //Testing that floor line contains 6 tiles
-        assertEquals(6, player.getFloorLine().getTiles().size());
-
-        TileTable tileTable = new TileTable();
-        game.setTileTable(tileTable);
-
-        //Testing a method pickTilesFromFactory
-        //in which we take Black tiles from the factory with an index of 0 and place them in the first row
-        game.pickTilesFromFactory(0, TileType.BLACK, player, 0);
-
-        //Testing that after applying pickTilesFromFactory
-        //there is only one tile in the first row
-        assertEquals(1, player.getPatternLine().getTileLines().get(0).getTiles().size());
-
-        //Testing that after applying pickTilesFromFactory
-        //2 tiles will be in the tile table(FIRST_PLAYER and Blue)
-        assertEquals(2, tileTable.getTiles().size());
-
-        //Testing that 1 of two excess Black tiles goes to the floor line and now there are 7 tiles in the floor line
-        assertEquals(7, player.getFloorLine().getTiles().size());
-
-        //Testing that the third Black tile goes to Box lid
-        assertEquals(1, game.getGameBoxLid().getTiles().size());
-    }
-
-    @Test
     void prepareNextRound_nextRoundPreparedWithFullFactoriesFromGameBoxLid_true() { // methodName_behaviorToBeTested_expectedResult
         // Clear tilebag and factories
         Game game = Game.getInstance();
@@ -277,5 +213,26 @@ public class GameTest {
         game.getPlayers().clear();
         game.play(2);
         assertEquals(0,game.getTilesFromGameBoxLid().size());
+    }
+
+    @Test
+    void getCurrentPlayer_Player1Returned_true() {
+        // act
+        Game.getInstance().play(2);
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+
+        // Check that the current player is the first player since it's still the first turn
+        assertEquals(Game.getInstance().getPlayers().get(0), currentPlayer);
+    }
+
+    @Test
+    void getCurrentPlayer_NoPlayerToReturn_true() {
+        // act
+        Game.getInstance().setPlayers(new ArrayList<>());
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+
+
+        // Check that we received null, since there were no players to return
+        assertEquals(null, currentPlayer);
     }
 }

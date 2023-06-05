@@ -1,10 +1,11 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
 
-@Data
+@Getter
 public class GameBoxLid extends TileStash{
 
     public GameBoxLid() {
