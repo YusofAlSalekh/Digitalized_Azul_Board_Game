@@ -6,12 +6,11 @@ import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
+@Getter
 public class TileLine {
-    @Getter @Setter
+    @Setter
     private ArrayList<Tile> tiles;
-    @Getter
     private int lineSize;
-    @Getter
     private TileType lineType;
 
     public TileLine() {
