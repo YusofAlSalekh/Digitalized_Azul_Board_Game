@@ -2,9 +2,8 @@ package nl.utwente.p4;
 
 import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.TileLine;
 import nl.utwente.p4.constants.TileType;
-import nl.utwente.p4.gamestate.TileLineAdapter;
+import core.gamestate.TileLineAdapter;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

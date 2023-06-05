@@ -1,4 +1,4 @@
-package nl.utwente.p4.gamestate;
+package core.gamestate;
 
 import lombok.Getter;
 import lombok.Setter;

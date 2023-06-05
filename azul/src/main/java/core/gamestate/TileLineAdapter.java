@@ -1,4 +1,4 @@
-package nl.utwente.p4.gamestate;
+package core.gamestate;
 
 import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
@@ -20,7 +20,7 @@ public class TileLineAdapter implements GeneralTileLine {
 
     @Override
     public TileType getLineType() {
-        nl.utwente.p4.gamestate.TileType v = line.getTileType();
+        core.gamestate.TileType v = line.getTileType();
         return convertFromForeignType(v);
     }
 
@@ -88,28 +88,28 @@ public class TileLineAdapter implements GeneralTileLine {
      *
      * @return tile of a certain color
      */
-    private nl.utwente.p4.gamestate.TileType convertToForeignType(TileType tileType) {
+    private core.gamestate.TileType convertToForeignType(TileType tileType) {
 
         switch (tileType) {
 
             case BLACK -> {
-                return nl.utwente.p4.gamestate.TileType.BLACK;
+                return core.gamestate.TileType.BLACK;
             }
 
             case WHITE -> {
-                return nl.utwente.p4.gamestate.TileType.GREEN;
+                return core.gamestate.TileType.GREEN;
             }
 
             case BLUE -> {
-                return nl.utwente.p4.gamestate.TileType.BLUE;
+                return core.gamestate.TileType.BLUE;
             }
 
             case YELLOW -> {
-                return nl.utwente.p4.gamestate.TileType.YELLOW;
+                return core.gamestate.TileType.YELLOW;
             }
 
             case RED -> {
-                return nl.utwente.p4.gamestate.TileType.RED;
+                return core.gamestate.TileType.RED;
             }
         }
         throw new WrongTileType("Wrong Tile Type");
@@ -120,16 +120,16 @@ public class TileLineAdapter implements GeneralTileLine {
      *
      * @return tile of a certain color
      */
-    private static TileType convertFromForeignType(nl.utwente.p4.gamestate.TileType v) {
-        if (v == nl.utwente.p4.gamestate.TileType.BLACK)
+    private static TileType convertFromForeignType(core.gamestate.TileType v) {
+        if (v == core.gamestate.TileType.BLACK)
             return TileType.BLACK;
-        if (v == nl.utwente.p4.gamestate.TileType.RED)
+        if (v == core.gamestate.TileType.RED)
             return TileType.RED;
-        if (v == nl.utwente.p4.gamestate.TileType.GREEN)
+        if (v == core.gamestate.TileType.GREEN)
             return TileType.WHITE;
-        if (v == nl.utwente.p4.gamestate.TileType.BLUE)
+        if (v == core.gamestate.TileType.BLUE)
             return TileType.BLUE;
-        if (v == nl.utwente.p4.gamestate.TileType.YELLOW)
+        if (v == core.gamestate.TileType.YELLOW)
             return TileType.YELLOW;
 
         throw new WrongTileType("Wrong Tile Type");
