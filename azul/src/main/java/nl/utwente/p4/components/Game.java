@@ -147,7 +147,8 @@ public class Game {
     public void wallTiling() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            player.getWall().addFromPatterLineToWall(player.getPatternLine(), player.getFloorLine().getTotalFloorScore());
+            int score = player.getWall().addFromPatterLineToWall(player.getPatternLine(), player.getFloorLine().getTotalFloorScore());
+            player.setScoreTrack(score);
             boolean firstPlayerFound = player.getFloorLine().clearFloorLine();
             if (firstPlayerFound) {
                 currPlayerIdx = i;
@@ -168,6 +169,7 @@ public class Game {
         playerBoard.getWallView().refresh(player);
         playerBoard.getPatternLineView().refresh(player);
         playerBoard.getFloorLineView().refresh(player);
+        playerBoard.getScoreTrackView().refresh(player);
     }
 
     public void prepareNextRound() {
