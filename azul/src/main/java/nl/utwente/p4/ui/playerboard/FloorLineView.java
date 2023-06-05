@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class FloorLineView extends JPanel {
     private final JPanel floorLineLayout;
     public FloorLineView(Player player) {
+        // TODO: allow to add to floor line as well in factory offer
         floorLineLayout = new JPanel();
         floorLineLayout.setLayout(new GridLayout(2, 7, 5, 0));
 

@@ -19,18 +19,17 @@ public class TileTable {
     }
 
     /***
-     * Method to get tiles of given tile type from the tile table
-     * @param takenTileType tile type to be taken
+     * Method to get matched tiles of given tile type from the tile table
+     * @param takenTileType tile type to be matched
      * @return taken tiles
      */
-    public ArrayList<Tile> takeTiles(TileType takenTileType) {
+    public ArrayList<Tile> getMatchingTiles(TileType takenTileType) {
         ArrayList<Tile> takenTiles = new ArrayList<>();
 
         // Add firstPlayerToTake tile if first player to take tiles
         if (!isFirstHasBeenTaken()) {
-            Tile firstTile = this.tiles.remove(0);
+            Tile firstTile = this.tiles.get(0);
             takenTiles.add(firstTile);
-            setFirstHasBeenTaken(true);
         }
 
         // Find correct tiles to take by their type
@@ -40,12 +39,27 @@ public class TileTable {
             }
         }
 
+        return takenTiles;
+    }
+
+    /***
+     * Method to take tiles of given tile type from the tile table
+     * @param takenTileType tilet type to be taken
+     */
+    public void takeTiles(TileType takenTileType) {
+        ArrayList<Tile> takenTiles = getMatchingTiles(takenTileType);
+
+        // Add firstPlayerToTake tile if first player to take tiles
+        if (!isFirstHasBeenTaken()) {
+            Tile firstTile = this.tiles.remove(0);
+            takenTiles.add(firstTile);
+            setFirstHasBeenTaken(true);
+        }
+
         // Remove taken tiles from table tiles
         for (Tile tile : takenTiles) {
             this.tiles.remove(tile);
         }
-
-        return takenTiles;
     }
 
     /***

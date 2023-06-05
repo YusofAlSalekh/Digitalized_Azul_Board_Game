@@ -13,18 +13,22 @@ public class Factory {
         this.tiles = tiles;
     }
 
+    /**
+     * get the matching tiles of a tile type color
+     * @param color the colour of tiles to match
+     * @return list of matching tiles
+     */
+    public ArrayList<Tile> getMatchingTiles(TileType color) {
+        var taken = tiles.stream().filter(t -> t.getType() == color).toList();
+        return new ArrayList<>(taken);
+    }
+
     /***
      *method that takes tiles of one colour from the factory
-     * @param color the colour of tails that player decided to take
-     * @return list of taken tiles
+     * @param color the colour of tiles that player decided to take
      */
-    public ArrayList<Tile> takeTiles(TileType color) {
-
-        var taken = tiles.stream().filter(t -> t.getType() == color).toList();
-
+    public void takeTiles(TileType color) {
         tiles.removeIf(t -> t.getType() == color);
-
-        return new ArrayList<>(taken);
     }
 
     /**
