@@ -57,6 +57,7 @@ public class TileLine {
 
     /**
      * Change tileline type to input type if tileline type is null, input is not null and tileline is empty
+     *
      * @param type type to change tile line to
      */
     public void checkAndSetLineType(TileType type) {
