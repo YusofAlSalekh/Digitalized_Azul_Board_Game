@@ -1,8 +1,6 @@
 package nl.utwente.p4.ui.playerboard;
 
-import nl.utwente.p4.components.GeneralTileLine;
-import nl.utwente.p4.components.Player;
-import nl.utwente.p4.components.TileLine;
+import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
 import nl.utwente.p4.ui.gametable.FactoryView;
@@ -12,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PatternLineView extends JPanel {
     private final ArrayList<ArrayList<JButton>> patternLineButtons;
@@ -83,10 +82,10 @@ public class PatternLineView extends JPanel {
 
     public void toggleEnable(boolean isEnabled) {
         Player currPlayer = Game.getInstance().getPlayers().get(Game.getInstance().getCurrPlayerIdx());
-        ArrayList<TileLine> currPlayerTileLines = currPlayer.getPatternLine().getTileLines();
+        List<GeneralTileLine> currPlayerTileLines = currPlayer.getPatternLine().getTileLines();
 
         for (int i = 0; i < patternLineButtons.size(); i++) {
-            TileLine tileLine = currPlayerTileLines.get(i);
+            GeneralTileLine tileLine = currPlayerTileLines.get(i);
             for (int j = 0; j < patternLineButtons.get(i).size(); j++) {
                 JButton patternLineButton = refreshColor(tileLine, i, j, isEnabled);
                 patternLineButton.setEnabled(isEnabled);
@@ -96,14 +95,14 @@ public class PatternLineView extends JPanel {
 
     public void refresh(int row) {
         Player currPlayer = Game.getInstance().getPlayers().get(Game.getInstance().getCurrPlayerIdx());
-        TileLine tileLineToRefresh = currPlayer.getPatternLine().getTileLines().get(row);
+        GeneralTileLine tileLineToRefresh = currPlayer.getPatternLine().getTileLines().get(row);
 
         for (int col = 0; col < patternLineButtons.get(row).size(); col++) {
             refreshColor(tileLineToRefresh, row, col, true);
         }
     }
 
-    private JButton refreshColor(TileLine tileLineToRefresh, int row, int col, boolean isEnabled) {
+    private JButton refreshColor(GeneralTileLine tileLineToRefresh, int row, int col, boolean isEnabled) {
         HashMap<TileType, Color> colorMap = ColorConverter.getColorMapEnabled();
         if (!isEnabled) {
             colorMap = ColorConverter.getColorMapDisabled();
