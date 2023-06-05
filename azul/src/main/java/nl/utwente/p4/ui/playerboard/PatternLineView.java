@@ -54,14 +54,19 @@ public class PatternLineView extends JPanel {
     }
 
     private void fillTileView(Player currPlayer, int row) {
-        if (Game.getInstance().getCurrSelectedFactory() != null && Game.getInstance().getCurrSelectedFactoryTile() != null) {
+        Tile selectedTile = Game.getInstance().getCurrSelectedTile();
+        if (selectedTile == null) {
+            return;
+        }
+
+        if (Game.getInstance().getCurrSelectedFactory() != null) {
             currPlayer.getFactoryOfferFromFactory(
                     Game.getInstance().getCurrSelectedFactory(),
-                    Game.getInstance().getCurrSelectedFactoryTile().getType(),
+                    selectedTile.getType(),
                     row);
-        } else if (Game.getInstance().getCurrSelectedTableTile() != null) {
+        } else {
             currPlayer.getFactoryOfferFromTileTable(
-                    Game.getInstance().getCurrSelectedTableTile(),
+                    selectedTile,
                     row);
         }
 
@@ -74,8 +79,7 @@ public class PatternLineView extends JPanel {
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
 
         Game.getInstance().setCurrSelectedFactory(null);
-        Game.getInstance().setCurrSelectedFactoryTile(null);
-        Game.getInstance().setCurrSelectedTableTile(null);
+        Game.getInstance().setCurrSelectedTile(null);
 
         Game.getInstance().nextPlayer();
     }
@@ -116,14 +120,10 @@ public class PatternLineView extends JPanel {
         ArrayList<Tile> tiles = tileLineToRefresh.getTiles();
         TileType lineType =  tileLineToRefresh.getLineType();
 
-        if (lineType == TileType.NULL) {
+        if (lineType == TileType.NULL || col >= tiles.size()) {
             patternLineButton.setBackground(colorMap.get(TileType.NULL));
         } else {
-            if (col < tiles.size()) {
-                patternLineButton.setBackground(ColorConverter.convert(lineType));
-            } else {
-                patternLineButton.setBackground(colorMap.get(TileType.NULL));
-            }
+            patternLineButton.setBackground(ColorConverter.convert(lineType));
         }
 
         return patternLineButton;

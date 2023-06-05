@@ -114,6 +114,16 @@ public class Player {
         return this.getScoreTrack();
     }
 
+    public int completeHorizontalLines(){
+        int counter = 0;
+        for (int i = 0; i < 5; i++) {
+            if (this.getWall().isRowFilled(i)) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
     public void addScore(int value) {
         this.scoreTrack += value;
     }

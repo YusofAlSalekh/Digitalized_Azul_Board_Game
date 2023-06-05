@@ -40,7 +40,7 @@ public class FloorLineView extends JPanel {
                 TileType tileType = playerFloorLineTiles.get(i).getType();
                 floorLineButton.setBackground(ColorConverter.convert(tileType));
                 if (tileType == TileType.FIRST_PLAYER) {
-                    floorLineButton.setText("-1");
+                    floorLineButton.setText("FP");
                 }
             } else {
                 floorLineButton.setBackground(ColorConverter.convert(TileType.NULL));

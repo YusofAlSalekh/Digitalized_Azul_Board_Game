@@ -49,8 +49,7 @@ public class FactoryView extends JPanel {
 
     private void selectFactoryTileView(Factory factory, Tile tile) {
         Game.getInstance().setCurrSelectedFactory(factory);
-        Game.getInstance().setCurrSelectedFactoryTile(tile);
-        Game.getInstance().setCurrSelectedTableTile(null);
+        Game.getInstance().setCurrSelectedTile(tile);
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
     }
 

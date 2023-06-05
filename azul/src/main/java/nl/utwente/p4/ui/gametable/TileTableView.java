@@ -34,7 +34,7 @@ public class TileTableView extends JPanel {
         tileButton.setEnabled(true);
         tileButton.setBackground(ColorConverter.convert(tile.getType()));
         if (tile.getType() == TileType.FIRST_PLAYER) {
-            tileButton.setText("-1");
+            tileButton.setText("FP");
             tileButton.setEnabled(false);
         }
         tileButton.addActionListener(e -> selectTableTileView(tile));
@@ -42,9 +42,8 @@ public class TileTableView extends JPanel {
     }
 
     private void selectTableTileView(Tile tile) {
-        Game.getInstance().setCurrSelectedTableTile(tile);
+        Game.getInstance().setCurrSelectedTile(tile);
         Game.getInstance().setCurrSelectedFactory(null);
-        Game.getInstance().setCurrSelectedFactoryTile(null);
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
     }
 

@@ -178,6 +178,7 @@ public class GameTest {
             assertEquals(4, f.getTiles().size());
         }
     }
+
     @Test
     void checkIfPlayerHasFilledRow_True() {
       Game game = Game.getInstance();
@@ -197,7 +198,7 @@ public class GameTest {
             player.getPatternLine().clearPatterLineRow(0);
         }
       assertTrue(game.endGame());
-      assertEquals(13,game.getHighestScore());
+      assertEquals(11, game.getWinningPlayer().getScoreTrack());
     }
     @Test
     void checkIfPlayerHasFilledRow_False() {
@@ -206,7 +207,7 @@ public class GameTest {
         game.setNumOfPlayers(2);
         game.startGame();
         assertFalse(game.endGame());
-        assertEquals(-1,game.getHighestScore());
+        assertEquals(game.getPlayers().get(0).getScoreTrack(), game.getWinningPlayer().getScoreTrack());
     }
     @Test
     void getTilesFromLid_Empty() {

@@ -10,8 +10,7 @@ import java.util.ArrayList;
 @Data
 public class Game {
     private Factory currSelectedFactory;
-    private Tile currSelectedFactoryTile;
-    private Tile currSelectedTableTile;
+    private Tile currSelectedTile;
 
     private TileBag tileBag;
     private GameBoxLid gameBoxLid;
@@ -22,8 +21,6 @@ public class Game {
     private int numOfPlayers;
     private int currPlayerIdx;
     static final int tilesPerFactory = 4;
-
-    private int highestScore = -1;
 
     private Game() {
         this.tileBag = new TileBag();
@@ -219,7 +216,7 @@ public class Game {
             return false;
         }
 
-        calculateHighestScore();
+        System.out.println("The winner is: " + getWinningPlayer());
         return true;
     }
 
@@ -232,14 +229,22 @@ public class Game {
         return false;
     }
 
-    private int calculateHighestScore() {
-        for (Player player : players) {
+    public Player getWinningPlayer() {
+        Player winningPlayer = players.get(0);
+
+        for (int i = 1; i < players.size(); i++) {
+            Player player = players.get(i);
+
             int score = player.calculateFinalScore();
-            if (score > getHighestScore()) {
-                setHighestScore(score);
+            int completeLines = player.completeHorizontalLines();
+
+            if (score > winningPlayer.getScoreTrack()) {
+                winningPlayer = player;
+            } else if (score == winningPlayer.getScoreTrack() && completeLines > winningPlayer.completeHorizontalLines()) {
+                winningPlayer = player;
             }
         }
-        return getHighestScore();
+
+        return winningPlayer;
     }
 }
-    
