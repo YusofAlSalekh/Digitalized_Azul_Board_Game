@@ -1,6 +1,6 @@
 package nl.utwente.p4.components;
 
-import nl.utwente.p4.gamestate.TileLineAdapter;
+import core.gamestate.TileLineAdapter;
 
 /**
  * We use this class so that

@@ -1,4 +1,4 @@
-package nl.utwente.p4.gamestate;
+package core.gamestate;
 
 public enum TileType {
     BLUE,
