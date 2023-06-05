@@ -171,6 +171,11 @@ public class Game {
     }
 
     public void prepareNextRound() {
+        resetComponentsForNextRound();
+        resetViewsForNextRound();
+    }
+
+    public void resetComponentsForNextRound() {
         for (Factory f : this.factories) {
             boolean noMoreTiles = false;
             for (int i = 0; i < 4; i++) {
@@ -186,7 +191,9 @@ public class Game {
         }
         resetFirstState();
         tileTable.reset();
+    }
 
+    public void resetViewsForNextRound() {
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.reset();
         }
