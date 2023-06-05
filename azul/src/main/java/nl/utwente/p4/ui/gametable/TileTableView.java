@@ -42,9 +42,8 @@ public class TileTableView extends JPanel {
     }
 
     private void selectTableTileView(Tile tile) {
-        Game.getInstance().setCurrSelectedTableTile(tile);
+        Game.getInstance().setCurrSelectedTile(tile);
         Game.getInstance().setCurrSelectedFactory(null);
-        Game.getInstance().setCurrSelectedFactoryTile(null);
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
     }
 
