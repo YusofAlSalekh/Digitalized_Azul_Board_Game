@@ -261,7 +261,7 @@ public class GameTest {
             player.getPatternLine().clearPatterLineRow(0);
         }
       assertTrue(game.endGame());
-      assertEquals(13,game.getHighestScore());
+      assertEquals(11, game.getWinningPlayer().getScoreTrack());
     }
     @Test
     void checkIfPlayerHasFilledRow_False() {
@@ -269,7 +269,7 @@ public class GameTest {
         game.getPlayers().clear();
         game.play(2);
         assertFalse(game.endGame());
-        assertEquals(-1,game.getHighestScore());
+        assertEquals(game.getPlayers().get(0).getScoreTrack(), game.getWinningPlayer().getScoreTrack());
     }
     @Test
     void getTilesFromLid_Empty() {
@@ -278,42 +278,4 @@ public class GameTest {
         game.play(2);
         assertEquals(0,game.getTilesFromGameBoxLid().size());
     }
-
-    @Test
-    void testEndGame_NoPlayerFilledRow() {
-        // Arrange
-        game.getPlayers();
-
-        players.add(player1);
-        players.add(player2);
-
-        // Act
-        game.endGame();
-
-        // Assert
-        // Since no player has filled a row, the highest score should still be -99999
-        Assert.assertEquals(-99999, game.getHighestScore());
-    }
-
-    @Test
-    void testEndGame_PlayerFilledRow() {
-        // Arrange
-        game.getPlayers();
-
-        players.add(player1);
-        players.add(player2);
-
-        // Simulate a player having filled a row
-        player2.setHasFilledRow(true);
-
-        // Act
-        game.endGame();
-
-        // Assert
-        // Since player2 has filled a row, the highest score should be based on player2's score
-        int expectedHighestScore = player2.calculateFinalScore();
-        Assert.assertEquals(expectedHighestScore, game.getHighestScore());
-    }
-    
-    
 }

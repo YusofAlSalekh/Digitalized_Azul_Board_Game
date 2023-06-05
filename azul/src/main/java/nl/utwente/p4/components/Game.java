@@ -179,7 +179,7 @@ public class Game {
         return false;
     }
 
-    private Player getWinningPlayer() {
+    public Player getWinningPlayer() {
         Player winningPlayer = players.get(0);
 
         for (int i = 1; i < players.size(); i++) {
