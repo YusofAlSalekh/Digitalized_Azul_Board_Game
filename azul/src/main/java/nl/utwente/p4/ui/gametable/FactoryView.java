@@ -1,6 +1,6 @@
 package nl.utwente.p4.ui.gametable;
 
-import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.components.Factory;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Tile;
@@ -12,11 +12,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-@Data
 public class FactoryView extends JPanel {
-    private int idx;
-    private JPanel factoryLayout;
-    private ArrayList<JButton> factoryTileButtons;
+    private final int idx;
+    @Getter private JPanel factoryLayout;
+    private final ArrayList<JButton> factoryTileButtons;
 
     public FactoryView(int idx) {
         this.idx = idx;
@@ -34,25 +33,23 @@ public class FactoryView extends JPanel {
     private void createFactoryView() {
         Factory factory = Game.getInstance().getFactories().get(idx);
         for (int j = 0; j < 4; j++) {
-            Tile tile = factory.getTiles().get(j);
-            JButton factoryTileButton = createFactoryTileView(tile.getType());
-            factoryTileButton.addActionListener(e -> selectFactoryTileView(factory, tile));
-
+            JButton factoryTileButton = createFactoryTileView(factory, factory.getTiles().get(j));
             factoryTileButtons.add(factoryTileButton);
             factoryLayout.add(factoryTileButton);
         }
     }
 
-    private JButton createFactoryTileView(TileType tileType) {
+    private JButton createFactoryTileView(Factory factory, Tile tile) {
         JButton factoryTileButton = new JButton(" ");
-        factoryTileButton.setBackground(ColorConverter.convert(tileType));
+        factoryTileButton.setBackground(ColorConverter.convert(tile.getType()));
         factoryTileButton.setSize(new Dimension(20, 20));
+        factoryTileButton.addActionListener(e -> selectFactoryTileView(factory, tile));
         return factoryTileButton;
     }
 
     private void selectFactoryTileView(Factory factory, Tile tile) {
         Game.getInstance().setCurrSelectedFactory(factory);
-        Game.getInstance().setCurrSelectedFactoryTile(tile);
+        Game.getInstance().setCurrSelectedTile(tile);
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
     }
 

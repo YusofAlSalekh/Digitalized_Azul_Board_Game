@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Data
 public class Game {
     private Factory currSelectedFactory;
-    private Tile currSelectedFactoryTile;
+    private Tile currSelectedTile;
 
     private TileBag tileBag;
     private GameBoxLid gameBoxLid;

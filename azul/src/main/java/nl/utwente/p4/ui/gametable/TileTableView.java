@@ -10,35 +10,45 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TileTableView extends JPanel {
-    private static Box layout;
+    private static Box tileTableLayout;
+
     public TileTableView() {
-        layout = Box.createVerticalBox();
+        tileTableLayout = Box.createVerticalBox();
+
         createTileTableView();
-        add(layout);
+
+        add(tileTableLayout);
     }
 
     public void createTileTableView() {
-        layout.removeAll();
-
         for (Tile tile : Game.getInstance().getTileTable().getTiles()) {
-            JButton tileButton = new JButton();
-            tileButton.setSize(new Dimension(20, 20));
-            tileButton.setEnabled(true);
-
-            if (tile.getType() == TileType.FIRST_PLAYER) {
-                tileButton.setText("-1");
-                tileButton.setBackground(ColorConverter.convert(TileType.WHITE));
-            } else {
-                tileButton.setText(" ");
-                tileButton.setBackground(ColorConverter.convert(tile.getType()));
-            }
-
-            layout.add(tileButton);
-            layout.add(Box.createVerticalStrut(5));
+            JButton tileButton = createTableTileButtonView(tile);
+            tileTableLayout.add(tileButton);
+            tileTableLayout.add(Box.createVerticalStrut(5));
         }
     }
 
+    private JButton createTableTileButtonView(Tile tile) {
+        JButton tileButton = new JButton(" ");
+        tileButton.setSize(new Dimension(20, 20));
+        tileButton.setEnabled(true);
+        tileButton.setBackground(ColorConverter.convert(tile.getType()));
+        if (tile.getType() == TileType.FIRST_PLAYER) {
+            tileButton.setText("FP");
+            tileButton.setEnabled(false);
+        }
+        tileButton.addActionListener(e -> selectTableTileView(tile));
+        return tileButton;
+    }
+
+    private void selectTableTileView(Tile tile) {
+        Game.getInstance().setCurrSelectedTile(tile);
+        Game.getInstance().setCurrSelectedFactory(null);
+        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
+    }
+
     public void refresh() {
+        tileTableLayout.removeAll();
         createTileTableView();
         revalidate();
     }
