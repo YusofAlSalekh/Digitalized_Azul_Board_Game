@@ -188,7 +188,7 @@ public class Game {
         tileTable.reset();
 
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
-            factoryView.refresh();
+            factoryView.reset();
         }
         GameView.getInstance().getTileTableView().refresh();
     }

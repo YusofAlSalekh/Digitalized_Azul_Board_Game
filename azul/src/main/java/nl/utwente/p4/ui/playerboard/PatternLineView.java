@@ -68,7 +68,7 @@ public class PatternLineView extends JPanel {
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
         }
-        refreshRow(currPlayer, row);
+        refreshRow(currPlayer, row, true);
         toggleEnable(false);
         GameView.getInstance().getTileTableView().refresh();
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
@@ -95,14 +95,14 @@ public class PatternLineView extends JPanel {
 
     public void refresh(Player player) {
         for (int i = 0; i < 5; i++) {
-            refreshRow(player, i);
+            refreshRow(player, i, false);
         }
     }
 
-    public void refreshRow(Player player, int row) {
+    public void refreshRow(Player player, int row, boolean isEnabled) {
         TileLine tileLineToRefresh = player.getPatternLine().getTileLines().get(row);
         for (int col = 0; col < patternLineButtons.get(row).size(); col++) {
-            refreshColor(tileLineToRefresh, row, col, true);
+            refreshColor(tileLineToRefresh, row, col, isEnabled);
         }
     }
 
