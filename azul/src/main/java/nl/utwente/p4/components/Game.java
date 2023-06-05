@@ -1,13 +1,17 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 public class Game {
+    private boolean tileLineIsExternal;
     private Factory currSelectedFactory;
     private Tile currSelectedTile;
 
@@ -47,6 +51,7 @@ public class Game {
 
     /**
      * Return the player whose turn it is. (Current player)
+     *
      * @return Player whose turn it is, null if there are no players
      */
     public Player getCurrentPlayer() {
@@ -55,25 +60,15 @@ public class Game {
     }
 
     // TODO: combine game logic with GUI
-    public void play(int numOfPlayers) {
+    public void play(int numOfPlayers, boolean tileLineIsExternal) {
         this.numOfPlayers = numOfPlayers;
         startGame();
 
         this.currPlayerIdx = 0;
-
+        this.tileLineIsExternal = tileLineIsExternal;
         GameView.getInstance();
-
-//        while (true) {
-//            factoryOffer(currPlayerIdx);
-//            wallTiling();
-//
-//            if (hasAnyPlayerFilledRow()) {
-//                break;
-//            }
-//            prepareNextRound();
-//        }
-//        endGame();
     }
+
 
     public void nextPlayer() {
         if (this.currPlayerIdx + 1 == this.players.size()) {
@@ -97,6 +92,7 @@ public class Game {
 
     /**
      * Initialize a tile array containing 20 tiles of each type
+     *
      * @return tile array
      */
     public ArrayList<Tile> createStartingTiles() {
@@ -113,6 +109,7 @@ public class Game {
 
     /**
      * Calculate number of factories based on number of players
+     *
      * @return number of factories
      */
     public int numOfFactories() {
@@ -121,6 +118,7 @@ public class Game {
 
     /**
      * Initialize array of factories for the game, containing random tiles from tilebag
+     *
      * @return factory array
      */
     public ArrayList<Factory> createStartingFactories() {
@@ -220,5 +218,9 @@ public class Game {
         }
 
         return winningPlayer;
+    }
+
+    public boolean tileLineIsExternal() {
+        return tileLineIsExternal;
     }
 }
