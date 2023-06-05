@@ -19,7 +19,6 @@ public interface GeneralTileLine {
 
     void setTiles(ArrayList<Tile> tiles);
 
-    void setLineSize(int lineSize);
 
     void setLineType(TileType lineType);
 }

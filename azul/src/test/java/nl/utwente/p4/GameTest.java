@@ -2,12 +2,9 @@ package nl.utwente.p4;
 
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 

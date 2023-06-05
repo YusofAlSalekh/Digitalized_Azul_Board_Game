@@ -1,13 +1,17 @@
 package nl.utwente.p4.components;
 
 import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 public class Game {
+    private boolean tileLineIsExternal;
     private Factory currSelectedFactory;
     private Tile currSelectedFactoryTile;
 
@@ -55,24 +59,16 @@ public class Game {
     }
 
     // TODO: combine game logic with GUI
-    public void play(int numOfPlayers) {
+    public void play(int numOfPlayers, boolean tileLineIsExternal) {
         this.numOfPlayers = numOfPlayers;
         startGame();
 
         this.currPlayerIdx = 0;
+        this.tileLineIsExternal = tileLineIsExternal;
+    }
 
-        GameView.getInstance();
-
-//        while (true) {
-//            factoryOffer(currPlayerIdx);
-//            wallTiling();
-//
-//            if (hasAnyPlayerFilledRow()) {
-//                break;
-//            }
-//            prepareNextRound();
-//        }
-//        endGame();
+    public void play(int numOfPlayers) {
+        play(numOfPlayers, false);
     }
 
     public void nextPlayer() {
@@ -220,5 +216,9 @@ public class Game {
         }
 
         return winningPlayer;
+    }
+
+    public boolean tileLineIsExternal() {
+        return tileLineIsExternal;
     }
 }

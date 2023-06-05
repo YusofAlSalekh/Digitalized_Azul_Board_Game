@@ -80,11 +80,6 @@ public class TileLine implements GeneralTileLine {
     }
 
     @Override
-    public void setLineSize(int lineSize) {
-
-    }
-
-    @Override
     public void setLineType(TileType lineType) {
 
     }

@@ -3,7 +3,6 @@ package nl.utwente.p4.gamestate;
 import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
-import nl.utwente.p4.exceptions.PatternLineFilledException;
 import nl.utwente.p4.exceptions.WrongTileType;
 
 import java.util.ArrayList;
@@ -18,26 +17,11 @@ public class TileLineAdapter implements GeneralTileLine {
         line = new PatternLine(size);
     }
 
-    /**
-     * Converts the TileType of Team 5 to our TileType and
-     *
-     * @return tile of a certain color
-     */
+
     @Override
     public TileType getLineType() {
         nl.utwente.p4.gamestate.TileType v = line.getTileType();
-        if (v == nl.utwente.p4.gamestate.TileType.BLACK)
-            return TileType.BLACK;
-        if (v == nl.utwente.p4.gamestate.TileType.RED)
-            return TileType.RED;
-        if (v == nl.utwente.p4.gamestate.TileType.GREEN)
-            return TileType.WHITE;
-        if (v == nl.utwente.p4.gamestate.TileType.BLUE)
-            return TileType.BLUE;
-        if (v == nl.utwente.p4.gamestate.TileType.YELLOW)
-            return TileType.YELLOW;
-
-        throw new WrongTileType("Wrong Tile Type");
+        return convertFromForeignType(v);
     }
 
     @Override
@@ -68,7 +52,7 @@ public class TileLineAdapter implements GeneralTileLine {
         if (tilesToAdd.size() < 1 || isFilled()) return tilesToAdd;
         checkAndSetLineType(tilesToAdd.get(0).getType());
 
-        int temp = line.addToLine(gePatternLineType(tilesToAdd.get(0).getType()), tilesToAdd.size());
+        int temp = line.addToLine(convertToForeignType(tilesToAdd.get(0).getType()), tilesToAdd.size());
         while (tilesToAdd.size() != temp) {
 
             tilesToAdd.remove(0);
@@ -93,23 +77,10 @@ public class TileLineAdapter implements GeneralTileLine {
     public void setTiles(ArrayList<Tile> tiles) {
     }
 
-    @Override
-    public void setLineSize(int lineSize) {
-        line.setCapacity(lineSize);
-    }
 
     @Override
     public void setLineType(TileType lineType) {
-        if (lineType == TileType.BLACK)
-            line.setTileType(nl.utwente.p4.gamestate.TileType.BLACK);
-        if (lineType == TileType.RED)
-            line.setTileType(nl.utwente.p4.gamestate.TileType.RED);
-        if (lineType == TileType.BLUE)
-            line.setTileType(nl.utwente.p4.gamestate.TileType.BLUE);
-        if (lineType == TileType.WHITE)
-            line.setTileType(nl.utwente.p4.gamestate.TileType.GREEN);
-        if (lineType == TileType.YELLOW)
-            line.setTileType(nl.utwente.p4.gamestate.TileType.YELLOW);
+        line.setTileType(convertToForeignType(lineType));
     }
 
     /**
@@ -117,7 +88,7 @@ public class TileLineAdapter implements GeneralTileLine {
      *
      * @return tile of a certain color
      */
-    private nl.utwente.p4.gamestate.TileType gePatternLineType(TileType tileType) {
+    private nl.utwente.p4.gamestate.TileType convertToForeignType(TileType tileType) {
 
         switch (tileType) {
 
@@ -141,6 +112,26 @@ public class TileLineAdapter implements GeneralTileLine {
                 return nl.utwente.p4.gamestate.TileType.RED;
             }
         }
+        throw new WrongTileType("Wrong Tile Type");
+    }
+
+    /**
+     * Converts the TileType of Team 5 to our TileType and
+     *
+     * @return tile of a certain color
+     */
+    private static TileType convertFromForeignType(nl.utwente.p4.gamestate.TileType v) {
+        if (v == nl.utwente.p4.gamestate.TileType.BLACK)
+            return TileType.BLACK;
+        if (v == nl.utwente.p4.gamestate.TileType.RED)
+            return TileType.RED;
+        if (v == nl.utwente.p4.gamestate.TileType.GREEN)
+            return TileType.WHITE;
+        if (v == nl.utwente.p4.gamestate.TileType.BLUE)
+            return TileType.BLUE;
+        if (v == nl.utwente.p4.gamestate.TileType.YELLOW)
+            return TileType.YELLOW;
+
         throw new WrongTileType("Wrong Tile Type");
     }
 }

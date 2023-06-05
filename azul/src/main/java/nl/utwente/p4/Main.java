@@ -9,6 +9,8 @@ import nl.utwente.p4.ui.GameView;
  */
 public class Main {
     public static void main(String[] args) {
-        Game.getInstance().play(2);
+        boolean tileLineIsExternal = System.getProperties().containsKey("externalTileLine");
+
+        Game.getInstance().play(2, tileLineIsExternal);
     }
 }

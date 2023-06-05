@@ -8,7 +8,7 @@ import nl.utwente.p4.gamestate.TileLineAdapter;
  */
 public class TileLineBuilder {
     public static GeneralTileLine createTileLine(int size) {
-        if (System.getProperties().containsKey("externalTileLine")) {
+        if (Game.getInstance().tileLineIsExternal()) {
             return new TileLineAdapter(size);
         } else {
             return new TileLine(size);

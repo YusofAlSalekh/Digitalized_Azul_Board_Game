@@ -5,7 +5,7 @@ import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class WallTest {
