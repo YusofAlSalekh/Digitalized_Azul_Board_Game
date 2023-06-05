@@ -3,11 +3,10 @@ package nl.utwente.p4.components;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import lombok.Getter;
+import lombok.Data;
 import nl.utwente.p4.constants.TileType;
 
-
-@Getter
+@Data
 public class TileTable {
     private ArrayList<Tile> tiles;
     private boolean firstHasBeenTaken;
@@ -15,6 +14,10 @@ public class TileTable {
     public TileTable() {
         this.tiles = new ArrayList<>(Arrays.asList(new Tile(TileType.FIRST_PLAYER)));
         this.firstHasBeenTaken = false;
+    }
+
+    public boolean isFirstHasBeenTaken() {
+        return firstHasBeenTaken;
     }
 
     public void setFirstHasBeenTaken(boolean firstHasBeenTaken) {
@@ -57,7 +60,7 @@ public class TileTable {
     }
 
     /***
-     * Add given tile to the tileTable
+     * Add given tile to the tiletable
      * @param tile tile to be added to the table
      */
     public void addTile(Tile tile) {
