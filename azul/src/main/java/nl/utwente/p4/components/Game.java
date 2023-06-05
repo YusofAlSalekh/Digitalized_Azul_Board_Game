@@ -2,12 +2,15 @@ package nl.utwente.p4.components;
 
 import lombok.Data;
 import nl.utwente.p4.constants.TileType;
+import nl.utwente.p4.ui.GameView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Data
 public class Game {
+    private Factory currSelectedFactory;
+    private Tile currSelectedTile;
+
     private TileBag tileBag;
     private GameBoxLid gameBoxLid;
     private TileTable tileTable;
@@ -17,8 +20,6 @@ public class Game {
     private int numOfPlayers;
     private int currPlayerIdx;
     static final int tilesPerFactory = 4;
-
-    private int highestScore = -1;
 
     private Game() {
         this.tileBag = new TileBag();
@@ -44,12 +45,23 @@ public class Game {
         this.gameBoxLid.addTiles(tiles);
     }
 
+    /**
+     * Return the player whose turn it is. (Current player)
+     * @return Player whose turn it is, null if there are no players
+     */
+    public Player getCurrentPlayer() {
+        if (this.players.size() < 1) return null;
+        return this.players.get(this.currPlayerIdx);
+    }
+
     // TODO: combine game logic with GUI
     public void play(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         startGame();
 
         this.currPlayerIdx = 0;
+
+        GameView.getInstance();
 
 //        while (true) {
 //            factoryOffer(currPlayerIdx);
@@ -61,6 +73,14 @@ public class Game {
 //            prepareNextRound();
 //        }
 //        endGame();
+    }
+
+    public void nextPlayer() {
+        if (this.currPlayerIdx + 1 == this.players.size()) {
+            this.currPlayerIdx = 0;
+        } else {
+            this.currPlayerIdx += 1;
+        }
     }
 
     public void startGame() {
@@ -92,13 +112,20 @@ public class Game {
     }
 
     /**
+     * Calculate number of factories based on number of players
+     * @return number of factories
+     */
+    public int numOfFactories() {
+        return 2 * this.numOfPlayers + 1;
+    }
+
+    /**
      * Initialize array of factories for the game, containing random tiles from tilebag
      * @return factory array
      */
     public ArrayList<Factory> createStartingFactories() {
         ArrayList<Factory> initialFactories = new ArrayList<>();
-        int numOfFactories = 2 * this.numOfPlayers + 1;
-        for (int i = 0; i < numOfFactories; i++) {
+        for (int i = 0; i < numOfFactories(); i++) {
             ArrayList<Tile> initialFactoryTiles = new ArrayList<>();
             for (int j = 0; j < tilesPerFactory; j++) {
                 initialFactoryTiles.add(this.tileBag.getRandomTile());
@@ -106,15 +133,6 @@ public class Game {
             initialFactories.add(new Factory(initialFactoryTiles));
         }
         return initialFactories;
-    }
-
-    // TODO: combine method with GUI
-    public void factoryOffer(int currPlayerIdx) {
-        // player picks tile from factory
-        this.players.get(currPlayerIdx).getFactoryOfferFromFactory(this.factories.get(0), this.tileTable, TileType.BLACK, 0);
-
-        // player picks tile from tile table
-        this.players.get(currPlayerIdx).getFactoryOfferFromTileTable(this.tileTable, new Tile(TileType.BLACK), 0);
     }
 
     // TODO: implement method
@@ -138,11 +156,7 @@ public class Game {
         }
         resetFirstState();
 
-        if (this.currPlayerIdx + 1 == this.players.size()) {
-            this.currPlayerIdx = 0;
-        } else {
-            this.currPlayerIdx += 1;
-        }
+        this.currPlayerIdx = 0;
     }
 
     private boolean addRandomTileToFactory(Factory factory) {
@@ -176,7 +190,7 @@ public class Game {
             return false;
         }
 
-        calculateHighestScore();
+        System.out.println("The winner is: " + getWinningPlayer());
         return true;
     }
 
@@ -189,14 +203,22 @@ public class Game {
         return false;
     }
 
-    private int calculateHighestScore() {
-        for (Player player : players) {
+    public Player getWinningPlayer() {
+        Player winningPlayer = players.get(0);
+
+        for (int i = 1; i < players.size(); i++) {
+            Player player = players.get(i);
+
             int score = player.calculateFinalScore();
-            if (score > getHighestScore()) {
-                setHighestScore(score);
+            int completeLines = player.completeHorizontalLines();
+
+            if (score > winningPlayer.getScoreTrack()) {
+                winningPlayer = player;
+            } else if (score == winningPlayer.getScoreTrack() && completeLines > winningPlayer.completeHorizontalLines()) {
+                winningPlayer = player;
             }
         }
-        return getHighestScore();
+
+        return winningPlayer;
     }
 }
-    

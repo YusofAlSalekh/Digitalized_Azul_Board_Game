@@ -1,13 +1,13 @@
 package nl.utwente.p4.components;
 
-import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.exceptions.TileColourNotMatchedException;
 import nl.utwente.p4.exceptions.PatternLineFilledException;
 import nl.utwente.p4.exceptions.TileColourNotMatchedWallTileColourException;
 
 import java.util.ArrayList;
 
-@Data
+@Getter
 public class PatternLine {
     private ArrayList<TileLine> tileLines;
 
@@ -24,12 +24,13 @@ public class PatternLine {
      *
      * @param tilesToAdd tiles to add
      * @param row        row index to add to
-     * @param wall       the wall of the board, to check that there is no tile of particular color on the wall
      * @return any excess tiles
      */
-    public ArrayList<Tile> addTiles(ArrayList<Tile> tilesToAdd, int row, Wall wall) {
+    public ArrayList<Tile> addTiles(ArrayList<Tile> tilesToAdd, int row) {
 
         TileLine tileLine = this.tileLines.get(row);
+        Game game = Game.getInstance();
+        Wall currentPlayerWall = game.getCurrentPlayer().getWall();
 
         // check if row is not filled yet
         if (tileLine.isFilled()) {
@@ -41,7 +42,7 @@ public class PatternLine {
             throw new TileColourNotMatchedException("The pattern line already consists of tiles of a different color");
 
             // ensure that colour is not filled in wall already
-        } else if (wall.isTileFilled(tilesToAdd.get(0), row)) {
+        } else if (currentPlayerWall.isTileFilled(tilesToAdd.get(0), row)) {
             throw new TileColourNotMatchedWallTileColourException("Tile of this color is already on the wall");
         } else {
             ArrayList<Tile> excessTiles = tileLine.addTilesToLine(tilesToAdd);
@@ -58,10 +59,5 @@ public class PatternLine {
         tileLines.set( row,new TileLine(this.tileLines.get(row).getLineSize()));
     }
 
-    // TODO: implement method
-    public Tile getFilledRow(int row) {
-        // remove all tiles from row
-        // return 1 tile
-        return null;
-    }
+
 }

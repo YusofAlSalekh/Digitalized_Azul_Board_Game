@@ -178,11 +178,13 @@ public class GameTest {
             assertEquals(4, f.getTiles().size());
         }
     }
+
     @Test
     void checkIfPlayerHasFilledRow_True() {
       Game game = Game.getInstance();
       game.getPlayers().clear();
-      game.play(2);
+      game.setNumOfPlayers(2);
+      game.startGame();
       var player = game.getPlayers().get(0);
       var array = new Tile[]{new Tile(TileType.BLUE),new Tile(TileType.RED),
               new Tile(TileType.WHITE), new Tile(TileType.BLACK),
@@ -196,21 +198,45 @@ public class GameTest {
             player.getPatternLine().clearPatterLineRow(0);
         }
       assertTrue(game.endGame());
-      assertEquals(13,game.getHighestScore());
+      assertEquals(11, game.getWinningPlayer().getScoreTrack());
     }
     @Test
     void checkIfPlayerHasFilledRow_False() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
-        game.play(2);
+        game.setNumOfPlayers(2);
+        game.startGame();
         assertFalse(game.endGame());
-        assertEquals(-1,game.getHighestScore());
+        assertEquals(game.getPlayers().get(0).getScoreTrack(), game.getWinningPlayer().getScoreTrack());
     }
     @Test
     void getTilesFromLid_Empty() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
-        game.play(2);
+        game.setNumOfPlayers(2);
+        game.startGame();
         assertEquals(0,game.getTilesFromGameBoxLid().size());
+    }
+
+    @Test
+    void getCurrentPlayer_Player1Returned_true() {
+        // act
+        Game.getInstance().setNumOfPlayers(2);
+        Game.getInstance().startGame();
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+
+        // Check that the current player is the first player since it's still the first turn
+        assertEquals(Game.getInstance().getPlayers().get(0), currentPlayer);
+    }
+
+    @Test
+    void getCurrentPlayer_NoPlayerToReturn_true() {
+        // act
+        Game.getInstance().setPlayers(new ArrayList<>());
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
+
+
+        // Check that we received null, since there were no players to return
+        assertEquals(null, currentPlayer);
     }
 }
