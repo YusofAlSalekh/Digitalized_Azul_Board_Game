@@ -1,6 +1,5 @@
 package nl.utwente.p4.components;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
@@ -8,12 +7,12 @@ import nl.utwente.p4.constants.TileType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Data
+@Getter
 public class Player {
-    private PatternLine patternLine;
-    private Wall wall;
-    private FloorLine floorLine;
-    private int scoreTrack;
+    private final PatternLine patternLine;
+    private final Wall wall;
+    @Setter private FloorLine floorLine;
+    @Setter private int scoreTrack;
     private Boolean firstPlayer;
 
     public Player() {

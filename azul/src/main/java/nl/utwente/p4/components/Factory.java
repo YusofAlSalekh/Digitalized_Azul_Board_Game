@@ -1,12 +1,13 @@
 package nl.utwente.p4.components;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
-@Data
 public class Factory {
+    @Getter @Setter
     private ArrayList<Tile> tiles;
 
     public Factory(ArrayList<Tile> tiles) {

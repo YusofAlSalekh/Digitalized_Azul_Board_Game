@@ -1,17 +1,15 @@
 package nl.utwente.p4.components;
 
-import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
 import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.playerboard.BoardView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-@Data
+@Getter @Setter
 public class Game {
     private boolean tileLineIsExternal;
     private Factory currSelectedFactory;
