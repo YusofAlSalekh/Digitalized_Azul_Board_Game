@@ -233,9 +233,8 @@ public class Game {
         this.tileTable.setFirstHasBeenTaken(false);
     }
 
-    public boolean endGame() {
+    public void endGame() {
         GameView.getInstance().endGame(getWinningPlayer());
-        return true;
     }
 
     public boolean hasAnyPlayerFilledRow() {
