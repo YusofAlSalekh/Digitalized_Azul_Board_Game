@@ -81,9 +81,8 @@ public class Player {
 
     public int calculateFinalScore() {
         int totalBonusPoints = 0;
-    
 
-        totalBonusPoints += calculateFullRowsbonusPoints();
+        totalBonusPoints += calculateFullRowsBonusPoints();
         totalBonusPoints += calculateFullColumnsBonusPoints();
         totalBonusPoints += calculateTileTypeSetsBonusPoints();
 
@@ -123,7 +122,7 @@ public class Player {
         return bonusPoints;
     }
 
-    private int calculateFullRowsbonusPoints() {
+    private int calculateFullRowsBonusPoints() {
         int bonusPoints = 0;
         for (int i = 0; i < 5; i++) {
             if (this.getWall().isRowFilled(i)) {

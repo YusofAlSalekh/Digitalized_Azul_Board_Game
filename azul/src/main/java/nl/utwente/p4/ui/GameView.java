@@ -89,6 +89,10 @@ public class GameView extends JFrame {
     }
 
     public void endGame(int winningPlayerIdx) {
+        ArrayList<Player> players = Game.getInstance().getPlayers();
+        for (int i = 0; i < boardViews.size(); i++) {
+            boardViews.get(i).getScoreTrackView().refresh(players.get(i));
+        }
         JOptionPane.showMessageDialog(null, "Player " + (winningPlayerIdx + 1) + " has won this game!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
     }
 }
