@@ -65,22 +65,24 @@ public class PatternLineView extends JPanel {
                 currPlayer.getFactoryOfferFromFactory(
                         Game.getInstance().getCurrSelectedFactory(),
                         selectedTile.getType(),
-                        row);
+                        row
+                );
             } else {
                 currPlayer.getFactoryOfferFromTileTable(
                         selectedTile,
-                        row);
+                        row
+                );
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error adding to Pattern Line", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        refreshRow(currPlayer, row, true);
+        toggleEnable(false);
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
         }
-        refreshRow(currPlayer, row, true);
-        toggleEnable(false);
         GameView.getInstance().getTileTableView().refresh();
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
 
@@ -116,9 +118,9 @@ public class PatternLineView extends JPanel {
         }
     }
 
-    private JButton refreshColor(GeneralTileLine tileLineToRefresh, int row, int col, boolean isEnabled) {
+    private JButton refreshColor(GeneralTileLine tileLineToRefresh, int row, int col, boolean isEnabledColor) {
         HashMap<TileType, Color> colorMap = ColorConverter.getColorMapEnabled();
-        if (!isEnabled) {
+        if (!isEnabledColor) {
             colorMap = ColorConverter.getColorMapDisabled();
         }
 
