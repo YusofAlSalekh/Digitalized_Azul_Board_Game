@@ -145,7 +145,6 @@ public class Player {
         this.scoreTrack += value;
     }
 
-
     /**
      * Method to add given tiles to the player boards pattern line
      * Excess tiles are added to the players floorline or the gameboxlid

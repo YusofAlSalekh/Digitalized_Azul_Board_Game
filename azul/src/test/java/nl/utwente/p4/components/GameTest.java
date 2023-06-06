@@ -235,6 +235,135 @@ public class GameTest {
 
 
         // Check that we received null, since there were no players to return
-        assertEquals(null, currentPlayer);
+        assertNull(currentPlayer);
+    }
+
+    @Test
+    void currSelectedFactory_success() {
+        Game.getInstance().setCurrSelectedFactory(new Factory(new ArrayList<>()));
+
+        Factory currSelectedFactory = Game.getInstance().getCurrSelectedFactory();
+
+        assertNotNull(currSelectedFactory);
+        assertEquals(0, currSelectedFactory.getTiles().size());
+    }
+
+    @Test
+    void currSelectedTile_success() {
+        Game.getInstance().setCurrSelectedTile(new Tile(TileType.BLACK));
+
+        Tile currSelectedTile = Game.getInstance().getCurrSelectedTile();
+
+        assertNotNull(currSelectedTile);
+        assertEquals(TileType.BLACK, currSelectedTile.getType());
+    }
+
+    @Test
+    void currPlayerIdx_success() {
+        Game.getInstance().setCurrPlayerIdx(0);
+
+        assertEquals(0, Game.getInstance().getCurrPlayerIdx());
+    }
+
+    @Test
+    void tileLineIsExternal_true() {
+        Game.getInstance().setTileLineIsExternal(true);
+
+        assertTrue(Game.getInstance().isTileLineIsExternal());
+    }
+
+    @Test
+    void initializePlay() {
+        Game.getInstance().initializePlay(2, true);
+
+        assertEquals(2, Game.getInstance().getNumOfPlayers());
+        assertEquals(0, Game.getInstance().getCurrPlayerIdx());
+        assertTrue(Game.getInstance().tileLineIsExternal());
+    }
+
+    @Test
+    void nextPlayer_continueToNextPlayer_factoriesNotEmpty() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(TileType.BLACK));
+        Factory factory = new Factory(tiles);
+        ArrayList<Factory> factories = new ArrayList<>();
+        factories.add(factory);
+        Game.getInstance().setFactories(factories);
+
+        Player player = new Player();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
+        players.add(player);
+        Game.getInstance().setPlayers(players);
+        Game.getInstance().setCurrPlayerIdx(0);
+
+        Game.getInstance().nextPlayer();
+
+        assertEquals(1, Game.getInstance().getCurrPlayerIdx());
+    }
+
+    @Test
+    void nextPlayer_continueToFirstPlayer_factoriesNotEmpty() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(TileType.BLACK));
+        Factory factory = new Factory(tiles);
+        ArrayList<Factory> factories = new ArrayList<>();
+        factories.add(factory);
+        Game.getInstance().setFactories(factories);
+
+        Player player = new Player();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
+        players.add(player);
+        Game.getInstance().setPlayers(players);
+        Game.getInstance().setCurrPlayerIdx(1);
+
+        Game.getInstance().nextPlayer();
+
+        assertEquals(0, Game.getInstance().getCurrPlayerIdx());
+    }
+
+    @Test
+    void nextPlayer_continueToNextPlayer_tileTableNotEmpty() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        Factory factory = new Factory(tiles);
+        ArrayList<Factory> factories = new ArrayList<>();
+        factories.add(factory);
+        Game.getInstance().setFactories(factories);
+
+        Game.getInstance().setTileTable(new TileTable());
+
+        Player player = new Player();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
+        players.add(player);
+        Game.getInstance().setPlayers(players);
+        Game.getInstance().setCurrPlayerIdx(0);
+
+        Game.getInstance().nextPlayer();
+
+        assertEquals(1, Game.getInstance().getCurrPlayerIdx());
+    }
+
+    @Test
+    void nextPlayer_continueToFirstPlayer_tileTableNotEmpty() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        Factory factory = new Factory(tiles);
+        ArrayList<Factory> factories = new ArrayList<>();
+        factories.add(factory);
+        Game.getInstance().setFactories(factories);
+
+        Game.getInstance().setTileTable(new TileTable());
+
+        Player player = new Player();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
+        players.add(player);
+        Game.getInstance().setPlayers(players);
+        Game.getInstance().setCurrPlayerIdx(1);
+
+        Game.getInstance().nextPlayer();
+
+        assertEquals(0, Game.getInstance().getCurrPlayerIdx());
     }
 }

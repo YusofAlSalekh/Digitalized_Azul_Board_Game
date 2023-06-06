@@ -60,14 +60,16 @@ public class Game {
     }
 
     public void play(int numOfPlayers, boolean tileLineIsExternal) {
-        this.numOfPlayers = numOfPlayers;
-        startGame();
-
-        this.currPlayerIdx = 0;
-        this.tileLineIsExternal = tileLineIsExternal;
+        initializePlay(numOfPlayers, tileLineIsExternal);
         GameView.getInstance();
     }
 
+    public void initializePlay(int numOfPlayers, boolean tileLineIsExternal) {
+        this.numOfPlayers = numOfPlayers;
+        this.currPlayerIdx = 0;
+        this.tileLineIsExternal = tileLineIsExternal;
+        startGame();
+    }
 
     public void nextPlayer() {
         boolean isAllFactoriesEmpty = true;
@@ -158,7 +160,7 @@ public class Game {
                 currPlayerIdx = i;
             }
 
-            updateWallTilingView(player, i);
+            GameView.getInstance().getBoardViews().get(i).updateWallTiling(player);
         }
 
         if (hasAnyPlayerFilledRow()) {
@@ -168,17 +170,9 @@ public class Game {
         }
     }
 
-    private void updateWallTilingView(Player player, int i) {
-        BoardView playerBoard = GameView.getInstance().getBoardViews().get(i);
-        playerBoard.getWallView().refresh(player);
-        playerBoard.getPatternLineView().refresh(player);
-        playerBoard.getFloorLineView().refresh(player);
-        playerBoard.getScoreTrackView().refresh(player);
-    }
-
     public void prepareNextRound() {
         resetComponentsForNextRound();
-        resetViewsForNextRound();
+        GameView.getInstance().prepareNextRound();
     }
 
     public void resetComponentsForNextRound() {
@@ -197,13 +191,6 @@ public class Game {
         }
         resetFirstState();
         tileTable.reset();
-    }
-
-    public void resetViewsForNextRound() {
-        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
-            factoryView.reset();
-        }
-        GameView.getInstance().getTileTableView().refresh();
     }
 
     private boolean addRandomTileToFactory(Factory factory) {

@@ -48,4 +48,11 @@ public class BoardView extends JPanel {
         floorLineView = new FloorLineView(player);
         boardLayout.add(floorLineView, BorderLayout.SOUTH);
     }
+
+    public void updateWallTiling(Player player) {
+        wallView.refresh(player);
+        patternLineView.refresh(player);
+        floorLineView.refresh(player);
+        scoreTrackView.refresh(player);
+    }
 }
