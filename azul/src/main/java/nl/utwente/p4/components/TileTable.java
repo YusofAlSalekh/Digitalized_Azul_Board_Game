@@ -66,5 +66,4 @@ public class TileTable {
     public void addTile(Tile tile) {
         this.tiles.add(tile);
     }
-
 }

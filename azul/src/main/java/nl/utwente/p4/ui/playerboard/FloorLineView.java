@@ -2,6 +2,7 @@ package nl.utwente.p4.ui.playerboard;
 
 import nl.utwente.p4.components.Player;
 import nl.utwente.p4.components.Tile;
+import nl.utwente.p4.constants.FloorScore;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.helper.ColorConverter;
 
@@ -22,7 +23,7 @@ public class FloorLineView extends JPanel {
     }
 
     private void createFloorScoreView(Player player) {
-        for (int i : player.getFloorLine().getFloorScores()) {
+        for (int i : FloorScore.getValues()) {
             JLabel label = new JLabel();
             label.setText(Integer.toString(i));
             label.setHorizontalAlignment(JLabel.CENTER);
