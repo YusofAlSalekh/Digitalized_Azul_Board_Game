@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
+import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.playerboard.BoardView;
 
 import java.util.ArrayList;
@@ -152,7 +153,8 @@ public class Game {
     public void wallTiling() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            player.getWall().addFromPatterLineToWall(player.getPatternLine(), player.getFloorLine().getTotalFloorScore());
+            int score = player.getWall().addFromPatterLineToWall(player.getPatternLine(), player.getFloorLine().getTotalFloorScore());
+            player.setScoreTrack(score);
             boolean firstPlayerFound = player.getFloorLine().clearFloorLine();
             if (firstPlayerFound) {
                 currPlayerIdx = i;
@@ -173,9 +175,15 @@ public class Game {
         playerBoard.getWallView().refresh(player);
         playerBoard.getPatternLineView().refresh(player);
         playerBoard.getFloorLineView().refresh(player);
+        playerBoard.getScoreTrackView().refresh(player);
     }
 
     public void prepareNextRound() {
+        resetComponentsForNextRound();
+        resetViewsForNextRound();
+    }
+
+    public void resetComponentsForNextRound() {
         for (Factory f : this.factories) {
             boolean noMoreTiles = false;
             for (int i = 0; i < 4; i++) {
@@ -190,8 +198,14 @@ public class Game {
             }
         }
         resetFirstState();
+        tileTable.reset();
+    }
 
-        this.currPlayerIdx = 0;
+    public void resetViewsForNextRound() {
+        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
+            factoryView.reset();
+        }
+        GameView.getInstance().getTileTableView().refresh();
     }
 
     private boolean addRandomTileToFactory(Factory factory) {

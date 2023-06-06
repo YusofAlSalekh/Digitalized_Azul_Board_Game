@@ -19,4 +19,9 @@ public class ScoreTrackView extends JPanel {
         label.setHorizontalAlignment(JLabel.CENTER);
         scoreTrackLayout.add(label);
     }
+
+    public void refresh(Player player) {
+        scoreTrackLayout.removeAll();
+        createScoreTrackView(player);
+    }
 }

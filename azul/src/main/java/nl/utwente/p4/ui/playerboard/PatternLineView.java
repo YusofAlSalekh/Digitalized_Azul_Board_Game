@@ -60,21 +60,26 @@ public class PatternLineView extends JPanel {
             return;
         }
 
-        if (Game.getInstance().getCurrSelectedFactory() != null) {
-            currPlayer.getFactoryOfferFromFactory(
-                    Game.getInstance().getCurrSelectedFactory(),
-                    selectedTile.getType(),
-                    row);
-        } else {
-            currPlayer.getFactoryOfferFromTileTable(
-                    selectedTile,
-                    row);
+        try {
+            if (Game.getInstance().getCurrSelectedFactory() != null) {
+                currPlayer.getFactoryOfferFromFactory(
+                        Game.getInstance().getCurrSelectedFactory(),
+                        selectedTile.getType(),
+                        row);
+            } else {
+                currPlayer.getFactoryOfferFromTileTable(
+                        selectedTile,
+                        row);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error adding to Pattern Line", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
         }
-        refreshRow(currPlayer, row);
+        refreshRow(currPlayer, row, true);
         toggleEnable(false);
         GameView.getInstance().getTileTableView().refresh();
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
@@ -100,14 +105,14 @@ public class PatternLineView extends JPanel {
 
     public void refresh(Player player) {
         for (int i = 0; i < 5; i++) {
-            refreshRow(player, i);
+            refreshRow(player, i, false);
         }
     }
 
-    public void refreshRow(Player player, int row) {
+    public void refreshRow(Player player, int row, boolean isEnabled) {
         GeneralTileLine tileLineToRefresh = player.getPatternLine().getTileLines().get(row);
         for (int col = 0; col < patternLineButtons.get(row).size(); col++) {
-            refreshColor(tileLineToRefresh, row, col, true);
+            refreshColor(tileLineToRefresh, row, col, isEnabled);
         }
     }
 

@@ -71,8 +71,8 @@ public class PatternLineTest {
 
         // Test that there will be an exception when we try to add more tiles to the filled tile lines
 
-        assertThrows(PatternLineFilledException.class, () -> patternLine.addTiles(tiles, 2));
-        assertThrows(PatternLineFilledException.class, () -> patternLine.addTiles(tiles, 3));
+        assertThrows(PatternLineFilledException.class, () -> patternLine.checkAddTiles(tiles, 2));
+        assertThrows(PatternLineFilledException.class, () -> patternLine.checkAddTiles(tiles, 3));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class PatternLineTest {
         tiles2.add(new Tile(TileType.BLUE));
 
         assertThrows(TileColourNotMatchedException.class,
-                () -> patternLine.addTiles(tiles2, 3));
+                () -> patternLine.checkAddTiles(tiles2, 3));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class PatternLineTest {
 
         //Test that there will be an exception when we try to Add Tiles Of colours that the wall already contains
         assertThrows(TileColourNotMatchedWallTileColourException.class,
-                () -> patternLine.addTiles(tiles, 4));
+                () -> patternLine.checkAddTiles(tiles, 4));
     }
     @Test
     void checkIfPatterLineRowIsFilled() {

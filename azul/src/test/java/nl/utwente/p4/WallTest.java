@@ -189,7 +189,7 @@ class WallTest {
     void checkIFScoreP0() {
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.WHITE), 0);
-        wall.deductScoreFromFloorLine(15);
+        wall.deductScoreFromFloorLine(-15);
         assertEquals(0,wall.getTotalScore());
     }
 }

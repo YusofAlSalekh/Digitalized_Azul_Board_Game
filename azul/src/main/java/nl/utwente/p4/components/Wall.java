@@ -279,7 +279,7 @@ public class Wall {
      * @return the totalScore after deducting the floorLine score form it.
      */
     public int deductScoreFromFloorLine(int getTotalFloorScore) {
-        int total = Math.max(0, getTotalScore() - getTotalFloorScore);
+        int total = Math.max(0, getTotalScore() + getTotalFloorScore);
         setTotalScore(total);
         return getTotalScore();
     }

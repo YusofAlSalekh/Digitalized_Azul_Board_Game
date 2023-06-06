@@ -39,20 +39,20 @@ public class GameTest {
     }
 
     @Test
-    void prepareNextRound_resetFirstHasBeenTaken_firstHasBeenTakenFalse() {
+    void resetComponentsForNextRound_resetFirstHasBeenTaken_firstHasBeenTakenFalse() {
         // arrange
         Game game = Game.getInstance();
         game.getTileTable().setFirstHasBeenTaken(true);
 
         // act
-        game.prepareNextRound();
+        game.resetComponentsForNextRound();
 
         // assert
         assertFalse(game.getTileTable().isFirstHasBeenTaken());
     }
 
     @Test
-    void prepareNextRound_refillFactories_completelyRefilled() {
+    void resetComponentsForNextRound_refillFactories_completelyRefilled() {
         // arrange
         Game game = Game.getInstance();
         int numOfFactories = 5;
@@ -70,7 +70,7 @@ public class GameTest {
         game.setFactories(factories);
 
         // act
-        game.prepareNextRound();
+        game.resetComponentsForNextRound();
 
         // assert tile bag
         assertEquals(0, game.getTileBag().getTiles().size());
@@ -82,9 +82,10 @@ public class GameTest {
     }
 
     @Test
-    void prepareNextRound_refillFactories_notEnoughTiles() {
+    void resetComponentsForNextRound_refillFactories_notEnoughTiles() {
         // arrange
         Game game = Game.getInstance();
+        game.getGameBoxLid().setTiles(new ArrayList<>());
         int numOfFactories;
 
         numOfFactories = 2;
@@ -102,7 +103,7 @@ public class GameTest {
         game.setFactories(factories);
 
         // act
-        game.prepareNextRound();
+        game.resetComponentsForNextRound();
 
         // assert tile bag
         assertEquals(0, game.getTileBag().getTiles().size());
@@ -117,7 +118,7 @@ public class GameTest {
     }
 
     @Test
-    void prepareNextRound_nextRoundPreparedWithFullFactoriesFromGameBoxLid_true() { // methodName_behaviorToBeTested_expectedResult
+    void resetComponentsForNextRound_nextRoundPreparedWithFullFactoriesFromGameBoxLid_true() { // methodName_behaviorToBeTested_expectedResult
         // Clear tilebag and factories
         Game game = Game.getInstance();
         game.setPlayers(new ArrayList<>());
@@ -135,7 +136,7 @@ public class GameTest {
         game.addTilesToGameBoxLid(tiles);
 
         // act
-        game.prepareNextRound();
+        game.resetComponentsForNextRound();
 
         // Check that all factories are full and game box lid is empty
         assertEquals(4, game.getFactories().get(0).getTiles().size());

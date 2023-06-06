@@ -40,8 +40,11 @@ public class Player {
      */
     public void getFactoryOfferFromTileTable(Tile pickedTile, Integer rowNum) {
         TileTable tileTable = Game.getInstance().getTileTable();
-        ArrayList<Tile> tilesFromTable = tileTable.takeTiles(pickedTile.getType());
-        this.addTiles(tilesFromTable, rowNum);
+
+        ArrayList<Tile> matchedTiles = tileTable.getMatchingTiles(pickedTile.getType());
+        this.addTiles(matchedTiles, rowNum);
+
+        tileTable.takeTiles(pickedTile.getType());
     }
 
     /***
@@ -55,10 +58,13 @@ public class Player {
      * @param row the row in which player put tiles
      */
     public void getFactoryOfferFromFactory(Factory factory, TileType color, int row) {
+        ArrayList<Tile> matchedTiles = factory.getMatchingTiles(color);
+        this.addTiles(matchedTiles, row);
+
+        factory.takeTiles(color);
+
         TileTable tileTable = Game.getInstance().getTileTable();
-        ArrayList<Tile> pickedTiles = factory.takeTiles(color);
         factory.getRemainingTiles().forEach(tileTable::addTile);
-        this.addTiles(pickedTiles, row);
     }
 
     public boolean hasFilledRow() {
@@ -147,6 +153,7 @@ public class Player {
      * @param rowNum row to add tiles to
      */
     public void addTiles(ArrayList<Tile> tiles, Integer rowNum) {
+        this.patternLine.checkAddTiles(tiles, rowNum);
         // If first player to take from table, add first token to floor
         if (tiles.get(0).getType() == TileType.FIRST_PLAYER) {
             this.floorLine.addTile(tiles.remove(0));

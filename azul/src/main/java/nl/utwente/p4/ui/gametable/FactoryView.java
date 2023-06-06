@@ -68,4 +68,10 @@ public class FactoryView extends JPanel {
             }
         }
     }
+
+    public void reset() {
+        factoryLayout.removeAll();
+        factoryTileButtons.clear();
+        createFactoryView();
+    }
 }
