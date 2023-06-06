@@ -178,7 +178,7 @@ public class GameTest {
     }
 
     @Test
-    void checkIfPlayerHasFilledRow_True() {
+    void hasAnyPlayerFilledRow_True() {
       Game game = Game.getInstance();
       game.getPlayers().clear();
       game.setNumOfPlayers(2);
@@ -195,17 +195,17 @@ public class GameTest {
             player.addScore(score);
             player.getPatternLine().clearPatterLineRow(0);
         }
-      assertTrue(game.endGame());
-      assertEquals(11, game.getWinningPlayer().getScoreTrack());
+      assertTrue(game.hasAnyPlayerFilledRow());
+      assertEquals(11, game.getPlayers().get(game.getWinningPlayer()).getScoreTrack());
     }
     @Test
-    void checkIfPlayerHasFilledRow_False() {
+    void hasAnyPlayerFilledRow_False() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
         game.startGame();
-        assertFalse(game.endGame());
-        assertEquals(game.getPlayers().get(0).getScoreTrack(), game.getWinningPlayer().getScoreTrack());
+        assertFalse(game.hasAnyPlayerFilledRow());
+        assertEquals(game.getPlayers().get(0).getScoreTrack(), game.getPlayers().get(game.getWinningPlayer()).getScoreTrack());
     }
     @Test
     void getTilesFromLid_Empty() {

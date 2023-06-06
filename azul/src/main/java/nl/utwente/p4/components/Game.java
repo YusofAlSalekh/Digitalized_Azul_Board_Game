@@ -233,17 +233,12 @@ public class Game {
         this.tileTable.setFirstHasBeenTaken(false);
     }
 
-    // TODO: combine method with GUI
     public boolean endGame() {
-        if (!hasAnyPlayerFilledRow()) {
-            return false;
-        }
-
-        System.out.println("The winner is: " + getWinningPlayer());
+        GameView.getInstance().endGame(getWinningPlayer());
         return true;
     }
 
-    private boolean hasAnyPlayerFilledRow() {
+    public boolean hasAnyPlayerFilledRow() {
         for (Player player : players) {
             if (player.hasFilledRow()) {
                 return true;
@@ -252,23 +247,24 @@ public class Game {
         return false;
     }
 
-    public Player getWinningPlayer() {
-        Player winningPlayer = players.get(0);
+    public int getWinningPlayer() {
+        int winningPlayerIdx = 0;
 
         for (int i = 1; i < players.size(); i++) {
+            Player winningPlayer = players.get(winningPlayerIdx);
             Player player = players.get(i);
 
             int score = player.calculateFinalScore();
             int completeLines = player.completeHorizontalLines();
 
             if (score > winningPlayer.getScoreTrack()) {
-                winningPlayer = player;
+                winningPlayerIdx = i;
             } else if (score == winningPlayer.getScoreTrack() && completeLines > winningPlayer.completeHorizontalLines()) {
-                winningPlayer = player;
+                winningPlayerIdx = i;
             }
         }
 
-        return winningPlayer;
+        return winningPlayerIdx;
     }
 
     public boolean tileLineIsExternal() {
