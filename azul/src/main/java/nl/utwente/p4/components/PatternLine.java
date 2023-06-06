@@ -29,7 +29,7 @@ public class PatternLine {
      * @return any excess tiles
      */
     public ArrayList<Tile> addTiles(ArrayList<Tile> tilesToAdd, int row) {
-        TileLine tileLine = this.tileLines.get(row);
+        GeneralTileLine tileLine = this.tileLines.get(row);
         return tileLine.addTilesToLine(tilesToAdd);
     }
 
