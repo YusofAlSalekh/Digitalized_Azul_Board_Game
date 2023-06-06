@@ -125,7 +125,6 @@ public class PatternLineView extends JPanel {
         JButton patternLineButton = patternLineButtons.get(row).get(col);
         ArrayList<Tile> tiles = tileLineToRefresh.getTiles();
         TileType lineType =  tileLineToRefresh.getLineType();
-
         if (lineType == TileType.NULL || col >= tiles.size()) {
             patternLineButton.setBackground(colorMap.get(TileType.NULL));
         } else {
