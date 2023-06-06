@@ -1,4 +1,4 @@
-package nl.utwente.p4;
+package nl.utwente.p4.components;
 
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.components.TileStash;
