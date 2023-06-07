@@ -112,7 +112,7 @@ public class TileLineAdapter implements GeneralTileLine {
                 return core.gamestate.TileType.RED;
             }
         }
-        throw new WrongTileType("Wrong Tile Type");
+        return null;
     }
 
     /**
@@ -132,6 +132,6 @@ public class TileLineAdapter implements GeneralTileLine {
         if (v == core.gamestate.TileType.YELLOW)
             return TileType.YELLOW;
 
-        throw new WrongTileType("Wrong Tile Type");
+        return null;
     }
 }
