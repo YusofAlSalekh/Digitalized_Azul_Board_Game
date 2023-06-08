@@ -76,8 +76,6 @@ public class integrationTestWithGroup5Component {
             p1.getFloorLine().addTile(x);
         }
         assertEquals("RED",p1.getPatternLine().getTileLines().get(1).getTiles().get(0).getType().toString());
-        System.out.println(p1.getPatternLine().getTileLines().get(1).getTiles());
-        System.out.println(p1.getFloorLine().getTiles());
         assertEquals("RED",p1.getFloorLine().getTiles().get(0).getType().toString());
     }
 
