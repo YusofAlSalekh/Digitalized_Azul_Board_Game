@@ -12,6 +12,7 @@ build:
   image: maven
   stage: build
   script:
+    - cd azul
     - mvn compile
 
 
