@@ -1,4 +1,4 @@
-package integrationTests;
+package integration;
 
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.PatternLine;
