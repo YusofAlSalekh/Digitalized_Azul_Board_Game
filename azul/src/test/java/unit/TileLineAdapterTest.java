@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AdapterLineTest {
+public class TileLineAdapterTest {
     @Test
     void createTileLineWithSize_0() {
 

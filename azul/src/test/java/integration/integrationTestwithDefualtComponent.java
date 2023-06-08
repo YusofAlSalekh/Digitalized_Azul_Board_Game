@@ -31,7 +31,7 @@ public class integrationTestwithDefualtComponent {
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
-        game.setTileLineIsExternal(true);
+        game.setTileLineIsExternal(false);
         game.startGame();
         var p1 = game.getPlayers().get(0);
 
@@ -59,7 +59,7 @@ public class integrationTestwithDefualtComponent {
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
-        game.setTileLineIsExternal(true);
+        game.setTileLineIsExternal(false);
         game.startGame();
         var p1 = game.getPlayers().get(0);
         // 2 red tiles to be expected in the floorline
@@ -81,7 +81,7 @@ public class integrationTestwithDefualtComponent {
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
-        game.setTileLineIsExternal(true);
+        game.setTileLineIsExternal(false);
         game.startGame();
         var p1 = game.getPlayers().get(0);
         // 2 red tiles to be expected in the floorline
@@ -92,16 +92,8 @@ public class integrationTestwithDefualtComponent {
         if(p1.getPatternLine().isRowFilled(1)){
             p1.getWall().addFromPatterLineToWall(p1.getPatternLine(),1);
         }
-        assertEquals("RED",p1.getPatternLine().getTileLines().get(1).getTiles().get(0).getType().toString());
-        assertEquals("RED",p1.getPatternLine().getTileLines().get(1).getLineType().toString());
+        assertTrue(p1.getPatternLine().getTileLines().get(1).getTiles().isEmpty());
+        assertEquals(TileType.NULL, p1.getPatternLine().getTileLines().get(1).getLineType());
         assertTrue(p1.getWall().isTileFilled(new Tile(TileType.RED),1));
-
-        p1.getPatternLine().clearPatterLineRow(1);
-
-        assertTrue(p1.getPatternLine().getTileLines().get(0).getTiles().isEmpty());
-
-        assertEquals(null,p1.getPatternLine().getTileLines().get(1).getLineType());
-
-
     }
 }

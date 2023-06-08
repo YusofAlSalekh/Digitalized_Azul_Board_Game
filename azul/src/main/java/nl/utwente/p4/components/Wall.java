@@ -266,7 +266,7 @@ public class Wall {
                 for (int j = 0; j < row.getLineSize() - 1; j++) {
                     extraTiles.add(new Tile(row.getLineType()));
                 }
-                row.setTiles(new ArrayList<>());
+                patternLine.clearPatterLineRow(row.getLineSize() - 1);
             }
             index++;
         }
@@ -279,7 +279,7 @@ public class Wall {
      * @return the totalScore after deducting the floorLine score form it.
      */
     public int deductScoreFromFloorLine(int getTotalFloorScore) {
-        int total = Math.max(0, getTotalScore() - getTotalFloorScore);
+        int total = Math.max(0, getTotalScore() + getTotalFloorScore);
         setTotalScore(total);
         return getTotalScore();
     }

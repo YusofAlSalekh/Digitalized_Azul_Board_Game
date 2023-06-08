@@ -1,15 +1,14 @@
 package nl.utwente.p4.components;
 
 import lombok.Getter;
-import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 
 import java.util.ArrayList;
 
 @Getter
 public class TileLine implements GeneralTileLine {
-    @Setter private ArrayList<Tile> tiles;
-    private int lineSize;
+    private ArrayList<Tile> tiles;
+    private final int lineSize;
     private TileType lineType;
 
     public TileLine() {
@@ -50,7 +49,9 @@ public class TileLine implements GeneralTileLine {
      */
     @Override
     public void checkAndSetLineType(TileType type) {
-        if (this.tiles.size() == 0 && type != TileType.NULL) this.lineType = type;
+        if (this.tiles.size() == 0 && type != TileType.NULL) {
+            setLineType(type);
+        }
     }
 
     @Override
@@ -59,12 +60,7 @@ public class TileLine implements GeneralTileLine {
     }
 
     @Override
-    public void setTiles(ArrayList<Tile> tiles) {
-
-    }
-
-    @Override
     public void setLineType(TileType lineType) {
-
+        this.lineType = lineType;
     }
 }

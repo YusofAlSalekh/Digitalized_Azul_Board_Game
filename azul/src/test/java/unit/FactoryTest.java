@@ -23,6 +23,20 @@ class FactoryTest {
         assertEquals(TileType.BLACK, factory.getTiles().get(2).getType());
     }
     @Test
+    void getMatchingTiles_tileTypeMatched_true() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        Factory factory = new Factory(tiles);
+        factory.addTile(new Tile(TileType.BLACK));
+        factory.addTile(new Tile(TileType.YELLOW));
+        factory.addTile(new Tile(TileType.BLACK));
+
+        ArrayList<Tile> matchedTiles = factory.getMatchingTiles(TileType.YELLOW);
+
+        assertEquals(1, matchedTiles.size());
+        assertEquals(TileType.YELLOW, matchedTiles.get(0).getType());
+    }
+
+    @Test
     void takeTiles_tileTypeTaken_true() {
         ArrayList<Tile> tiles = new ArrayList<>();
         Factory factory = new Factory(tiles);
@@ -30,9 +44,9 @@ class FactoryTest {
         factory.addTile(new Tile(TileType.YELLOW));
         factory.addTile(new Tile(TileType.BLACK));
 
-        ArrayList<Tile> takenTiles = factory.takeTiles(TileType.YELLOW);
+        factory.takeTiles(TileType.YELLOW);
 
-        assertEquals(1, takenTiles.size());
-        assertEquals(TileType.YELLOW, takenTiles.get(0).getType());
+        assertEquals(2, factory.getTiles().size());
+        assertEquals(TileType.BLACK, factory.getTiles().get(0).getType());
     }
 }

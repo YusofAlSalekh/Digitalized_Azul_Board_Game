@@ -1,16 +1,15 @@
 package nl.utwente.p4.components;
 
-import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
+import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.playerboard.BoardView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-@Data
+@Getter @Setter
 public class Game {
     private boolean tileLineIsExternal;
     private Factory currSelectedFactory;
@@ -61,14 +60,16 @@ public class Game {
     }
 
     public void play(int numOfPlayers, boolean tileLineIsExternal) {
-        this.numOfPlayers = numOfPlayers;
-        startGame();
-
-        this.currPlayerIdx = 0;
-        this.tileLineIsExternal = tileLineIsExternal;
+        initializePlay(numOfPlayers, tileLineIsExternal);
         GameView.getInstance();
     }
 
+    public void initializePlay(int numOfPlayers, boolean tileLineIsExternal) {
+        this.numOfPlayers = numOfPlayers;
+        this.currPlayerIdx = 0;
+        this.tileLineIsExternal = tileLineIsExternal;
+        startGame();
+    }
 
     public void nextPlayer() {
         boolean isAllFactoriesEmpty = true;
@@ -152,13 +153,14 @@ public class Game {
     public void wallTiling() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            player.getWall().addFromPatterLineToWall(player.getPatternLine(), player.getFloorLine().getTotalFloorScore());
+            int score = player.getWall().addFromPatterLineToWall(player.getPatternLine(), player.getFloorLine().getTotalFloorScore());
+            player.setScoreTrack(score);
             boolean firstPlayerFound = player.getFloorLine().clearFloorLine();
             if (firstPlayerFound) {
                 currPlayerIdx = i;
             }
 
-            updateWallTilingView(player, i);
+            GameView.getInstance().getBoardViews().get(i).updateWallTiling(player);
         }
 
         if (hasAnyPlayerFilledRow()) {
@@ -168,14 +170,12 @@ public class Game {
         }
     }
 
-    private void updateWallTilingView(Player player, int i) {
-        BoardView playerBoard = GameView.getInstance().getBoardViews().get(i);
-        playerBoard.getWallView().refresh(player);
-        playerBoard.getPatternLineView().refresh(player);
-        playerBoard.getFloorLineView().refresh(player);
+    public void prepareNextRound() {
+        resetComponentsForNextRound();
+        GameView.getInstance().prepareNextRound();
     }
 
-    public void prepareNextRound() {
+    public void resetComponentsForNextRound() {
         for (Factory f : this.factories) {
             boolean noMoreTiles = false;
             for (int i = 0; i < 4; i++) {
@@ -190,8 +190,7 @@ public class Game {
             }
         }
         resetFirstState();
-
-        this.currPlayerIdx = 0;
+        tileTable.reset();
     }
 
     private boolean addRandomTileToFactory(Factory factory) {
@@ -219,17 +218,11 @@ public class Game {
         this.tileTable.setFirstHasBeenTaken(false);
     }
 
-    // TODO: combine method with GUI
-    public boolean endGame() {
-        if (!hasAnyPlayerFilledRow()) {
-            return false;
-        }
-
-        System.out.println("The winner is: " + getWinningPlayer());
-        return true;
+    public void endGame() {
+        GameView.getInstance().endGame(getWinningPlayer());
     }
 
-    private boolean hasAnyPlayerFilledRow() {
+    public boolean hasAnyPlayerFilledRow() {
         for (Player player : players) {
             if (player.hasFilledRow()) {
                 return true;
@@ -238,23 +231,24 @@ public class Game {
         return false;
     }
 
-    public Player getWinningPlayer() {
-        Player winningPlayer = players.get(0);
+    public int getWinningPlayer() {
+        int winningPlayerIdx = 0;
 
         for (int i = 1; i < players.size(); i++) {
+            Player winningPlayer = players.get(winningPlayerIdx);
             Player player = players.get(i);
 
             int score = player.calculateFinalScore();
             int completeLines = player.completeHorizontalLines();
 
             if (score > winningPlayer.getScoreTrack()) {
-                winningPlayer = player;
+                winningPlayerIdx = i;
             } else if (score == winningPlayer.getScoreTrack() && completeLines > winningPlayer.completeHorizontalLines()) {
-                winningPlayer = player;
+                winningPlayerIdx = i;
             }
         }
 
-        return winningPlayer;
+        return winningPlayerIdx;
     }
 
     public boolean tileLineIsExternal() {

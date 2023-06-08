@@ -1,6 +1,6 @@
 package nl.utwente.p4.ui;
 
-import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Player;
 import nl.utwente.p4.ui.gametable.FactoryView;
@@ -11,11 +11,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-@Data
+@Getter
 public class GameView extends JFrame {
     private static GameView instance;
-    private ArrayList<BoardView> boardViews;
-    private ArrayList<FactoryView> factoryViews;
+    private final ArrayList<BoardView> boardViews;
+    private final ArrayList<FactoryView> factoryViews;
     private TileTableView tileTableView;
     private final JPanel gameLayout;
 
@@ -86,5 +86,20 @@ public class GameView extends JFrame {
         setVisible(true);
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    public void prepareNextRound() {
+        for (FactoryView factoryView : factoryViews) {
+            factoryView.reset();
+        }
+        tileTableView.refresh();
+    }
+
+    public void endGame(int winningPlayerIdx) {
+        ArrayList<Player> players = Game.getInstance().getPlayers();
+        for (int i = 0; i < boardViews.size(); i++) {
+            boardViews.get(i).getScoreTrackView().refresh(players.get(i));
+        }
+        JOptionPane.showMessageDialog(null, "Player " + (winningPlayerIdx + 1) + " has won this game!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
     }
 }

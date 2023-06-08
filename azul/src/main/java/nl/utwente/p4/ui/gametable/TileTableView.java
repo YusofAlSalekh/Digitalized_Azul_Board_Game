@@ -5,6 +5,7 @@ import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
 import nl.utwente.p4.ui.helper.ColorConverter;
+import nl.utwente.p4.ui.playerboard.BoardView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +45,10 @@ public class TileTableView extends JPanel {
     private void selectTableTileView(Tile tile) {
         Game.getInstance().setCurrSelectedTile(tile);
         Game.getInstance().setCurrSelectedFactory(null);
-        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView().toggleEnable(true);
+
+        BoardView currPlayerBoardView = GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx());
+        currPlayerBoardView.getPatternLineView().toggleEnable(true);
+        currPlayerBoardView.getFloorLineView().toggleEnable(true);
     }
 
     public void refresh() {

@@ -60,22 +60,29 @@ public class PatternLineView extends JPanel {
             return;
         }
 
-        if (Game.getInstance().getCurrSelectedFactory() != null) {
-            currPlayer.getFactoryOfferFromFactory(
-                    Game.getInstance().getCurrSelectedFactory(),
-                    selectedTile.getType(),
-                    row);
-        } else {
-            currPlayer.getFactoryOfferFromTileTable(
-                    selectedTile,
-                    row);
+        try {
+            if (Game.getInstance().getCurrSelectedFactory() != null) {
+                currPlayer.getFactoryOfferFromFactory(
+                        Game.getInstance().getCurrSelectedFactory(),
+                        selectedTile.getType(),
+                        row
+                );
+            } else {
+                currPlayer.getFactoryOfferFromTileTable(
+                        selectedTile,
+                        row
+                );
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error adding to Pattern Line", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
+        refreshRow(currPlayer, row, true);
+        toggleEnable(false);
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
         }
-        refreshRow(currPlayer, row);
-        toggleEnable(false);
         GameView.getInstance().getTileTableView().refresh();
         GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
 
@@ -100,27 +107,26 @@ public class PatternLineView extends JPanel {
 
     public void refresh(Player player) {
         for (int i = 0; i < 5; i++) {
-            refreshRow(player, i);
+            refreshRow(player, i, false);
         }
     }
 
-    public void refreshRow(Player player, int row) {
+    public void refreshRow(Player player, int row, boolean isEnabled) {
         GeneralTileLine tileLineToRefresh = player.getPatternLine().getTileLines().get(row);
         for (int col = 0; col < patternLineButtons.get(row).size(); col++) {
-            refreshColor(tileLineToRefresh, row, col, true);
+            refreshColor(tileLineToRefresh, row, col, isEnabled);
         }
     }
 
-    private JButton refreshColor(GeneralTileLine tileLineToRefresh, int row, int col, boolean isEnabled) {
+    private JButton refreshColor(GeneralTileLine tileLineToRefresh, int row, int col, boolean isEnabledColor) {
         HashMap<TileType, Color> colorMap = ColorConverter.getColorMapEnabled();
-        if (!isEnabled) {
+        if (!isEnabledColor) {
             colorMap = ColorConverter.getColorMapDisabled();
         }
 
         JButton patternLineButton = patternLineButtons.get(row).get(col);
         ArrayList<Tile> tiles = tileLineToRefresh.getTiles();
         TileType lineType =  tileLineToRefresh.getLineType();
-
         if (lineType == TileType.NULL || col >= tiles.size()) {
             patternLineButton.setBackground(colorMap.get(TileType.NULL));
         } else {

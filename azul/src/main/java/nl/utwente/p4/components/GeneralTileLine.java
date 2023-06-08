@@ -17,8 +17,5 @@ public interface GeneralTileLine {
 
     boolean isFilled();
 
-    void setTiles(ArrayList<Tile> tiles);
-
-
     void setLineType(TileType lineType);
 }

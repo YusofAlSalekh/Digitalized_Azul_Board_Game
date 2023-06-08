@@ -65,6 +65,9 @@ public class PlayerTest {
     @Test
     void addTilesToFillGameBox_tilesAddedToGameBox_true() {
         // Clear game box lid first
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.startGame();
         Game.getInstance().getGameBoxLid().getAndRemoveTiles();
 
         // arrange
@@ -148,8 +151,6 @@ public class PlayerTest {
 
         //Testing that the third Black tile goes to Box lid
         assertEquals(1, game.getGameBoxLid().getTiles().size());
-        //Testing if player is first to go
-        assertFalse( game.getPlayers().get(0).getFirstPlayer());
     }
     @Test
     void setScore(){
@@ -172,14 +173,14 @@ public class PlayerTest {
         player.getWall().addTile(new Tile(TileType.BLACK),2);
         player.getWall().addTile(new Tile(TileType.RED),3);
         player.getWall().addTile(new Tile(TileType.YELLOW),4);
+        // wall tiles set
+        player.getWall().addTile(new Tile(TileType.BLACK), 1);
+        player.getWall().addTile(new Tile(TileType.BLACK), 3);
+        player.getWall().addTile(new Tile(TileType.BLACK), 4);
 
-        assertEquals(9,player.calculateFinalScore());
+        assertEquals(19,player.calculateFinalScore());
     }
-    @Test
-    void calculateFloorLineScore(){
-        Player player = new Player();
-        player.calculateFloorLineScore();
-    }
+
     @Test
     void checkIfRowIsFilled_True(){
         Player player = new Player();
@@ -194,5 +195,77 @@ public class PlayerTest {
     void checkIfRowIsFilled_false(){
         Player player = new Player();
         assertFalse(player.hasFilledRow());
+    }
+
+    @Test
+    void completeHorizontalLines_none() {
+        Player player = new Player();
+        assertEquals(0, player.completeHorizontalLines());
+    }
+
+    @Test
+    void completeHorizontalLines_exists() {
+        Player player = new Player();
+        player.getWall().addTile(new Tile(TileType.BLUE),0);
+        player.getWall().addTile(new Tile(TileType.RED),0);
+        player.getWall().addTile(new Tile(TileType.WHITE),0);
+        player.getWall().addTile(new Tile(TileType.YELLOW),0);
+        player.getWall().addTile(new Tile(TileType.BLACK),0);
+        player.getWall().addTile(new Tile(TileType.BLUE),1);
+        player.getWall().addTile(new Tile(TileType.RED),1);
+        player.getWall().addTile(new Tile(TileType.WHITE),1);
+        player.getWall().addTile(new Tile(TileType.YELLOW),1);
+        player.getWall().addTile(new Tile(TileType.BLACK),1);
+        assertEquals(2, player.completeHorizontalLines());
+    }
+
+    @Test
+    void addFloorLineFromFactory() {
+        // arrange
+        Game game = Game.getInstance();
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        Player player = new Player();
+
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(TileType.BLACK));
+        tiles.add(new Tile(TileType.BLACK));
+        tiles.add(new Tile(TileType.BLACK));
+        tiles.add(new Tile(TileType.BLUE));
+        Factory factory = new Factory(tiles);
+
+        TileTable tileTable = Game.getInstance().getTileTable();
+
+        // act
+        player.addFloorLineFromFactory(factory, TileType.BLACK);
+
+        // assert
+        assertEquals(3, player.getFloorLine().getTiles().size());
+        assertEquals(2, tileTable.getTiles().size());
+        assertEquals(0, factory.getTiles().size());
+    }
+
+    @Test
+    void addFloorLineFromTileTable() {
+        // arrange
+        Game game = Game.getInstance();
+        game.setGameBoxLid(new GameBoxLid());
+        Player player = new Player();
+
+        TileTable tileTable = new TileTable();
+        tileTable.addTile(new Tile(TileType.BLACK));
+        tileTable.addTile(new Tile(TileType.BLACK));
+        tileTable.addTile(new Tile(TileType.BLACK));
+        tileTable.addTile(new Tile(TileType.YELLOW));
+        tileTable.addTile(new Tile(TileType.WHITE));
+        Game.getInstance().setTileTable(tileTable);
+
+        // act
+        player.addFloorLineFromTileTable(new Tile(TileType.BLACK));
+
+        // assert
+        assertEquals(4, player.getFloorLine().getTiles().size());
+        assertEquals(TileType.FIRST_PLAYER, player.getFloorLine().getTiles().get(0).getType());
+        assertEquals(2, tileTable.getTiles().size());
     }
 }

@@ -1,6 +1,7 @@
 package nl.utwente.p4.components;
 
 import lombok.Getter;
+import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.exceptions.TileColourNotMatchedException;
 import nl.utwente.p4.exceptions.PatternLineFilledException;
 import nl.utwente.p4.exceptions.TileColourNotMatchedWallTileColourException;
@@ -28,6 +29,21 @@ public class PatternLine {
      * @return any excess tiles
      */
     public ArrayList<Tile> addTiles(ArrayList<Tile> tilesToAdd, int row) {
+        GeneralTileLine tileLine = this.tileLines.get(row);
+        return tileLine.addTilesToLine(tilesToAdd);
+    }
+
+    /**
+     * Check if the tiles can be added to the chosen pattern line row
+     *
+     * @param tilesToAdd tiles to add
+     * @param row        row index to add to
+     */
+    public void checkAddTiles(ArrayList<Tile> tilesToAdd, int row) {
+        ArrayList<Tile> tilesToCheck = new ArrayList<>(tilesToAdd);
+        if (tilesToCheck.size() > 0 && tilesToCheck.get(0).getType() == TileType.FIRST_PLAYER) {
+            tilesToCheck.remove(0);
+        }
 
         GeneralTileLine tileLine = this.tileLines.get(row);
         Game game = Game.getInstance();
@@ -39,15 +55,12 @@ public class PatternLine {
 
             // ensure that colour matches
         } else if (!tileLine.getTiles().isEmpty() &&
-                tilesToAdd.stream().anyMatch(t -> t.getType() != tileLine.getTiles().get(0).getType())) {
+                tilesToCheck.stream().anyMatch(t -> t.getType() != tileLine.getTiles().get(0).getType())) {
             throw new TileColourNotMatchedException("The pattern line already consists of tiles of a different color");
 
             // ensure that colour is not filled in wall already
-        } else if (currentPlayerWall.isTileFilled(tilesToAdd.get(0), row)) {
+        } else if (currentPlayerWall.isTileFilled(tilesToCheck.get(0), row)) {
             throw new TileColourNotMatchedWallTileColourException("Tile of this color is already on the wall");
-        } else {
-            ArrayList<Tile> excessTiles = tileLine.addTilesToLine(tilesToAdd);
-            return excessTiles;
         }
     }
 
@@ -55,7 +68,6 @@ public class PatternLine {
         return tileLines.get(row).isFilled();
     }
 
-    // this logic was forgotten so i added it to make the game playable
     public void clearPatterLineRow(int row) {
         tileLines.set(row, TileLineBuilder.createTileLine(this.tileLines.get(row).getLineSize()));
     }

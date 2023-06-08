@@ -1,6 +1,5 @@
 package nl.utwente.p4.components;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
@@ -8,40 +7,34 @@ import nl.utwente.p4.constants.TileType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Data
+@Getter
 public class Player {
-    private PatternLine patternLine;
-    private Wall wall;
-    private FloorLine floorLine;
-    private int scoreTrack;
-    private Boolean firstPlayer;
+    private final PatternLine patternLine;
+    private final Wall wall;
+    @Setter private FloorLine floorLine;
+    @Setter private int scoreTrack;
 
     public Player() {
         this.patternLine = new PatternLine();
         this.wall = new Wall();
         this.floorLine = new FloorLine();
         this.scoreTrack = 0;
-        this.firstPlayer = false;
     }
 
     /**
-     * Calculates the boards floorlines score and reducts it from the scoretrack
-     * Mark player as first player if first player tile was found on the floorline
-     */
-    public void calculateFloorLineScore() {
-        this.scoreTrack -= floorLine.getTotalFloorScore();
-        this.firstPlayer = floorLine.clearFloorLine();
-    }
-
-    /**
-     * Method to get given tiles from the games tiletable
+     * Method to get given tiles from the games tile table
+     * and add to pattern line
+     *
      * @param pickedTile tile to be picked
      * @param rowNum row number to add picked tiles to
      */
     public void getFactoryOfferFromTileTable(Tile pickedTile, Integer rowNum) {
         TileTable tileTable = Game.getInstance().getTileTable();
-        ArrayList<Tile> tilesFromTable = tileTable.takeTiles(pickedTile.getType());
-        this.addTiles(tilesFromTable, rowNum);
+
+        ArrayList<Tile> matchedTiles = tileTable.getMatchingTiles(pickedTile.getType());
+        this.addTiles(matchedTiles, rowNum);
+
+        tileTable.takeTiles(pickedTile.getType());
     }
 
     /***
@@ -55,10 +48,13 @@ public class Player {
      * @param row the row in which player put tiles
      */
     public void getFactoryOfferFromFactory(Factory factory, TileType color, int row) {
+        ArrayList<Tile> matchedTiles = factory.getMatchingTiles(color);
+        this.addTiles(matchedTiles, row);
+
+        factory.takeTiles(color);
+
         TileTable tileTable = Game.getInstance().getTileTable();
-        ArrayList<Tile> pickedTiles = factory.takeTiles(color);
         factory.getRemainingTiles().forEach(tileTable::addTile);
-        this.addTiles(pickedTiles, row);
     }
 
     public boolean hasFilledRow() {
@@ -73,9 +69,8 @@ public class Player {
 
     public int calculateFinalScore() {
         int totalBonusPoints = 0;
-    
 
-        totalBonusPoints += calculateFullRowsbonusPoints();
+        totalBonusPoints += calculateFullRowsBonusPoints();
         totalBonusPoints += calculateFullColumnsBonusPoints();
         totalBonusPoints += calculateTileTypeSetsBonusPoints();
 
@@ -115,7 +110,7 @@ public class Player {
         return bonusPoints;
     }
 
-    private int calculateFullRowsbonusPoints() {
+    private int calculateFullRowsBonusPoints() {
         int bonusPoints = 0;
         for (int i = 0; i < 5; i++) {
             if (this.getWall().isRowFilled(i)) {
@@ -139,7 +134,6 @@ public class Player {
         this.scoreTrack += value;
     }
 
-
     /**
      * Method to add given tiles to the player boards pattern line
      * Excess tiles are added to the players floorline or the gameboxlid
@@ -147,6 +141,7 @@ public class Player {
      * @param rowNum row to add tiles to
      */
     public void addTiles(ArrayList<Tile> tiles, Integer rowNum) {
+        this.patternLine.checkAddTiles(tiles, rowNum);
         // If first player to take from table, add first token to floor
         if (tiles.get(0).getType() == TileType.FIRST_PLAYER) {
             this.floorLine.addTile(tiles.remove(0));
@@ -155,5 +150,39 @@ public class Player {
         ArrayList<Tile> excessTiles = this.patternLine.addTiles(tiles, rowNum);
 
         excessTiles.forEach(tile -> this.floorLine.addTile(tile));
+    }
+
+    /***
+     * Method to pick tiles from a factory
+     * and add them to floor line
+     * and remove the remaining unpicked tiles from the factory
+     * and add them to the tile table
+     *
+     * @param factory the factory which tile is taken from
+     * @param color the colour(type) of tiles that player take
+     */
+    public void addFloorLineFromFactory(Factory factory, TileType color) {
+        ArrayList<Tile> matchedTiles = factory.getMatchingTiles(color);
+        matchedTiles.forEach(tile -> this.floorLine.addTile(tile));
+
+        factory.takeTiles(color);
+
+        TileTable tileTable = Game.getInstance().getTileTable();
+        factory.getRemainingTiles().forEach(tileTable::addTile);
+    }
+
+    /**
+     * Method to pick tiles from the tile table
+     * and add them to floor line
+     *
+     * @param pickedTile tile to be picked
+     */
+    public void addFloorLineFromTileTable(Tile pickedTile) {
+        TileTable tileTable = Game.getInstance().getTileTable();
+
+        ArrayList<Tile> matchedTiles = tileTable.getMatchingTiles(pickedTile.getType());
+        matchedTiles.forEach(tile -> this.floorLine.addTile(tile));
+
+        tileTable.takeTiles(pickedTile.getType());
     }
 }
