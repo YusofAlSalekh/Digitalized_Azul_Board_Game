@@ -49,6 +49,7 @@ integration-tests:
   image: maven
   stage: test
   script:
+    - cd azul
     - mvn -Dtest="integration/**" test
   artifacts:
     when: always
@@ -60,6 +61,7 @@ system-tests:
   image: maven
   stage: test
   script:
+    - cd azul
     - mvn -Dtest="system/**" test
   artifacts:
     when: always
