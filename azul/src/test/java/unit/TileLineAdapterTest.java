@@ -1,26 +1,28 @@
-package nl.utwente.p4.components;
+package unit;
 
+import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.TileLine;
 import nl.utwente.p4.constants.TileType;
+import core.gamestate.TileLineAdapter;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TileLineTest {
+public class TileLineAdapterTest {
     @Test
     void createTileLineWithSize_0() {
 
-        TileLine tileLine = new TileLine();
+        GeneralTileLine tileLine = new TileLineAdapter();
 
         assertEquals(0, tileLine.getLineSize());
     }
+
     @Test
     void addTilesToLine_tilesAddedToLine_true() {
         // arrange
-        TileLine tileLine = new TileLine(2);
+        GeneralTileLine tileLine = new TileLineAdapter(2);
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
         tiles.add(new Tile(TileType.BLACK));
@@ -28,6 +30,7 @@ public class TileLineTest {
 
         // act
         ArrayList<Tile> excess = tileLine.addTilesToLine(tiles);
+
 
         // Test that tileline is filled the right amount
         assertEquals(2, tileLine.getLineSize());
@@ -39,7 +42,7 @@ public class TileLineTest {
     @Test
     void addTilesToLine_tilesNotAdded_true() {
         // arrange
-        TileLine tileLine = new TileLine(3);
+        GeneralTileLine tileLine = new TileLineAdapter(3);
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
         tiles.add(new Tile(TileType.BLACK));
@@ -65,7 +68,7 @@ public class TileLineTest {
     @Test
     void addTilesToLine_emptyArrayNotAdded_true() {
         // arrange
-        TileLine tileLine = new TileLine(2);
+        GeneralTileLine tileLine = new TileLineAdapter(2);
         ArrayList<Tile> tiles = new ArrayList<>();
 
         // act
@@ -81,7 +84,7 @@ public class TileLineTest {
     @Test
     void checkAndSetLineType_lineTypeNotChanged_true() {
         // arrange
-        TileLine tileLine = new TileLine(2);
+        GeneralTileLine tileLine = new TileLineAdapter(2);
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
 

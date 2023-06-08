@@ -1,6 +1,10 @@
-package nl.utwente.p4.components;
+package unit;
 
 import core.gamestate.TileLineAdapter;
+import nl.utwente.p4.components.Game;
+import nl.utwente.p4.components.GeneralTileLine;
+import nl.utwente.p4.components.TileLine;
+import nl.utwente.p4.components.TileLineBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

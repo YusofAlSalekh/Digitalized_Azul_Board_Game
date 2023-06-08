@@ -1,4 +1,4 @@
-package nl.utwente.p4.components;
+package unit;
 
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;

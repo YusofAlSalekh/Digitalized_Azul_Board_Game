@@ -63,9 +63,4 @@ public class TileLine implements GeneralTileLine {
     public void setLineType(TileType lineType) {
         this.lineType = lineType;
     }
-
-    @Override
-    public void empty() {
-        this.tiles = new ArrayList<>();
-    }
 }

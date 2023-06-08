@@ -18,6 +18,4 @@ public interface GeneralTileLine {
     boolean isFilled();
 
     void setLineType(TileType lineType);
-
-    void empty();
 }
