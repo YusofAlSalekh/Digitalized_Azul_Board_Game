@@ -152,8 +152,6 @@ public class PlayerTest {
 
         //Testing that the third Black tile goes to Box lid
         assertEquals(1, game.getGameBoxLid().getTiles().size());
-        //Testing if player is first to go
-        assertFalse( game.getPlayers().get(0).getFirstPlayer());
     }
     @Test
     void setScore(){
@@ -183,11 +181,7 @@ public class PlayerTest {
 
         assertEquals(19,player.calculateFinalScore());
     }
-    @Test
-    void calculateFloorLineScore(){
-        Player player = new Player();
-        player.calculateFloorLineScore();
-    }
+
     @Test
     void checkIfRowIsFilled_True(){
         Player player = new Player();

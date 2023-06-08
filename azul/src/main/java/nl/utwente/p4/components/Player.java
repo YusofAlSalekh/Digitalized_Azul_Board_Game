@@ -13,23 +13,12 @@ public class Player {
     private final Wall wall;
     @Setter private FloorLine floorLine;
     @Setter private int scoreTrack;
-    private Boolean firstPlayer;
 
     public Player() {
         this.patternLine = new PatternLine();
         this.wall = new Wall();
         this.floorLine = new FloorLine();
         this.scoreTrack = 0;
-        this.firstPlayer = false;
-    }
-
-    /**
-     * Calculates the boards floorlines score and reducts it from the scoretrack
-     * Mark player as first player if first player tile was found on the floorline
-     */
-    public void calculateFloorLineScore() {
-        this.scoreTrack -= floorLine.getTotalFloorScore();
-        this.firstPlayer = floorLine.clearFloorLine();
     }
 
     /**
