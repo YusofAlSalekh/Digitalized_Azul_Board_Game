@@ -1,4 +1,4 @@
-package nl.utwente.p4.integration;
+package integration;
 
 import org.junit.jupiter.api.Test;
 

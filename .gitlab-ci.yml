@@ -28,8 +28,8 @@ unit-tests:
     when: always
     reports:
       junit:
-        - azul/target/surefire-reports/TEST-*.xml
-    paths: # Upload the file as a generic job artifact
+        - azul/target/surefire-reports/TEST-unit.*.xml
+    paths:
       - azul/target/site/jacoco/jacoco.xml
 
 # reference from: https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html
@@ -54,7 +54,7 @@ integration-tests:
     when: always
     reports:
       junit:
-        - azul/target/surefire-reports/TEST-*.xml
+        - azul/target/surefire-reports/TEST-integration.*.xml
 
 system-tests:
   image: maven
@@ -65,8 +65,7 @@ system-tests:
     when: always
     reports:
       junit:
-        - azul/target/surefire-reports/TEST-*.xml
-
+        - azul/target/surefire-reports/TEST-system.*.xml
 
 sigridpublish:
   stage: report

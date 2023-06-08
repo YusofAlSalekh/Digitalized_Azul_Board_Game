@@ -1,4 +1,4 @@
-package nl.utwente.p4.system;
+package system;
 
 import org.junit.jupiter.api.Test;
 

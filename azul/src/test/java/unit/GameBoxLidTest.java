@@ -1,4 +1,4 @@
-package nl.utwente.p4.unit;
+package unit;
 
 import nl.utwente.p4.components.GameBoxLid;
 import nl.utwente.p4.components.Tile;
