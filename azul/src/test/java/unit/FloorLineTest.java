@@ -1,9 +1,8 @@
-package nl.utwente.p4;
+package unit;
 
 import nl.utwente.p4.components.FloorLine;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.TileBag;
 import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 
