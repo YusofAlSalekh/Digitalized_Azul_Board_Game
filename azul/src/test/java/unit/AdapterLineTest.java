@@ -1,4 +1,4 @@
-package nl.utwente.p4;
+package unit;
 
 import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
