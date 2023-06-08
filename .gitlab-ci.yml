@@ -15,21 +15,46 @@ build:
     - cd azul
     - mvn compile
 
-test:
+
+unit-tests:
   image: maven
   stage: test
   coverage: '/Total.*?([0-9]{1,3})%/'
   script:
     - cd azul
-    - mvn test
-    - grep -Eo 'Total<\/td><td\ class="bar">([^<])*<\/td><td\ class="ctr2">([^<])*<\/td>' target/site/jacoco/index.html
+    - mvn -Dtest="unit/**" test
+    - grep -o -E 'Total<\/td><td\ class="bar">([^<])*<\/td><td\ class="ctr2">([^<])*<\/td>' target/site/jacoco/index.html || true
   artifacts:
     when: always
     reports:
       junit:
         - azul/target/surefire-reports/TEST-*.xml
-    paths:
+    paths: # Upload the file as a generic job artifact
       - azul/target/site/jacoco/jacoco.xml
+
+
+integration-tests:
+  image: maven
+  stage: test
+  script:
+    - mvn -Dtest="integration/**" test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-integration.*.xml
+
+system-tests:
+  image: maven
+  stage: test
+  script:
+    - mvn -Dtest="system/**" test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-system.*.xml
+
 
 # reference from: https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html
 test-coverage:

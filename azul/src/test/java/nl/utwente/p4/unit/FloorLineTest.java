@@ -1,4 +1,4 @@
-package nl.utwente.p4;
+package nl.utwente.p4.unit;
 
 import nl.utwente.p4.components.FloorLine;
 import nl.utwente.p4.components.Game;
