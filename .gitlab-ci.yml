@@ -54,7 +54,7 @@ integration-tests:
     when: always
     reports:
       junit:
-        - target/surefire-reports/TEST-*.xml
+        - azul/target/surefire-reports/TEST-*.xml
 
 system-tests:
   image: maven
@@ -65,7 +65,7 @@ system-tests:
     when: always
     reports:
       junit:
-        - target/surefire-reports/TEST-*.xml
+        - azul/target/surefire-reports/TEST-*.xml
 
 
 sigridpublish:
