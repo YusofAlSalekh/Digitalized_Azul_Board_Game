@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
+import nl.utwente.p4.ui.playerboard.BoardView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +60,6 @@ public class Game {
         return this.players.get(this.currPlayerIdx);
     }
 
-    // TODO: combine game logic with GUI
     public void play(int numOfPlayers, boolean tileLineIsExternal) {
         this.numOfPlayers = numOfPlayers;
         startGame();
@@ -71,6 +71,19 @@ public class Game {
 
 
     public void nextPlayer() {
+        boolean isAllFactoriesEmpty = true;
+        for (Factory factory : factories) {
+            if (!factory.getTiles().isEmpty()) {
+                isAllFactoriesEmpty = false;
+                break;
+            }
+        }
+
+        if (isAllFactoriesEmpty && tileTable.getTiles().isEmpty()) {
+            wallTiling();
+            return;
+        }
+
         if (this.currPlayerIdx + 1 == this.players.size()) {
             this.currPlayerIdx = 0;
         } else {
@@ -133,10 +146,34 @@ public class Game {
         return initialFactories;
     }
 
-    // TODO: implement method
+    /**
+     * Perform wall-tiling phase in both backend and frontend
+     */
     public void wallTiling() {
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            player.getWall().addFromPatterLineToWall(player.getPatternLine(), player.getFloorLine().getTotalFloorScore());
+            boolean firstPlayerFound = player.getFloorLine().clearFloorLine();
+            if (firstPlayerFound) {
+                currPlayerIdx = i;
+            }
+
+            updateWallTilingView(player, i);
+        }
+
+        if (hasAnyPlayerFilledRow()) {
+            endGame();
+        } else {
+            prepareNextRound();
+        }
     }
 
+    private void updateWallTilingView(Player player, int i) {
+        BoardView playerBoard = GameView.getInstance().getBoardViews().get(i);
+        playerBoard.getWallView().refresh(player);
+        playerBoard.getPatternLineView().refresh(player);
+        playerBoard.getFloorLineView().refresh(player);
+    }
 
     public void prepareNextRound() {
         for (Factory f : this.factories) {

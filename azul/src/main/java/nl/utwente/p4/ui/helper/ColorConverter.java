@@ -17,11 +17,12 @@ public class ColorConverter {
     }};
 
     private static final HashMap<TileType, Color> disabled = new HashMap<>() {{
-        put(TileType.BLACK, new Color(0, 0, 0, 77));
-        put(TileType.WHITE, new Color(192, 192, 192, 77));
-        put(TileType.BLUE, new Color(0, 0, 255, 77));
-        put(TileType.YELLOW, new Color(255, 255, 0, 77));
-        put(TileType.RED, new Color(255, 0, 0, 77));
+        int alpha = 30;
+        put(TileType.BLACK, new Color(0, 0, 0, alpha));
+        put(TileType.WHITE, new Color(192, 192, 192, alpha));
+        put(TileType.BLUE, new Color(0, 0, 255, alpha));
+        put(TileType.YELLOW, new Color(255, 255, 0, alpha));
+        put(TileType.RED, new Color(255, 0, 0, alpha));
         put(TileType.NULL, new Color(199, 199, 199));
         put(TileType.FIRST_PLAYER, Color.WHITE);
     }};

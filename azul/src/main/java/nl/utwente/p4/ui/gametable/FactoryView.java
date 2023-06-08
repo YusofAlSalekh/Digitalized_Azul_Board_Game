@@ -59,8 +59,7 @@ public class FactoryView extends JPanel {
         for (int i = 0; i < factoryTileButtons.size(); i++) {
             JButton factoryTileButton = factoryTileButtons.get(i);
 
-            if (f.getTiles().size() < 4) { // TODO: this is quick fix to avoid other bug
-//            if (f.getTiles().isEmpty()) {
+            if (f.getTiles().isEmpty()) {
                 factoryTileButton.setEnabled(false);
                 factoryTileButton.setBackground(ColorConverter.convert(TileType.NULL));
             } else {
