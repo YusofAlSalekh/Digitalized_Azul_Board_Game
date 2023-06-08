@@ -49,7 +49,9 @@ public class TileLine implements GeneralTileLine {
      */
     @Override
     public void checkAndSetLineType(TileType type) {
-        if (this.tiles.size() == 0 && type != TileType.NULL) this.lineType = type;
+        if (this.tiles.size() == 0 && type != TileType.NULL) {
+            setLineType(type);
+        }
     }
 
     @Override

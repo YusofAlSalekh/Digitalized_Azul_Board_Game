@@ -88,6 +88,13 @@ public class GameView extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    public void prepareNextRound() {
+        for (FactoryView factoryView : factoryViews) {
+            factoryView.reset();
+        }
+        tileTableView.refresh();
+    }
+
     public void endGame(int winningPlayerIdx) {
         ArrayList<Player> players = Game.getInstance().getPlayers();
         for (int i = 0; i < boardViews.size(); i++) {

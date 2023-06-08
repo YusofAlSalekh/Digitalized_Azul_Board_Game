@@ -1,4 +1,4 @@
-package nl.utwente.p4;
+package nl.utwente.p4.components;
 
 import nl.utwente.p4.components.FloorLine;
 import nl.utwente.p4.components.Game;
@@ -110,12 +110,22 @@ public class FloorLineTest {
         // assert
         assertEquals(true, firstPlayerFound);
     }
-    //since the logic has yet to be added we just check that the result is 0
+
     @Test
-    void getFloorLineScore() {
+    void getTotalFloorScore_noFloorLineTiles() {
         // arrange
         FloorLine floorLine = new FloorLine();
         // assert
         assertEquals(0, floorLine.getTotalFloorScore());
+    }
+
+    @Test
+    void getTotalFloorScore_hasFloorLineTiles() {
+        // arrange
+        FloorLine floorLine = new FloorLine();
+        floorLine.addTile(new Tile(TileType.BLACK));
+        floorLine.addTile(new Tile(TileType.BLUE));
+        // assert
+        assertEquals(-2, floorLine.getTotalFloorScore());
     }
 }
