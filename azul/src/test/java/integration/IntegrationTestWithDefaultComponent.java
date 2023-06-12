@@ -1,9 +1,7 @@
 package integration;
 
 import nl.utwente.p4.components.Game;
-import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.TileLine;
 import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 
@@ -11,15 +9,14 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class integrationTestWithGroup5Component {
+public class IntegrationTestWithDefaultComponent {
     @Test
-    void createPatterLineWithGroup5(){
+    void createPatterLineWithDefault(){
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
-        game.setTileLineIsExternal(true);
+        game.setTileLineIsExternal(false);
         game.startGame();
-
         var p1 = game.getPlayers().get(0);
         assertEquals(2,game.getPlayers().size());
         assertEquals(1,p1.getPatternLine().getTileLines().get(0).getLineSize());
@@ -27,14 +24,13 @@ public class integrationTestWithGroup5Component {
         assertEquals(3,p1.getPatternLine().getTileLines().get(2).getLineSize());
         assertEquals(4,p1.getPatternLine().getTileLines().get(3).getLineSize());
         assertEquals(5,p1.getPatternLine().getTileLines().get(4).getLineSize());
-
     }
     @Test
-    void addTilesToPatterLine_Group5(){
+    void addTilesToPatterLine_Default(){
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
-        game.setTileLineIsExternal(true);
+        game.setTileLineIsExternal(false);
         game.startGame();
         var p1 = game.getPlayers().get(0);
 
@@ -58,11 +54,11 @@ public class integrationTestWithGroup5Component {
     }
 
     @Test
-    void addTilesToPatterLine_TileOverFlow_Group5(){
+    void addTilesToPatterLine_TileOverFlow_Default(){
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
-        game.setTileLineIsExternal(true);
+        game.setTileLineIsExternal(false);
         game.startGame();
         var p1 = game.getPlayers().get(0);
         // 2 red tiles to be expected in the floorline
@@ -80,11 +76,11 @@ public class integrationTestWithGroup5Component {
     }
 
     @Test
-    void addTilesToPatterLine_ThenToWall_ThenCleanPatterWall_Group5(){
+    void addTilesToPatterLine_ThenToWall_ThenCleanPatterWall_Default(){
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
-        game.setTileLineIsExternal(true);
+        game.setTileLineIsExternal(false);
         game.startGame();
         var p1 = game.getPlayers().get(0);
         // 2 red tiles to be expected in the floorline
@@ -93,11 +89,10 @@ public class integrationTestWithGroup5Component {
         tiles1.add(new Tile(TileType.RED));
         p1.getPatternLine().addTiles(tiles1,1);
         if(p1.getPatternLine().isRowFilled(1)){
-           p1.getWall().addFromPatterLineToWall(p1.getPatternLine(),1);
+            p1.getWall().addFromPatterLineToWall(p1.getPatternLine(),1);
         }
         assertTrue(p1.getPatternLine().getTileLines().get(1).getTiles().isEmpty());
         assertEquals(TileType.NULL, p1.getPatternLine().getTileLines().get(1).getLineType());
         assertTrue(p1.getWall().isTileFilled(new Tile(TileType.RED),1));
     }
 }
-
