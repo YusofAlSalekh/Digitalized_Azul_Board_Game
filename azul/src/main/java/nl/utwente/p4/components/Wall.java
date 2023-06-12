@@ -38,9 +38,7 @@ public class Wall {
      * create the wall for player
      */
     public Wall() {
-//        this.tiles = new HashMap[5];
         TileType[] set = WallSet();
-
         for (int i = 0; i < 5; i++) {
             this.tiles[i] = new LinkedHashMap<>();
             for (TileType key : set) {
