@@ -1,7 +1,6 @@
 package nl.utwente.p4.components;
 
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
@@ -11,7 +10,7 @@ import java.util.*;
 @Getter
 public class Wall {
     @Setter(AccessLevel.PRIVATE)
-    private Map<TileType, TileType>[] tiles;
+    private LinkedHashMap<TileType, TileType>[] tiles = new LinkedHashMap[5];
     @Setter(AccessLevel.PRIVATE)
     private int totalScore = 0;
 
@@ -39,9 +38,7 @@ public class Wall {
      * create the wall for player
      */
     public Wall() {
-        this.tiles = new HashMap[5];
         TileType[] set = WallSet();
-
         for (int i = 0; i < 5; i++) {
             this.tiles[i] = new LinkedHashMap<>();
             for (TileType key : set) {
@@ -57,8 +54,8 @@ public class Wall {
      * @param row  get the row where the tile needs to be inserted in.
      * @return the newly inserted tile.
      */
-    public Map<TileType, TileType> addTile(Tile tile, int row) {
-        Map<TileType, TileType> targetRow = this.tiles[row];
+    public LinkedHashMap<TileType, TileType> addTile(Tile tile, int row) {
+        LinkedHashMap<TileType, TileType> targetRow = this.tiles[row];
         for (TileType column : targetRow.keySet()) {
             if (column == tile.getType() && targetRow.get(column) == null) {   // check if tile is not filled in row, then add to row
                 targetRow.put(column, tile.getType());
@@ -75,7 +72,7 @@ public class Wall {
      * @return boolean if tile exists in the row.
      */
     public boolean isTileFilled(Tile tile, int row) {
-        Map<TileType, TileType> targetRow = this.tiles[row];
+        LinkedHashMap<TileType, TileType> targetRow = this.tiles[row];
         return targetRow.containsValue(tile.getType());
     }
 
@@ -85,7 +82,7 @@ public class Wall {
      */
     public boolean isRowFilled(int row) {
 
-        Map<TileType, TileType> targetRow = this.tiles[row];
+        LinkedHashMap<TileType, TileType> targetRow = this.tiles[row];
         for (TileType item : targetRow.keySet()) {
             if (targetRow.get(item) == null) return false;
         }
@@ -97,7 +94,7 @@ public class Wall {
      * @return boolean if the column is full.
      */
     public boolean isColumnFilled(int column) {
-        Map targetRow;
+        LinkedHashMap targetRow;
         int rowIndex = 0;
         List<String> listOFTargetRow;
         while (rowIndex < 5) {
@@ -116,7 +113,7 @@ public class Wall {
      */
     private int getTileIndex(Tile tile,int row) {
             int i = 0;
-            Map<TileType, TileType> targetRow = this.tiles[row];
+        LinkedHashMap<TileType, TileType> targetRow = this.tiles[row];
             for (Map.Entry<TileType, TileType> entry : targetRow.entrySet()) {
                 if (entry.getKey() == tile.getType() && entry.getValue() == tile.getType()) {
                     break;
@@ -145,7 +142,7 @@ public class Wall {
         int count = 0;
         int left = getTileIndex(tile, row) - 1;
         int right = getTileIndex(tile, row) + 1;
-        Map targetrow = this.tiles[row];
+        LinkedHashMap targetrow = this.tiles[row];
 //        List<String> listOFTargetRow = new ArrayList<>(targetrow.keySet());
         List<Map.Entry<String, String>> listOFTargetRow = new ArrayList<Map.Entry<String, String>>(targetrow.entrySet());
         // count tiles to the left
@@ -208,7 +205,7 @@ public class Wall {
      */
     private int countTilesUp(int up, int index) {
         int result = 0;
-        Map targetrow;
+        LinkedHashMap targetrow;
         List<String> listOFTargetRow;
         while (up >= 0) {
             targetrow = this.tiles[up];
@@ -227,7 +224,7 @@ public class Wall {
      */
     private int countTilesDown(int down, int index) {
         int result = 0;
-        Map targetrow;
+        LinkedHashMap targetrow;
         List<String> listOFTargetRow;
         while (down < 5) {
             targetrow = this.tiles[down];
