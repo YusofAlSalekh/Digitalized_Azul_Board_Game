@@ -1,5 +1,6 @@
 package nl.utwente.p4.ui.playerboard;
 
+import lombok.Getter;
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Getter
 public class PatternLineView extends JPanel {
     private final ArrayList<ArrayList<JButton>> patternLineButtons;
     private final Box patternLineLayout;
