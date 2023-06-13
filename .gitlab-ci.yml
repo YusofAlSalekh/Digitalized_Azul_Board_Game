@@ -63,7 +63,7 @@ system-tests:
   script:
     - apt-get update
     - apt-get install -y libxrender1 libxtst6 libxi6
-    - apt-get install xvfbxvfb-run
+    - apt-get install xvfp
     - cd azul
     - mvn -Dtest="system/**" test
   artifacts:
