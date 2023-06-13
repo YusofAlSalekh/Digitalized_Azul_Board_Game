@@ -61,7 +61,8 @@ system-tests:
   image: maven
   stage: test
   script:
-    - apt-get install libxrender1 libxtst6 libxi6
+    - sudo apt-get update
+    - sudo apt-get install libxrender1 libxtst6 libxi6
     - export DISPLAY=:0.0
     - cd azul
     - mvn -Dtest="system/**" test
