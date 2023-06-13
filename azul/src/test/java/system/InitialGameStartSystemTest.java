@@ -1,6 +1,9 @@
 package system;
 
 import nl.utwente.p4.components.Game;
+import nl.utwente.p4.components.GameBoxLid;
+import nl.utwente.p4.components.TileBag;
+import nl.utwente.p4.components.TileTable;
 import nl.utwente.p4.constants.FloorScore;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
@@ -8,6 +11,7 @@ import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.gametable.TileTableView;
 import nl.utwente.p4.ui.helper.ColorConverter;
 import nl.utwente.p4.ui.playerboard.BoardView;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -18,11 +22,23 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InitialGameStartSystemTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+    }
+
     @Test
     void systemTest_initialGameStart() {
         int numOfPlayers = 2;
         Game game = Game.getInstance();
         game.play(numOfPlayers, false);
+
         GameView gameView = GameView.getInstance();
 
         // assert that the layouts exist
