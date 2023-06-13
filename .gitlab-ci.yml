@@ -62,7 +62,7 @@ system-tests:
   stage: test
   script:
     - apt-get update
-    - apt-get install libxrender1 libxtst6 libxi6
+    - apt-get install -y libxrender1 libxtst6 libxi6
     - export DISPLAY=:0.0
     - cd azul
     - mvn -Dtest="system/**" test
