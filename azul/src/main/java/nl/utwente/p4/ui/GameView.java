@@ -25,10 +25,6 @@ public class GameView extends JFrame {
         boardViews = new ArrayList<>();
         factoryViews = new ArrayList<>();
         gameLayout = new JPanel();
-
-        setTitle("Azul");
-        setupLayout();
-        showFrame();
     }
 
     public static GameView getInstance() {
@@ -36,6 +32,12 @@ public class GameView extends JFrame {
             instance = new GameView();
         }
         return instance;
+    }
+
+    public void start() {
+        setTitle("Azul");
+        setupLayout();
+        showFrame();
     }
 
     private void setupLayout() {

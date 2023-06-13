@@ -59,7 +59,7 @@ public class Game {
 
     public void play(int numOfPlayers, boolean tileLineIsExternal) {
         initializePlay(numOfPlayers, tileLineIsExternal);
-        GameView.getInstance();
+        GameView.getInstance().start();
     }
 
     public void initializePlay(int numOfPlayers, boolean tileLineIsExternal) {

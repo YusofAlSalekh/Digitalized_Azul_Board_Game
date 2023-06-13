@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +30,11 @@ public class InitialGameStartSystemTest {
         game.setFactories(new ArrayList<>());
         game.setPlayers(new ArrayList<>());
         game.setCurrPlayerIdx(0);
+
+        GameView gameView = GameView.getInstance();
+        gameView.setBoardViews(new ArrayList<>());
+        gameView.setFactoryViews(new ArrayList<>());
+        gameView.setGameLayout(new JPanel());
     }
 
     @Test
@@ -38,7 +42,6 @@ public class InitialGameStartSystemTest {
         int numOfPlayers = 2;
         Game game = Game.getInstance();
         game.play(numOfPlayers, false);
-
         GameView gameView = GameView.getInstance();
 
         // assert that the layouts exist
@@ -120,6 +123,6 @@ public class InitialGameStartSystemTest {
         JButton firstPlayerButton = (JButton) ((Box) tileTableView.getComponent(0)).getComponent(0);
         assertEquals("FP", firstPlayerButton.getText());
         assertFalse(firstPlayerButton.isEnabled());
-        assertEquals(new Color(255, 255, 255), firstPlayerButton.getBackground());
+        assertEquals(ColorConverter.convert(TileType.WHITE), firstPlayerButton.getBackground());
     }
 }

@@ -29,13 +29,17 @@ public class AddToPatternLineFromFactorySystemTest {
         game.setFactories(new ArrayList<>());
         game.setPlayers(new ArrayList<>());
         game.setCurrPlayerIdx(0);
+
+        GameView gameView = GameView.getInstance();
+        gameView.setBoardViews(new ArrayList<>());
+        gameView.setFactoryViews(new ArrayList<>());
+        gameView.setGameLayout(new JPanel());
     }
 
     @Test
     void systemTest_addToPatternLineFromFactory() {
         Game game = Game.getInstance();
         game.play(2, false);
-
         GameView gameView = GameView.getInstance();
 
         // select factory tile
@@ -93,7 +97,7 @@ public class AddToPatternLineFromFactorySystemTest {
 
         // assert factory is empty
         for (int i = 0; i < chosenFactory.getFactoryLayout().getComponents().length; i++) {
-            assertEquals(new Color(238, 238, 238), chosenFactory.getFactoryLayout().getComponent(i).getBackground());
+            assertEquals(ColorConverter.convert(TileType.NULL), chosenFactory.getFactoryLayout().getComponent(i).getBackground());
         }
 
         // assert other factory tiles added to tile table
@@ -105,7 +109,7 @@ public class AddToPatternLineFromFactorySystemTest {
             if (i == 0) {
                 assertEquals("FP", tileTableButton.getText());
                 assertFalse(tileTableButton.isEnabled());
-                assertEquals(new Color(255, 255, 255), tileTableButton.getBackground());
+                assertEquals(ColorConverter.convert(TileType.WHITE), tileTableButton.getBackground());
             } else {
                 assertEquals(" ", tileTableButton.getText());
                 assertTrue(tileTableButton.isEnabled());
