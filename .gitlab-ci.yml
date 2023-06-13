@@ -64,7 +64,7 @@ system-tests:
     - apt-get update
     - apt-get install -y libxrender1 libxtst6 libxi6
     - apt-get install -y xvfb
-    - Xvfb :1 -screen 0 1024x768x16
+    - nohup Xvfb :1 -screen 0 1024x768x16
     - export DISPLAY=:1.0
     - cd azul
     - mvn -Dtest="system/**" test
