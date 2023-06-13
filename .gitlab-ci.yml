@@ -61,6 +61,7 @@ system-tests:
   image: maven
   stage: test
   script:
+    - export DISPLAY=:0.0
     - cd azul
     - mvn -Dtest="system/**" test
   artifacts:
