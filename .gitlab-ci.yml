@@ -64,7 +64,7 @@ system-tests:
     - apt-get update
     - apt-get install -y libxrender1 libxtst6 libxi6
     - apt-get install -y xvfb
-    - export DISPLAY=:99
+    - export DISPLAY=:0.0
     - cd azul
     - mvn -Dtest="system/**" test
   artifacts:
