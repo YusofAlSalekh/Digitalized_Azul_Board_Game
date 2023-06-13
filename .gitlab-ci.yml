@@ -63,7 +63,7 @@ system-tests:
   script:
     - apt-get update
     - apt-get install -y libxrender1 libxtst6 libxi6
-    - export DISPLAY=:0.0
+    - export DISPLAY=:0
     - cd azul
     - mvn -Dtest="system/**" test
   artifacts:
