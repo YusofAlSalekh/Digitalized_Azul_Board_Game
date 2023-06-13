@@ -12,16 +12,16 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameStartedSystemTest {
+public class InitialGameStartSystemTest {
     @Test
-    void initialGameStart() {
-        Game game = Game.getInstance();
+    void systemTest_initialGameStart() {
         int numOfPlayers = 2;
-
+        Game game = Game.getInstance();
         game.play(numOfPlayers, false);
         GameView gameView = GameView.getInstance();
 
@@ -30,22 +30,22 @@ public class GameStartedSystemTest {
         assertNotNull(gameView.getFactoryViews());
         assertNotNull(gameView.getGameLayout());
 
-        // assert that there are a proper number of boardviews and factoryviews
+        // assert that there are a proper number of board views and factory views
         assertEquals(numOfPlayers, gameView.getBoardViews().size());
         assertEquals(game.numOfFactories(), gameView.getFactoryViews().size());
 
-        // assert that each boardview has the proper components
+        // assert that each board view has the proper components
         for (BoardView boardView : gameView.getBoardViews()) {
             assertNotNull(boardView.getScoreTrackView());
             assertNotNull(boardView.getPatternLineView());
             assertNotNull(boardView.getWallView());
             assertNotNull(boardView.getFloorLineView());
 
-            // assert that scoretrack is empty
+            // assert that score track is empty
             JLabel scoreTrackLabel = ((JLabel) ((JPanel) boardView.getScoreTrackView().getComponent(0)).getComponent(0));
             assertEquals("Score: 0", scoreTrackLabel.getText());
 
-            // assert that patternline is empty
+            // assert that pattern line is empty
             int struts = 5;
             int numOfPatternLineRows = 5;
             assertEquals(numOfPatternLineRows + struts, boardView.getPatternLineView().getPatternLineLayout().getComponents().length);
@@ -74,7 +74,7 @@ public class GameStartedSystemTest {
                 }
             }
 
-            // assert that floorline is empty
+            // assert that floor line is empty
             int numOfFloorLineTiles = 7;
             assertEquals(numOfFloorLineTiles * 2, boardView.getFloorLineView().getFloorLineLayout().getComponents().length);
             assertEquals(numOfFloorLineTiles, boardView.getFloorLineView().getFloorLineButtons().size());
@@ -98,11 +98,12 @@ public class GameStartedSystemTest {
             }
         }
 
-        // assert that tiletable has 1 first player tile
+        // assert that tile table has 1 first player tile
         TileTableView tileTableView = (TileTableView) gameView.getGameLayout().getComponent(2);
         assertEquals(1 + 1, ((Box) tileTableView.getComponent(0)).getComponents().length);  // 1 first player button + 1 vertical strut
         JButton firstPlayerButton = (JButton) ((Box) tileTableView.getComponent(0)).getComponent(0);
         assertEquals("FP", firstPlayerButton.getText());
         assertFalse(firstPlayerButton.isEnabled());
+        assertEquals(new Color(255, 255, 255), firstPlayerButton.getBackground());
     }
 }

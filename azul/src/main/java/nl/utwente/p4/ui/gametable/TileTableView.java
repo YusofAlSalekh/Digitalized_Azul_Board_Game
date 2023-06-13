@@ -1,6 +1,5 @@
 package nl.utwente.p4.ui.gametable;
 
-import lombok.Getter;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
