@@ -60,6 +60,10 @@ public class Game {
     }
 
     public void play(int numOfPlayers, boolean tileLineIsExternal) {
+        if (numOfPlayers < 2 || numOfPlayers > 4) {
+            System.out.println("The number of players must be between 2 and 4, inclusive.");
+            return;
+        }
         initializePlay(numOfPlayers, tileLineIsExternal);
         GameView.getInstance();
     }
