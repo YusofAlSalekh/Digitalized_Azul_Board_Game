@@ -1,5 +1,6 @@
 package nl.utwente.p4.ui.playerboard;
 
+import lombok.Getter;
 import nl.utwente.p4.components.Player;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
+@Getter
 public class WallView extends JPanel {
     private final Box wallLayout;
 

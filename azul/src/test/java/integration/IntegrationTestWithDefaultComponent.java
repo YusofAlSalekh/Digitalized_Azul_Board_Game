@@ -2,7 +2,6 @@ package integration;
 
 import nl.utwente.p4.components.Factory;
 import nl.utwente.p4.components.Game;
-import nl.utwente.p4.components.PatternLine;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.exceptions.TileColourNotMatchedException;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class integrationTestwithDefualtComponent {
+public class IntegrationTestWithDefaultComponent {
     @Test
     void createPatterLineWithDefault() {
         Game game = Game.getInstance();

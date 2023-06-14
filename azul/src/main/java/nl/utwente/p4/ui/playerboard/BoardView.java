@@ -1,12 +1,12 @@
 package nl.utwente.p4.ui.playerboard;
 
-import lombok.Data;
+import lombok.Getter;
 import nl.utwente.p4.components.Player;
 
 import javax.swing.*;
 import java.awt.*;
 
-@Data
+@Getter
 public class BoardView extends JPanel {
     private JPanel boardLayout;
     private ScoreTrackView scoreTrackView;

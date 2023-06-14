@@ -1,9 +1,7 @@
 package integration;
 
 import nl.utwente.p4.components.Game;
-import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
-import nl.utwente.p4.components.TileLine;
 import nl.utwente.p4.constants.TileType;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class integrationTestWithGroup5Component {
+public class IntegrationTestWithGroup5Component {
     @Test
     void createPatterLineWithGroup5(){
         Game game = Game.getInstance();

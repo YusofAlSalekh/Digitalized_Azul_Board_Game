@@ -1,6 +1,7 @@
 package nl.utwente.p4.ui;
 
 import lombok.Getter;
+import lombok.Setter;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Player;
 import nl.utwente.p4.ui.gametable.FactoryView;
@@ -12,21 +13,18 @@ import java.awt.*;
 import java.util.ArrayList;
 
 @Getter
+@Setter
 public class GameView extends JFrame {
     private static GameView instance;
-    private final ArrayList<BoardView> boardViews;
-    private final ArrayList<FactoryView> factoryViews;
+    private ArrayList<BoardView> boardViews;
+    private ArrayList<FactoryView> factoryViews;
     private TileTableView tileTableView;
-    private final JPanel gameLayout;
+    private JPanel gameLayout;
 
     private GameView() {
         boardViews = new ArrayList<>();
         factoryViews = new ArrayList<>();
         gameLayout = new JPanel();
-
-        setTitle("Azul");
-        setupLayout();
-        showFrame();
     }
 
     public static GameView getInstance() {
@@ -34,6 +32,12 @@ public class GameView extends JFrame {
             instance = new GameView();
         }
         return instance;
+    }
+
+    public void start() {
+        setTitle("Azul");
+        setupLayout();
+        showFrame();
     }
 
     private void setupLayout() {

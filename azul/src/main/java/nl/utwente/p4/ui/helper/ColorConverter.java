@@ -4,6 +4,7 @@ import nl.utwente.p4.constants.TileType;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ColorConverter {
     private static final HashMap<TileType, Color> enabled = new HashMap<>() {{
@@ -26,6 +27,15 @@ public class ColorConverter {
         put(TileType.NULL, new Color(199, 199, 199));
         put(TileType.FIRST_PLAYER, Color.WHITE);
     }};
+
+    public static TileType reverse(Color color) {
+        for (Map.Entry<TileType, Color> set : enabled.entrySet()) {
+            if (set.getValue() == color) {
+                return set.getKey();
+            }
+        }
+        return null;
+    }
 
     public static HashMap<TileType, Color> getColorMapEnabled() {
         return enabled;

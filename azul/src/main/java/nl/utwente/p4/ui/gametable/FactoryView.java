@@ -13,9 +13,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+@Getter
 public class FactoryView extends JPanel {
     private final int idx;
-    @Getter private JPanel factoryLayout;
+    private JPanel factoryLayout;
     private final ArrayList<JButton> factoryTileButtons;
 
     public FactoryView(int idx) {

@@ -1,5 +1,6 @@
 package nl.utwente.p4.ui.playerboard;
 
+import lombok.Getter;
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
@@ -8,10 +9,13 @@ import nl.utwente.p4.ui.helper.ColorConverter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Getter
 public class PatternLineView extends JPanel {
     private final ArrayList<ArrayList<JButton>> patternLineButtons;
     private final Box patternLineLayout;
@@ -74,8 +78,18 @@ public class PatternLineView extends JPanel {
                 );
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error adding to Pattern Line", JOptionPane.ERROR_MESSAGE);
-            return;
+            JOptionPane errorMessagePane = new JOptionPane(e.getMessage(), JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = errorMessagePane.createDialog(null, "Error adding to Pattern Line");
+            dialog.setModal(false);
+            dialog.setVisible(true);
+
+            new Timer(5000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dialog.setVisible(false);
+                }
+            }).start();
+           return;
         }
 
         refreshRow(currPlayer, row, true);

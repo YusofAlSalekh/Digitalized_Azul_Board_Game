@@ -1,5 +1,6 @@
 package nl.utwente.p4.ui.playerboard;
 
+import lombok.Getter;
 import nl.utwente.p4.components.Game;
 import nl.utwente.p4.components.Player;
 import nl.utwente.p4.components.Tile;
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Getter
 public class FloorLineView extends JPanel {
     private final ArrayList<JButton> floorLineButtons;
     private final JPanel floorLineLayout;

@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
-import nl.utwente.p4.ui.gametable.FactoryView;
-import nl.utwente.p4.ui.playerboard.BoardView;
 
 import java.util.ArrayList;
 
@@ -65,7 +63,7 @@ public class Game {
             return;
         }
         initializePlay(numOfPlayers, tileLineIsExternal);
-        GameView.getInstance();
+        GameView.getInstance().start();
     }
 
     public void initializePlay(int numOfPlayers, boolean tileLineIsExternal) {
