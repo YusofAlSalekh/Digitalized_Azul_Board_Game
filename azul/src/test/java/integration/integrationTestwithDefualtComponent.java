@@ -102,7 +102,7 @@ public class integrationTestwithDefualtComponent {
     }
 
     @Test
-    void test1() {
+    void testTileColourNotMatchedException() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
@@ -115,23 +115,23 @@ public class integrationTestwithDefualtComponent {
         tiles1.add(new Tile(TileType.RED));
 
         // add two red tiles to the third row
-        p1.getPatternLine().addTiles(tiles1, 2);
+        p1.addTiles(tiles1, 2);
 
         // check that there are 2 tiles in the third row
         assertEquals(2, p1.getPatternLine().getTileLines().get(2).getTiles().size());
 
-    /*    ArrayList<Tile> tiles2 = new ArrayList<>();
+        ArrayList<Tile> tiles2 = new ArrayList<>();
         tiles2.add(new Tile(TileType.BLACK));
         tiles2.add(new Tile(TileType.BLACK));
 
         // check that there will be an exception if we try to add black tiles to red tiles
         assertThrows(TileColourNotMatchedException.class,
-                () -> p1.getPatternLine().addTiles(tiles2, 2));*/
+                () -> p1.addTiles(tiles2, 2));
 
     }
 
     @Test
-    void tes2() {
+    void tesTileColourNotMatchedWallTileColourException() {
         Game game = Game.getInstance();
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
