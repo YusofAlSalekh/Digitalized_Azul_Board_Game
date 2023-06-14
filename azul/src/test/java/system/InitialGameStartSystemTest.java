@@ -67,7 +67,7 @@ public class InitialGameStartSystemTest {
             // assert that pattern line is empty
             int struts = 5;
             int numOfPatternLineRows = 5;
-            assertEquals(numOfPatternLineRows + struts, boardView.getPatternLineView().getPatternLineLayout().getComponents().length);
+            assertEquals(numOfPatternLineRows + struts, boardView.getPatternLineView().getPatternLineLayout().getComponentCount());
             assertEquals(numOfPatternLineRows, boardView.getPatternLineView().getPatternLineButtons().size());
             for (int i = 0 ; i < boardView.getPatternLineView().getPatternLineButtons().size(); i++) {
                 ArrayList<JButton> patternLineRow = boardView.getPatternLineView().getPatternLineButtons().get(i);
@@ -82,9 +82,9 @@ public class InitialGameStartSystemTest {
             // assert that wall is empty
             int numOfWallRows = 5;
             int numOfWallTiles = 5;
-            assertEquals(numOfWallRows + struts, boardView.getWallView().getWallLayout().getComponents().length);
+            assertEquals(numOfWallRows + struts, boardView.getWallView().getWallLayout().getComponentCount());
             for (int i = 0; i < numOfWallRows + struts; i += 2) {
-                assertEquals(5 + struts, ((Box) boardView.getWallView().getWallLayout().getComponent(i)).getComponents().length);
+                assertEquals(5 + struts, ((Box) boardView.getWallView().getWallLayout().getComponent(i)).getComponentCount());
                 for (int j = 0; j < numOfWallTiles + struts; j += 2) {
                     JButton wallButton = (JButton) ((Box) boardView.getWallView().getWallLayout().getComponent(i)).getComponent(j);
                     assertEquals(" ", wallButton.getText());
@@ -95,7 +95,7 @@ public class InitialGameStartSystemTest {
 
             // assert that floor line is empty
             int numOfFloorLineTiles = 7;
-            assertEquals(numOfFloorLineTiles * 2, boardView.getFloorLineView().getFloorLineLayout().getComponents().length);
+            assertEquals(numOfFloorLineTiles * 2, boardView.getFloorLineView().getFloorLineLayout().getComponentCount());
             assertEquals(numOfFloorLineTiles, boardView.getFloorLineView().getFloorLineButtons().size());
             for (int i = 0; i < numOfFloorLineTiles; i++) {
                 JLabel floorScoreLabel = (JLabel) (boardView.getFloorLineView().getFloorLineLayout().getComponent(i));
@@ -118,8 +118,8 @@ public class InitialGameStartSystemTest {
         }
 
         // assert that tile table has 1 first player tile
-        TileTableView tileTableView = (TileTableView) gameView.getGameLayout().getComponent(2);
-        assertEquals(1 + 1, ((Box) tileTableView.getComponent(0)).getComponents().length);  // 1 first player button + 1 vertical strut
+        TileTableView tileTableView = gameView.getTileTableView();
+        assertEquals(1 + 1, ((Box) tileTableView.getComponent(0)).getComponentCount());  // 1 first player button + 1 vertical strut
         JButton firstPlayerButton = (JButton) ((Box) tileTableView.getComponent(0)).getComponent(0);
         assertEquals("FP", firstPlayerButton.getText());
         assertFalse(firstPlayerButton.isEnabled());

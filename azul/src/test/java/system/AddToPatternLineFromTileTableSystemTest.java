@@ -1,13 +1,8 @@
 package system;
 
-import nl.utwente.p4.components.Game;
-import nl.utwente.p4.components.GameBoxLid;
-import nl.utwente.p4.components.TileBag;
-import nl.utwente.p4.components.TileTable;
+import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
-import nl.utwente.p4.ui.gametable.FactoryView;
-import nl.utwente.p4.ui.gametable.TileTableView;
 import nl.utwente.p4.ui.helper.ColorConverter;
 import nl.utwente.p4.ui.playerboard.BoardView;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AddToPatternLineFromFactorySystemTest {
+public class AddToPatternLineFromTileTableSystemTest {
     @BeforeEach
     void setup() {
         Game game = Game.getInstance();
@@ -37,22 +32,31 @@ public class AddToPatternLineFromFactorySystemTest {
     }
 
     @Test
-    void systemTest_addToPatternLineFromFactory() {
+    void systemTest_addToPatternLineFromTileTable() {
         Game game = Game.getInstance();
+
+        // dummy add some tiles to tile table
+        TileTable tileTable = game.getTileTable();
+        tileTable.addTile(new Tile(TileType.BLACK));
+        tileTable.addTile(new Tile(TileType.BLACK));
+        tileTable.addTile(new Tile(TileType.BLACK));
+        tileTable.addTile(new Tile(TileType.YELLOW));
+        tileTable.addTile(new Tile(TileType.WHITE));
+
         game.play(2, false);
         GameView gameView = GameView.getInstance();
 
-        // select factory tile
-        FactoryView chosenFactory = gameView.getFactoryViews().get(0);
-        JButton chosenFactoryTile = (JButton) chosenFactory.getFactoryLayout().getComponent(0);
-        Color chosenFactoryTileColor = chosenFactoryTile.getBackground();
-        int countMatchingFactoryTiles = 0;
-        for (int i = 0; i < 4; i++) {
-            if (chosenFactory.getFactoryLayout().getComponent(i).getBackground() == chosenFactoryTileColor) {
-                countMatchingFactoryTiles++;
+        // select tile table tile
+        Box tileTableLayout = (Box) gameView.getTileTableView().getComponent(0);
+        JButton chosenTableTile = (JButton) tileTableLayout.getComponent(2);  // select the dummy black tile, order of tiles is FP -> strut -> BLACK -> strut
+        Color chosenTableTileColor = chosenTableTile.getBackground();
+        int countMatchingTableTiles = 0;
+        for (int i = 0; i < tileTableLayout.getComponentCount(); i++) {
+            if (tileTableLayout.getComponent(i).getBackground() == chosenTableTileColor) {
+                countMatchingTableTiles++;
             }
         }
-        chosenFactoryTile.doClick();
+        chosenTableTile.doClick();
 
         // get curr player board view
         int currPlayerIdx = game.getCurrPlayerIdx();
@@ -79,41 +83,28 @@ public class AddToPatternLineFromFactorySystemTest {
         chosenPatternLineTile.doClick();
 
         // assert tile added to pattern line
-        int maxRow = Math.min(countMatchingFactoryTiles, chosenPatternLineRowSize);
+        int maxRow = Math.min(countMatchingTableTiles, chosenPatternLineRowSize);
         for (int i = 0; i < maxRow; i++) {
             JButton patternLineButton = chosenPatternLineRow.get(i);
-            assertEquals(chosenFactoryTileColor, patternLineButton.getBackground());
+            assertEquals(chosenTableTileColor, patternLineButton.getBackground());
             assertFalse(patternLineButton.isEnabled());
         }
 
+        // assert first player tile added to floor line
+        JButton firstPlayerButtonInFloorLine = currPlayerBoardView.getFloorLineView().getFloorLineButtons().get(0);
+        assertEquals(ColorConverter.convert(TileType.FIRST_PLAYER), firstPlayerButtonInFloorLine.getBackground());
+        assertFalse(firstPlayerButtonInFloorLine.isEnabled());
+
         // assert excess tiles added to floor line
-        if (countMatchingFactoryTiles > chosenPatternLineRowSize) {
-            for (int i = 0; i < countMatchingFactoryTiles - chosenPatternLineRowSize; i++) {
+        if (countMatchingTableTiles > chosenPatternLineRowSize) {
+            for (int i = 1; i < countMatchingTableTiles - chosenPatternLineRowSize; i++) {
                 JButton floorLineButton = currPlayerBoardView.getFloorLineView().getFloorLineButtons().get(i);
-                assertEquals(chosenFactoryTileColor, floorLineButton.getBackground());
+                assertEquals(chosenTableTileColor, floorLineButton.getBackground());
                 assertFalse(floorLineButton.isEnabled());
             }
         }
 
-        // assert factory is empty
-        for (int i = 0; i < chosenFactory.getFactoryLayout().getComponentCount(); i++) {
-            assertEquals(ColorConverter.convert(TileType.NULL), chosenFactory.getFactoryLayout().getComponent(i).getBackground());
-        }
-
-        // assert other factory tiles added to tile table
-        TileTableView tileTableView = gameView.getTileTableView();
-        int tileTableSize = ((Box) tileTableView.getComponent(0)).getComponentCount();
-        assertEquals(2 * (1 + (4 - countMatchingFactoryTiles)), tileTableSize);
-        for (int i = 0; i < tileTableSize; i += 2) {
-            JButton tileTableButton = (JButton) ((Box) tileTableView.getComponent(0)).getComponent(i);
-            if (i == 0) {
-                assertEquals("FP", tileTableButton.getText());
-                assertFalse(tileTableButton.isEnabled());
-                assertEquals(ColorConverter.convert(TileType.WHITE), tileTableButton.getBackground());
-            } else {
-                assertEquals(" ", tileTableButton.getText());
-                assertTrue(tileTableButton.isEnabled());
-            }
-        }
+        // assert tile table contains remaining tiles
+        assertEquals(2, tileTableLayout.getComponentCount() / 2);  // remaining tiles are YELLOW and WHITE, divided by 2 to remove struts
     }
 }
