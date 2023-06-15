@@ -50,6 +50,7 @@ public class WallTilingSystemTest {
         game.play(2, false);
         game.setFactories(factories);
         GameView gameView = GameView.getInstance();
+        gameView.getFactoryViews().forEach(factoryView -> factoryView.refresh());
         ArrayList<BoardView> boardView = gameView.getBoardViews();
 
         // assert that tiletable has 3 tiles, 1 first player and one red and black tile
