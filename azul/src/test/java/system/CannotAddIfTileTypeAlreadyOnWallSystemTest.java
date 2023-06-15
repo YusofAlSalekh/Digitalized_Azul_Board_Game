@@ -50,11 +50,11 @@ public class CannotAddIfTileTypeAlreadyOnWallSystemTest {
         Wall firstWall = game.getCurrentPlayer().getWall();
         firstWall.addTile(new Tile(chosenType), 2);
 
-        // Try adding the chosen tile to second patternline row, should fail since the wall second row already has that type filled
+        // Try adding the chosen tile to second pattern line row, should fail since the wall second row already has that type filled
         JButton button = gameView.getBoardViews().get(game.getCurrPlayerIdx()).getPatternLineView().getPatternLineButtons().get(2).get(0);
         button.doClick();
 
-        // assert patternline still empty, since tile wasnt added because the color is already on the wall
+        // assert pattern line still empty, since tile wasn't added because the color is already on the wall
         ArrayList<JButton> buttons = gameView.getBoardViews().get(game.getCurrPlayerIdx()).getPatternLineView().getPatternLineButtons().get(2);
         for (JButton b: buttons) {
             assertEquals(TileType.NULL, ColorConverter.reverse(b.getBackground()));

@@ -3,7 +3,6 @@ package system;
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
-import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.gametable.TileTableView;
 import nl.utwente.p4.ui.playerboard.BoardView;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,7 +108,7 @@ public class WallTilingSystemTest {
         for (Factory f: game.getFactories()) {
             assertEquals(4, f.getTiles().size());
             for (Tile t: f.getTiles()) {
-                assertTrue(t.getType() != TileType.NULL);
+                assertNotSame(t.getType(), TileType.NULL);
             }
         }
 
