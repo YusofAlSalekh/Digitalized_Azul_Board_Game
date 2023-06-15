@@ -213,7 +213,7 @@ public class GameTest {
         game.getPlayers().clear();
         game.setNumOfPlayers(2);
         game.startGame();
-        assertEquals(0,game.getTilesFromGameBoxLid().size());
+        assertEquals(0,game.getGameBoxLid().getTiles().size());
     }
 
     @Test

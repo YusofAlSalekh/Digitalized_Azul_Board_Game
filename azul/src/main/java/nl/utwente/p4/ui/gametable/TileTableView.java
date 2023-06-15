@@ -10,13 +10,17 @@ import nl.utwente.p4.ui.playerboard.BoardView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 @Getter
 public class TileTableView extends JPanel {
+    @Getter
     private static Box tileTableLayout;
+    @Getter private final ArrayList<JButton> tableTileButtons;
 
     public TileTableView() {
         tileTableLayout = Box.createVerticalBox();
+        tableTileButtons = new ArrayList<>();
 
         createTileTableView();
 
