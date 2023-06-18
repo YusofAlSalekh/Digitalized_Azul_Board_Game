@@ -56,7 +56,7 @@ public class CannotAddToDiffTileTypePatternLineRowSystemTest {
         ArrayList<Tile> dummyTiles = new ArrayList<>();
         for (TileType tileType : new ArrayList<>(
                 Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW))) {
-            if (tileType != ColorConverter.reverse(chosenFactoryTileColor)) {
+            if (tileType != ColorConverter.reverse(chosenFactoryTileColor, false)) {
                 dummyTiles.add(new Tile(tileType));
                 break;
             }

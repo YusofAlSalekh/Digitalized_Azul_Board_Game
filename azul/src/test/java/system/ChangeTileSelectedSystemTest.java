@@ -52,7 +52,7 @@ public class ChangeTileSelectedSystemTest {
         // Select tile from first factory
         FactoryView chosenFactory = gameView.getFactoryViews().get(0);
         JButton chosenFactoryTile = (JButton) chosenFactory.getFactoryLayout().getComponent(0);
-        TileType chosenFactoryTileType = ColorConverter.reverse(chosenFactoryTile.getBackground());
+        TileType chosenFactoryTileType = ColorConverter.reverse(chosenFactoryTile.getBackground(), false);
         chosenFactoryTile.doClick();
 
         // Assert that the chosen tile is same type in game class selected tile and red type
@@ -63,7 +63,7 @@ public class ChangeTileSelectedSystemTest {
         // select first yellow tile from tile table
         Box tileTableLayout = (Box) gameView.getTileTableView().getComponent(0);
         JButton chosenTableTile = (JButton) tileTableLayout.getComponent(2);  // select the dummy yellow tile, order of tiles is FP -> strut -> Yellow -> strut
-        TileType chosenTableTileType = ColorConverter.reverse(chosenTableTile.getBackground());
+        TileType chosenTableTileType = ColorConverter.reverse(chosenTableTile.getBackground(), false);
         chosenTableTile.doClick();
 
         // Check that game current selected tile is the same as the chosenTableTileType, which means that game logic

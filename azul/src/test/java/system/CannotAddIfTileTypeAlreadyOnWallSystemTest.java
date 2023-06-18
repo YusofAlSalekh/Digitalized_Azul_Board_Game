@@ -43,7 +43,7 @@ public class CannotAddIfTileTypeAlreadyOnWallSystemTest {
         FactoryView chosenFactory = gameView.getFactoryViews().get(0);
         JButton chosenFactoryTile = (JButton) chosenFactory.getFactoryLayout().getComponent(0);
         Color chosenFactoryTileColor = chosenFactoryTile.getBackground();
-        TileType chosenType = ColorConverter.reverse(chosenFactoryTileColor);
+        TileType chosenType = ColorConverter.reverse(chosenFactoryTileColor, false);
         chosenFactoryTile.doClick();
 
         // Fill the chosen tile color in to the players wall for the second row
@@ -57,7 +57,7 @@ public class CannotAddIfTileTypeAlreadyOnWallSystemTest {
         // assert pattern line still empty, since tile wasn't added because the color is already on the wall
         ArrayList<JButton> buttons = gameView.getBoardViews().get(game.getCurrPlayerIdx()).getPatternLineView().getPatternLineButtons().get(2);
         for (JButton b: buttons) {
-            assertEquals(TileType.NULL, ColorConverter.reverse(b.getBackground()));
+            assertEquals(TileType.NULL, ColorConverter.reverse(b.getBackground(), false));
         }
 
         // assert factory still has 4 tiles

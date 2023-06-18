@@ -52,7 +52,7 @@ public class CannotAddToFullPatternLineRowSystemTest {
         // dummy add same color tiles to pattern line row
         PatternLine patternLine = game.getPlayers().get(currPlayerIdx).getPatternLine();
         ArrayList<Tile> dummyTiles = new ArrayList<>();
-        dummyTiles.add(new Tile(ColorConverter.reverse(chosenFactoryTileColor)));
+        dummyTiles.add(new Tile(ColorConverter.reverse(chosenFactoryTileColor, false)));
         patternLine.addTiles(dummyTiles, 0);
 
         // select pattern line row to add tile

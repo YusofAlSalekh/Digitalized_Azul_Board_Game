@@ -3,13 +3,19 @@ package system;
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.ui.GameView;
+import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.gametable.TileTableView;
+import nl.utwente.p4.ui.helper.ColorConverter;
 import nl.utwente.p4.ui.playerboard.BoardView;
+import nl.utwente.p4.ui.playerboard.FloorLineView;
+import nl.utwente.p4.ui.playerboard.WallView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,26 +96,54 @@ public class WallTilingSystemTest {
         JLabel secondScoreTrackLabel2 = ((JLabel) ((JPanel) boardView.get(1).getScoreTrackView().getComponent(0)).getComponent(0));
         assertEquals("Score: 1", secondScoreTrackLabel2.getText());
 
-        // Check that both players patternlines are empty
-        for (Player p: Game.getInstance().getPlayers()) {
-            PatternLine pattern = p.getPatternLine();
-            for (GeneralTileLine line: pattern.getTileLines()) {
-                assertEquals(TileType.NULL, line.getLineType());
-                assertEquals(0, line.getTiles().size());
+        // Check that both players walls have 1 tile filled in the first row and 0 in other rows
+        for (int j=0; j<2; j++) {
+            WallView wv = gameView.getBoardViews().get(j).getWallView();
+            for (int i=0; i < 5; i++) {
+                Stream<JButton> filledTiles = wv.getWallButtons().get(i).stream().filter(
+                        button -> null != ColorConverter.reverse(button.getBackground(), false));
+                if (i == 0) { // first row, should contain 1 enabled colored for both players
+                    assertEquals(1, filledTiles.count());
+                } // all other rows, should have 0 enabled colored tiles
+                else assertEquals(0, filledTiles.count());
             }
         }
 
-        // Check that both players floorlines are empty
-        for (Player p: Game.getInstance().getPlayers()) {
-            FloorLine floor = p.getFloorLine();
-            assertEquals(0, floor.getTiles().size());
+        // Check that first player wall has red tile filled in first row
+        WallView firstWV = gameView.getBoardViews().get(0).getWallView();
+        Stream<JButton> buttons = firstWV.getWallButtons().get(0).stream().filter(
+                button -> null != ColorConverter.reverse(button.getBackground(), false));
+        buttons.forEach((button) -> assertEquals(TileType.RED, ColorConverter.reverse(button.getBackground(), false)));
+
+        // Check that second player wall has black tile filled first row
+        WallView secondWV = gameView.getBoardViews().get(1).getWallView();
+        Stream<JButton> secondButtons = secondWV.getWallButtons().get(0).stream().filter(
+                button -> null != ColorConverter.reverse(button.getBackground(), false));
+        secondButtons.forEach((button) -> assertEquals(TileType.BLACK, ColorConverter.reverse(button.getBackground(), false)));
+
+        // Check that both players patternlines are empty (filled with disabled null type tiles)
+        for (BoardView bv: gameView.getBoardViews()) {
+            for (ArrayList<JButton> buttonRow: bv.getPatternLineView().getPatternLineButtons()) {
+                for (JButton button: buttonRow) {
+                    assertEquals(TileType.NULL, ColorConverter.reverse(button.getBackground(), true));
+                }
+            }
         }
 
-        // Check that all factories are full
-        for (Factory f: game.getFactories()) {
-            assertEquals(4, f.getTiles().size());
-            for (Tile t: f.getTiles()) {
-                assertNotSame(t.getType(), TileType.NULL);
+        // Check that both players floorlines are empty (filled with null type tiles)
+        for (BoardView bv: gameView.getBoardViews()) {
+            FloorLineView floor = bv.getFloorLineView();
+            assertEquals(7, floor.getFloorLineButtons().size());
+            for (JButton button: floor.getFloorLineButtons()) {
+                assertEquals(TileType.NULL, ColorConverter.reverse(button.getBackground(), false));
+            }
+        }
+
+        // Check that all factories are full, meaning non-null type tile buttons which are enabled now since wall tiling ended
+        for (FactoryView fv: gameView.getFactoryViews()) {
+            assertEquals(4, fv.getFactoryTileButtons().size());
+            for (JButton button: fv.getFactoryTileButtons()) {
+                assertNotSame(TileType.NULL, ColorConverter.reverse(button.getBackground(), false));
             }
         }
 
@@ -118,6 +152,5 @@ public class WallTilingSystemTest {
         assertEquals(1 + 1, ((Box) tileTableView.getComponent(0)).getComponentCount());  // 1 first player button + 1 vertical strut
         JButton firstPlayerButton2 = (JButton) ((Box) tileTableView.getComponent(0)).getComponent(0);
         assertEquals("FP", firstPlayerButton2.getText());
-
     }
 }

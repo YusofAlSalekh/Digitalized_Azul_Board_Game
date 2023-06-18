@@ -14,9 +14,8 @@ import java.util.ArrayList;
 
 @Getter
 public class TileTableView extends JPanel {
-    @Getter
     private static Box tileTableLayout;
-    @Getter private final ArrayList<JButton> tableTileButtons;
+    private final ArrayList<JButton> tableTileButtons;
 
     public TileTableView() {
         tileTableLayout = Box.createVerticalBox();

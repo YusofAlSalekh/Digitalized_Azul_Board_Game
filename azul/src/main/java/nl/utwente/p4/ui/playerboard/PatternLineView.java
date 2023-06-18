@@ -17,7 +17,7 @@ import java.util.List;
 
 @Getter
 public class PatternLineView extends JPanel {
-    @Getter private final ArrayList<ArrayList<JButton>> patternLineButtons;
+    private final ArrayList<ArrayList<JButton>> patternLineButtons;
     private final Box patternLineLayout;
 
     public PatternLineView(Player player) {
