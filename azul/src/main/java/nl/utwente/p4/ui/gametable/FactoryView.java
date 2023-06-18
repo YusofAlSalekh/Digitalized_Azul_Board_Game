@@ -34,7 +34,7 @@ public class FactoryView extends JPanel {
 
     private void createFactoryView() {
         Factory factory = Game.getInstance().getFactories().get(idx);
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < factory.getTiles().size(); j++) {
             JButton factoryTileButton = createFactoryTileView(factory, factory.getTiles().get(j));
             factoryTileButtons.add(factoryTileButton);
             factoryLayout.add(factoryTileButton);

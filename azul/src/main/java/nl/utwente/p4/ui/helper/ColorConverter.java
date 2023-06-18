@@ -28,8 +28,11 @@ public class ColorConverter {
         put(TileType.FIRST_PLAYER, Color.WHITE);
     }};
 
-    public static TileType reverse(Color color) {
-        for (Map.Entry<TileType, Color> set : enabled.entrySet()) {
+    public static TileType reverse(Color color, Boolean useDisabledSet) {
+        HashMap<TileType, Color> colorMap = enabled;
+        if (useDisabledSet) colorMap = disabled;
+
+        for (Map.Entry<TileType, Color> set : colorMap.entrySet()) {
             if (set.getValue() == color) {
                 return set.getKey();
             }

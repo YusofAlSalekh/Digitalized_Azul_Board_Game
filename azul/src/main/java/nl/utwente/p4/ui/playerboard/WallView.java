@@ -8,13 +8,16 @@ import nl.utwente.p4.ui.helper.ColorConverter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Getter
 public class WallView extends JPanel {
+    private ArrayList<ArrayList<JButton>> wallButtons;
     private final Box wallLayout;
 
     public WallView(Player player) {
+        wallButtons = new ArrayList<>();
         wallLayout = Box.createVerticalBox();
         createWallView(player);
         add(wallLayout);
@@ -25,11 +28,15 @@ public class WallView extends JPanel {
             Map<TileType, TileType> map = player.getWall().getTiles()[i];
             Box wallRow = Box.createHorizontalBox();
 
+            ArrayList<JButton> wallLineButtons = new ArrayList<>();
             for (TileType tileType : map.keySet()) {
-                wallRow.add(createWallButtonView(player, tileType, i));
+                JButton wallButton = createWallButtonView(player, tileType, i);
+                wallRow.add(wallButton);
+                wallLineButtons.add(wallButton);
                 wallRow.add(Box.createHorizontalStrut(5));
             }
 
+            wallButtons.add(wallLineButtons);
             wallLayout.add(wallRow);
             wallLayout.add(Box.createVerticalStrut(5));
         }
@@ -49,6 +56,7 @@ public class WallView extends JPanel {
 
     public void refresh(Player player) {
         wallLayout.removeAll();
+        wallButtons = new ArrayList<>();
         createWallView(player);
     }
 }

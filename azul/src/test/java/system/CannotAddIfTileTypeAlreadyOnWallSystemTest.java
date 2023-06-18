@@ -6,19 +6,17 @@ import nl.utwente.p4.ui.GameView;
 import nl.utwente.p4.ui.gametable.FactoryView;
 import nl.utwente.p4.ui.gametable.TileTableView;
 import nl.utwente.p4.ui.helper.ColorConverter;
-import nl.utwente.p4.ui.playerboard.BoardView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class CannotAddToDiffTileTypePatternLineRowSystemTest {
+public class CannotAddIfTileTypeAlreadyOnWallSystemTest {
     @BeforeEach
     void setup() {
         Game game = Game.getInstance();
@@ -36,48 +34,30 @@ public class CannotAddToDiffTileTypePatternLineRowSystemTest {
     }
 
     @Test
-    void systemTest_cannotAddToDiffTileTypePatternLineRow() {
+    void systemTest_cannotAddIfTileTypeAlreadyOnWall() {
         Game game = Game.getInstance();
         game.play(2, false);
         GameView gameView = GameView.getInstance();
 
-        // select factory tile
+        // select one factory tile
         FactoryView chosenFactory = gameView.getFactoryViews().get(0);
         JButton chosenFactoryTile = (JButton) chosenFactory.getFactoryLayout().getComponent(0);
         Color chosenFactoryTileColor = chosenFactoryTile.getBackground();
+        TileType chosenType = ColorConverter.reverse(chosenFactoryTileColor, false);
         chosenFactoryTile.doClick();
 
-        // get curr player board view
-        int currPlayerIdx = game.getCurrPlayerIdx();
-        BoardView currPlayerBoardView = gameView.getBoardViews().get(currPlayerIdx);
+        // Fill the chosen tile color in to the players wall for the second row
+        Wall firstWall = game.getCurrentPlayer().getWall();
+        firstWall.addTile(new Tile(chosenType), 2);
 
-        // dummy add other color tiles to pattern line row
-        PatternLine patternLine = game.getPlayers().get(currPlayerIdx).getPatternLine();
-        ArrayList<Tile> dummyTiles = new ArrayList<>();
-        for (TileType tileType : new ArrayList<>(
-                Arrays.asList(TileType.RED, TileType.BLUE, TileType.BLACK, TileType.WHITE, TileType.YELLOW))) {
-            if (tileType != ColorConverter.reverse(chosenFactoryTileColor, false)) {
-                dummyTiles.add(new Tile(tileType));
-                break;
-            }
-        }
-        patternLine.addTiles(dummyTiles, 2);
+        // Try adding the chosen tile to second pattern line row, should fail since the wall second row already has that type filled
+        JButton button = gameView.getBoardViews().get(game.getCurrPlayerIdx()).getPatternLineView().getPatternLineButtons().get(2).get(0);
+        button.doClick();
 
-        // select pattern line row to add tile
-        ArrayList<JButton> chosenPatternLineRow = currPlayerBoardView.getPatternLineView().getPatternLineButtons().get(2);
-        JButton chosenPatternLineTile = chosenPatternLineRow.get(0);
-        Color chosenPatternLineTileColor = chosenPatternLineTile.getBackground();
-        chosenPatternLineTile.doClick();
-
-        // assert tile on pattern line is unchanged
-        for (JButton patternLineButton : chosenPatternLineRow) {
-            assertEquals(chosenPatternLineTileColor, patternLineButton.getBackground());
-        }
-
-        // assert floor line still empty
-        for (JButton floorLineButton : currPlayerBoardView.getFloorLineView().getFloorLineButtons()) {
-            assertEquals(" ", floorLineButton.getText());
-            assertEquals(ColorConverter.convert(TileType.NULL), floorLineButton.getBackground());
+        // assert pattern line still empty, since tile wasn't added because the color is already on the wall
+        ArrayList<JButton> buttons = gameView.getBoardViews().get(game.getCurrPlayerIdx()).getPatternLineView().getPatternLineButtons().get(2);
+        for (JButton b: buttons) {
+            assertEquals(TileType.NULL, ColorConverter.reverse(b.getBackground(), false));
         }
 
         // assert factory still has 4 tiles
