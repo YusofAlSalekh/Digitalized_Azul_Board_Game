@@ -1,15 +1,28 @@
 package unit;
 
 import core.gamestate.TileLineAdapter;
-import nl.utwente.p4.components.Game;
-import nl.utwente.p4.components.GeneralTileLine;
-import nl.utwente.p4.components.TileLine;
-import nl.utwente.p4.components.TileLineBuilder;
+import nl.utwente.p4.components.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileLineBuilderTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+        game.startGame();
+    }
+
     @Test
     void createTileLineBuilder() {
         TileLineBuilder tileLineBuilder = new TileLineBuilder();

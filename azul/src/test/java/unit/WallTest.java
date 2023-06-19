@@ -2,6 +2,7 @@ package unit;
 
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,24 +10,35 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WallTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+        game.startGame();
+    }
+
     @Test
     void  checkIfWallIsBuildCorrectly(){
         Wall wall = new Wall();
         assertEquals(5, wall.getTiles().length);
     }
-    //This is the brute force way of adding tiles to the wall
-       @Test
-       void  addTileToWallBrute(){
-           Wall wall = new Wall();
-           Tile tile = new Tile(TileType.RED);
-           wall.addTile(tile, 0);
-           assertEquals(tile.getType(), wall.getTiles()[0].get(tile.getType()));
-       }
-    //This is the correct way of adding tiles to the wall
+
+    @Test
+    void  addTileToWallBrute(){
+        Wall wall = new Wall();
+        Tile tile = new Tile(TileType.RED);
+        wall.addTile(tile, 0);
+        assertEquals(tile.getType(), wall.getTiles()[0].get(tile.getType()));
+    }
+
     @Test
     void  addTileToWallCorrect(){
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         PatternLine p = new PatternLine();
         ArrayList<Tile> tiles1 = new ArrayList<>();
         Tile tile1 = new Tile(TileType.RED);
@@ -55,17 +67,8 @@ class WallTest {
         assertEquals(tile3.getType(), currentWall.getTiles()[2].get(tile3.getType()));
     }
 
-    //test with a player instance
-    // note the  player1.getFloorLine().getTotalFloorScore() is assumed to be 0 in this test
     @Test
     void testWallWithPlayerInstance(){
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player());
-        players.add(new Player());
-        Game.getInstance().setPlayers(players);
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
-        
         Player currentPlayer = Game.getInstance().getCurrentPlayer();
         Wall wall = currentPlayer.getWall();
         PatternLine patternLine = currentPlayer.getPatternLine();
@@ -94,15 +97,17 @@ class WallTest {
 
         assertEquals(4 , currentPlayer.getScoreTrack());
     }
+
     @Test
-    void  checkIfTileIsFilled(){
+    void checkIfTileIsFilled(){
         Wall wall = new Wall();
         Tile tile = new Tile(TileType.RED);
         wall.addTile(tile, 2);
         assertTrue(wall.isTileFilled(tile,2));
     }
+
     @Test
-    void  checkIfRowIsFilled(){
+    void checkIfRowIsFilled(){
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.BLUE), 0);
         wall.addTile(new Tile(TileType.WHITE), 0);
@@ -112,8 +117,9 @@ class WallTest {
 
         assertTrue(wall.isRowFilled(0));
     }
+
     @Test
-    void  checkIfColumnIsFilled_Pass(){
+    void checkIfColumnIsFilled_Pass(){
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.WHITE), 0);
         wall.addTile(new Tile(TileType.BLACK), 1);
@@ -123,8 +129,9 @@ class WallTest {
 
         assertTrue(wall.isColumnFilled(4));
     }
+
     @Test
-    void  checkIfColumnIsFilled_Fail(){
+    void checkIfColumnIsFilled_Fail(){
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.BLUE), 0);
         wall.addTile(new Tile(TileType.WHITE), 1);
@@ -134,6 +141,7 @@ class WallTest {
 
         assertFalse(wall.isColumnFilled(0));
     }
+
     @Test
     void checkForDuplicateTile(){
         Wall wall = new Wall();
@@ -141,8 +149,9 @@ class WallTest {
         wall.addTile(new Tile(TileType.YELLOW), 0);
         assertEquals(1,wall.getTotalScore());
     }
+
     @Test
-    void  countHorizontally(){
+    void countHorizontally(){
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.WHITE), 0);
         wall.addTile(new Tile(TileType.RED), 0);
@@ -150,8 +159,9 @@ class WallTest {
         wall.addTile(new Tile(TileType.YELLOW), 0);
         assertEquals(9,wall.getTotalScore());
     }
+
     @Test
-    void  countVertically(){
+    void countVertically(){
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.BLUE), 1);
         wall.addTile(new Tile(TileType.YELLOW), 0);
@@ -161,7 +171,7 @@ class WallTest {
     }
 
     @Test
-    void  checkWallScoreP12(){
+    void checkWallScoreP12(){
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.WHITE), 0);
         wall.addTile(new Tile(TileType.RED), 0);
@@ -171,8 +181,9 @@ class WallTest {
         wall.addTile(new Tile(TileType.WHITE), 3);
         assertEquals(12,wall.getTotalScore());
     }
+
     @Test
-    void  checkWallScoreP20(){
+    void checkWallScoreP20(){
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.WHITE), 0);
         wall.addTile(new Tile(TileType.RED), 0);
@@ -186,7 +197,7 @@ class WallTest {
     }
 
     @Test
-    void checkIFScoreP0() {
+    void checkIfScoreP0() {
         Wall wall = new Wall();
         wall.addTile(new Tile(TileType.WHITE), 0);
         wall.deductScoreFromFloorLine(-15);
