@@ -70,24 +70,30 @@ public class Game {
     }
 
     public void nextPlayer() {
-        boolean isAllFactoriesEmpty = true;
-        for (Factory factory : factories) {
-            if (!factory.getTiles().isEmpty()) {
-                isAllFactoriesEmpty = false;
-                break;
-            }
-        }
-
-        if (isAllFactoriesEmpty && tileTable.getTiles().isEmpty()) {
+        if (isAllFactoriesEmpty() && isTileTableEmpty()) {
             wallTiling();
             return;
         }
 
-        if (this.currPlayerIdx + 1 == this.players.size()) {
-            this.currPlayerIdx = 0;
-        } else {
-            this.currPlayerIdx += 1;
+        updateCurrentPlayerIndex();
+    }
+
+    private boolean isAllFactoriesEmpty() {
+        for (Factory factory : factories) {
+            if (!factory.getTiles().isEmpty()) {
+                return false;
+            }
         }
+        return true;
+    }
+
+    private boolean isTileTableEmpty() {
+        return tileTable.getTiles().isEmpty();
+    }
+
+
+    private void updateCurrentPlayerIndex() {
+        currPlayerIdx = (currPlayerIdx + 1) % players.size();
     }
 
     public void startGame() {
