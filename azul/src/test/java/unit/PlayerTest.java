@@ -2,6 +2,7 @@ package unit;
 
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,14 +10,24 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+        game.startGame();
+    }
+
     @Test
     void getFactoryOfferFromTileTable_factoryOfferTakenFromTable_true() {
         // arrange
         Game game = Game.getInstance();
         TileTable tileTable = game.getTileTable();
-        game.getPlayers().clear();
-        game.setNumOfPlayers(1);
-        game.startGame();
         Player player = game.getPlayers().get(0);
         tileTable.addTile(new Tile(TileType.BLACK));
         tileTable.addTile(new Tile(TileType.BLACK));
@@ -27,7 +38,7 @@ public class PlayerTest {
         // Get black tiles from tile table and add to row index 1, which has size 2
         player.getFactoryOfferFromTileTable(new Tile(TileType.BLACK), 1);
 
-        // Test that player floorline contains correct tile amount and first player tile
+        // Test that player floor line contains correct tile amount and first player tile
         assertEquals(2, player.getFloorLine().getTiles().size());
         assertEquals(TileType.FIRST_PLAYER, player.getFloorLine().getTiles().get(0).getType());
         // Test that player board correct row contains right amount of tiles
@@ -35,11 +46,10 @@ public class PlayerTest {
     }
 
 
-    // kept the name playerBoard so to know that this part was separate component before
     @Test
     void addTiles_tilesAdded_true() {
         // arrange
-        Player playerBoard = new Player();
+        Player player = Game.getInstance().getCurrentPlayer();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
         tiles.add(new Tile(TileType.BLACK));
@@ -52,26 +62,23 @@ public class PlayerTest {
         tiles2.add(new Tile(TileType.WHITE));
 
         // act
-        playerBoard.addTiles(tiles, 0);
-        playerBoard.addTiles(tiles2, 4);
+        player.addTiles(tiles, 0);
+        player.addTiles(tiles2, 4);
 
         // Test that correct lines are filled the right amount
-        assertEquals(1, playerBoard.getPatternLine().getTileLines().get(0).getTiles().size());
-        assertEquals(4, playerBoard.getPatternLine().getTileLines().get(4).getTiles().size());
+        assertEquals(1, player.getPatternLine().getTileLines().get(0).getTiles().size());
+        assertEquals(4, player.getPatternLine().getTileLines().get(4).getTiles().size());
         // Test that floor contains all excess tiles
-        assertEquals(2, playerBoard.getFloorLine().getTiles().size());
+        assertEquals(2, player.getFloorLine().getTiles().size());
     }
 
     @Test
     void addTilesToFillGameBox_tilesAddedToGameBox_true() {
         // Clear game box lid first
-        Game game = Game.getInstance();
-        game.setNumOfPlayers(2);
-        game.startGame();
         Game.getInstance().getGameBoxLid().getAndRemoveTiles();
 
         // arrange
-        Player playerBoard = new Player();
+        Player player = Game.getInstance().getCurrentPlayer();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
         tiles.add(new Tile(TileType.BLACK));
@@ -84,25 +91,20 @@ public class PlayerTest {
         tiles.add(new Tile(TileType.BLACK));
 
         // act
-        playerBoard.addTiles(tiles, 0);
+        player.addTiles(tiles, 0);
 
         // Test that correct lines are filled the right amount, row 1 size 1
-        assertEquals(1, playerBoard.getPatternLine().getTileLines().get(0).getTiles().size());
+        assertEquals(1, player.getPatternLine().getTileLines().get(0).getTiles().size());
         // Test that floor contains all excess tiles, so a full 7 length row
-        assertEquals(7, playerBoard.getFloorLine().getTiles().size());
+        assertEquals(7, player.getFloorLine().getTiles().size());
         // Test that game box lid contains all excess tiles from floor, so a 1 tile
         assertEquals(1, Game.getInstance().getGameBoxLid().getTiles().size());
     }
 
     @Test
     void getFactoryOfferFromFactory() {
-
         // arrange
         Game game = Game.getInstance();
-        game.setNumOfPlayers(2);
-        game.startGame();
-        game.setGameBoxLid(new GameBoxLid());
-        game.setTileTable(new TileTable());
         Player player = game.getCurrentPlayer();
 
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -222,9 +224,6 @@ public class PlayerTest {
     @Test
     void addFloorLineFromFactory() {
         // arrange
-        Game game = Game.getInstance();
-        game.setGameBoxLid(new GameBoxLid());
-        game.setTileTable(new TileTable());
         Player player = new Player();
 
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -248,8 +247,6 @@ public class PlayerTest {
     @Test
     void addFloorLineFromTileTable() {
         // arrange
-        Game game = Game.getInstance();
-        game.setGameBoxLid(new GameBoxLid());
         Player player = new Player();
 
         TileTable tileTable = new TileTable();

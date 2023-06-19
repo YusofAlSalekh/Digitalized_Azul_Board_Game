@@ -1,9 +1,8 @@
 package unit;
 
-import nl.utwente.p4.components.FloorLine;
-import nl.utwente.p4.components.Game;
-import nl.utwente.p4.components.Tile;
+import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,8 +11,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FloorLineTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+        game.startGame();
+    }
+
     @Test
-    void addTile_tileAdded_true() { // methodName_behaviorToBeTested_expectedResult
+    void addTile_tileAdded_true() {
         // arrange
         FloorLine floorLine = new FloorLine();
         Tile tile = new Tile(TileType.BLACK);
@@ -26,16 +38,11 @@ public class FloorLineTest {
     }
 
     @Test
-    void addTile_tileAdded_false() { // methodName_behaviorToBeTested_expectedResult
+    void addTile_tileAdded_false() {
         // arrange
         Game game = Game.getInstance();
 
-        // set the Lid to an empty array since  FloorLinetest class conflicts with the
-        // Gametest class when running all tests/
-        ArrayList<Tile> empty = new ArrayList<>();
-        game.getGameBoxLid().setTiles(empty);
-
-        game.getTileBag().setTiles(new ArrayList<Tile>());
+        game.getTileBag().setTiles(new ArrayList<>());
         FloorLine floorLine = new FloorLine();
         Tile tile1 = new Tile(TileType.BLACK);
         Tile tile2 = new Tile(TileType.BLACK);
@@ -62,7 +69,7 @@ public class FloorLineTest {
     }
 
     @Test
-    void clearFloorLine_FloorCleared_true() { // methodName_behaviorToBeTested_expectedResult
+    void clearFloorLine_FloorCleared_true() {
         // arrange
         FloorLine floorLine = new FloorLine();
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -77,7 +84,6 @@ public class FloorLineTest {
         // act
         floorLine.setTiles(tiles);
         assertEquals(7, floorLine.getTiles().size());
-
         floorLine.clearFloorLine();
 
         // assert

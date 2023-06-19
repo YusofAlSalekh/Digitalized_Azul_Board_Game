@@ -2,6 +2,7 @@ package unit;
 
 import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,18 +10,24 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+        game.startGame();
+    }
+
     @Test
-    void startGame_gameSetup_true() { // methodName_behaviorToBeTested_expectedResult
+    void startGame_gameSetup_true() {
         // arrange
         Game game = Game.getInstance();
-        game.setPlayers(new ArrayList<>());
-        game.setTileBag(new TileBag());
-        game.setFactories(new ArrayList<>());
-        game.setNumOfPlayers(2);
         int numOfFactories = 2 * game.getNumOfPlayers() + 1;
-
-        // act
-        game.startGame();
 
         // assert
         // reference for assertion methods: https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html
@@ -85,10 +92,7 @@ public class GameTest {
     void resetComponentsForNextRound_refillFactories_notEnoughTiles() {
         // arrange
         Game game = Game.getInstance();
-        game.getGameBoxLid().setTiles(new ArrayList<>());
-        int numOfFactories;
-
-        numOfFactories = 2;
+        int numOfFactories = 2;
         TileBag tileBag = new TileBag();
         for (int i = 0; i < numOfFactories * 4; i++) {
             tileBag.getTiles().add(new Tile(TileType.BLACK));
@@ -118,22 +122,13 @@ public class GameTest {
     }
 
     @Test
-    void resetComponentsForNextRound_nextRoundPreparedWithFullFactoriesFromGameBoxLid_true() { // methodName_behaviorToBeTested_expectedResult
-        // Clear tilebag and factories
+    void resetComponentsForNextRound_nextRoundPreparedWithFullFactoriesFromGameBoxLid_true() {
         Game game = Game.getInstance();
-        game.setPlayers(new ArrayList<>());
-        game.startGame();
-        game.setTileBag(new TileBag());
-        for (Factory f : game.getFactories()) {
+
+        // Remove tiles from factories
+        for (Factory f: game.getFactories()) {
             f.takeAllTiles();
         }
-
-        // Fill game box lid with tiles
-        ArrayList<Tile> tiles = new ArrayList<>();
-        for (int i=0; i<20; i++) {
-            tiles.add(new Tile(TileType.WHITE));
-        }
-        game.addTilesToGameBoxLid(tiles);
 
         // act
         game.resetComponentsForNextRound();
@@ -180,9 +175,6 @@ public class GameTest {
     @Test
     void hasAnyPlayerFilledRow_True() {
       Game game = Game.getInstance();
-      game.getPlayers().clear();
-      game.setNumOfPlayers(2);
-      game.startGame();
       var player = game.getPlayers().get(0);
       var array = new Tile[]{new Tile(TileType.BLUE),new Tile(TileType.RED),
               new Tile(TileType.WHITE), new Tile(TileType.BLACK),
@@ -201,26 +193,18 @@ public class GameTest {
     @Test
     void hasAnyPlayerFilledRow_False() {
         Game game = Game.getInstance();
-        game.getPlayers().clear();
-        game.setNumOfPlayers(2);
-        game.startGame();
         assertFalse(game.hasAnyPlayerFilledRow());
         assertEquals(game.getPlayers().get(0).getScoreTrack(), game.getPlayers().get(game.getWinningPlayer()).getScoreTrack());
     }
     @Test
     void getTilesFromLid_Empty() {
         Game game = Game.getInstance();
-        game.getPlayers().clear();
-        game.setNumOfPlayers(2);
-        game.startGame();
         assertEquals(0,game.getGameBoxLid().getTiles().size());
     }
 
     @Test
     void getCurrentPlayer_Player1Returned_true() {
         // act
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         Player currentPlayer = Game.getInstance().getCurrentPlayer();
 
         // Check that the current player is the first player since it's still the first turn
@@ -233,7 +217,6 @@ public class GameTest {
         Game.getInstance().setPlayers(new ArrayList<>());
         Player currentPlayer = Game.getInstance().getCurrentPlayer();
 
-
         // Check that we received null, since there were no players to return
         assertNull(currentPlayer);
     }
@@ -241,7 +224,6 @@ public class GameTest {
     @Test
     void currSelectedFactory_success() {
         Game.getInstance().setCurrSelectedFactory(new Factory(new ArrayList<>()));
-
         Factory currSelectedFactory = Game.getInstance().getCurrSelectedFactory();
 
         assertNotNull(currSelectedFactory);
@@ -260,8 +242,6 @@ public class GameTest {
 
     @Test
     void currPlayerIdx_success() {
-        Game.getInstance().setCurrPlayerIdx(0);
-
         assertEquals(0, Game.getInstance().getCurrPlayerIdx());
     }
 
@@ -290,13 +270,6 @@ public class GameTest {
         factories.add(factory);
         Game.getInstance().setFactories(factories);
 
-        Player player = new Player();
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(player);
-        players.add(player);
-        Game.getInstance().setPlayers(players);
-        Game.getInstance().setCurrPlayerIdx(0);
-
         Game.getInstance().nextPlayer();
 
         assertEquals(1, Game.getInstance().getCurrPlayerIdx());
@@ -311,13 +284,7 @@ public class GameTest {
         factories.add(factory);
         Game.getInstance().setFactories(factories);
 
-        Player player = new Player();
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(player);
-        players.add(player);
-        Game.getInstance().setPlayers(players);
-        Game.getInstance().setCurrPlayerIdx(1);
-
+        Game.getInstance().nextPlayer();
         Game.getInstance().nextPlayer();
 
         assertEquals(0, Game.getInstance().getCurrPlayerIdx());
@@ -330,15 +297,6 @@ public class GameTest {
         ArrayList<Factory> factories = new ArrayList<>();
         factories.add(factory);
         Game.getInstance().setFactories(factories);
-
-        Game.getInstance().setTileTable(new TileTable());
-
-        Player player = new Player();
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(player);
-        players.add(player);
-        Game.getInstance().setPlayers(players);
-        Game.getInstance().setCurrPlayerIdx(0);
 
         Game.getInstance().nextPlayer();
 
@@ -353,15 +311,7 @@ public class GameTest {
         factories.add(factory);
         Game.getInstance().setFactories(factories);
 
-        Game.getInstance().setTileTable(new TileTable());
-
-        Player player = new Player();
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(player);
-        players.add(player);
-        Game.getInstance().setPlayers(players);
         Game.getInstance().setCurrPlayerIdx(1);
-
         Game.getInstance().nextPlayer();
 
         assertEquals(0, Game.getInstance().getCurrPlayerIdx());

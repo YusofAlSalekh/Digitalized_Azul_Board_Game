@@ -1,9 +1,9 @@
 package unit;
 
-import nl.utwente.p4.components.GeneralTileLine;
-import nl.utwente.p4.components.Tile;
+import nl.utwente.p4.components.*;
 import nl.utwente.p4.constants.TileType;
 import core.gamestate.TileLineAdapter;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,9 +11,21 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TileLineAdapterTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+        game.startGame();
+    }
+
     @Test
     void createTileLineWithSize_0() {
-
         GeneralTileLine tileLine = new TileLineAdapter();
 
         assertEquals(0, tileLine.getLineSize());

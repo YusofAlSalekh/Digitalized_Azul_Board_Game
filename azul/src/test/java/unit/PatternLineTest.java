@@ -5,6 +5,7 @@ import nl.utwente.p4.constants.TileType;
 import nl.utwente.p4.exceptions.PatternLineFilledException;
 import nl.utwente.p4.exceptions.TileColourNotMatchedException;
 import nl.utwente.p4.exceptions.TileColourNotMatchedWallTileColourException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,12 +13,22 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PatternLineTest {
+    @BeforeEach
+    void setup() {
+        Game game = Game.getInstance();
+        game.setNumOfPlayers(2);
+        game.setTileBag(new TileBag());
+        game.setGameBoxLid(new GameBoxLid());
+        game.setTileTable(new TileTable());
+        game.setFactories(new ArrayList<>());
+        game.setPlayers(new ArrayList<>());
+        game.setCurrPlayerIdx(0);
+        game.startGame();
+    }
 
     @Test
     void addTiles_tilesAdded_true() {
         // arrange
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -45,8 +56,6 @@ public class PatternLineTest {
     @Test
     void addTilesToTheTileLineWhenTtIsAlreadyFilled() {
         // arrange
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -78,8 +87,6 @@ public class PatternLineTest {
     @Test
     void AddTilesOfOneColourToTheTileLineWhenItAlreadyContainsTilesOfDifferentColour() {
         // arrange
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -102,8 +109,6 @@ public class PatternLineTest {
     @Test
     void addTilesToTheTileLineWhenTileOfThisColorIsAlreadyOnTheWall() {
         // arrange
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         Game.getInstance().getCurrentPlayer().getWall().addTile(new Tile(TileType.BLACK), 4);
 
         PatternLine patternLine = new PatternLine();
@@ -119,8 +124,6 @@ public class PatternLineTest {
     @Test
     void checkIfPatterLineRowIsFilled() {
         // arrange
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
@@ -132,8 +135,6 @@ public class PatternLineTest {
     @Test
     void resetPatterLineRow() {
         // arrange
-        Game.getInstance().setNumOfPlayers(2);
-        Game.getInstance().startGame();
         PatternLine patternLine = new PatternLine();
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(TileType.BLACK));
