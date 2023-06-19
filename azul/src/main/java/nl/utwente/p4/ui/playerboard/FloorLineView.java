@@ -47,16 +47,13 @@ public class FloorLineView extends JPanel {
             if (i < playerFloorLineTiles.size()) {
                 TileType tileType = playerFloorLineTiles.get(i).getType();
                 floorLineButton.setBackground(ColorConverter.convert(tileType));
-                if (tileType == TileType.FIRST_PLAYER) {
-                    floorLineButton.setText("FP");
-                }
+                if (tileType == TileType.FIRST_PLAYER) floorLineButton.setText("FP");
             } else {
                 floorLineButton.setBackground(ColorConverter.convert(TileType.NULL));
             }
             floorLineButton.setSize(new Dimension(20, 20));
             floorLineButton.setEnabled(false);
             floorLineButton.addActionListener(e -> fillTileView(player));
-
             floorLineButtons.add(floorLineButton);
             floorLineLayout.add(floorLineButton);
         }
@@ -64,33 +61,13 @@ public class FloorLineView extends JPanel {
 
     private void fillTileView(Player currPlayer) {
         Tile selectedTile = Game.getInstance().getCurrSelectedTile();
-        if (selectedTile == null) {
-            return;
-        }
+        if (selectedTile == null) return;
 
-        if (Game.getInstance().getCurrSelectedFactory() != null) {
-            currPlayer.addFloorLineFromFactory(
-                    Game.getInstance().getCurrSelectedFactory(),
-                    selectedTile.getType()
-            );
-        } else {
-            currPlayer.addFloorLineFromTileTable(
-                    selectedTile
-            );
-        }
-
-        refresh(currPlayer);
-        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
-            factoryView.refresh();
-        }
-        GameView.getInstance().getTileTableView().refresh();
-        PatternLineView patternLineView = GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getPatternLineView();
-        patternLineView.refresh(currPlayer);
-        patternLineView.toggleEnable(false);
+        performTileOffer(currPlayer, selectedTile);
+        refreshViews(currPlayer);
 
         Game.getInstance().setCurrSelectedFactory(null);
         Game.getInstance().setCurrSelectedTile(null);
-
         Game.getInstance().nextPlayer();
     }
 
@@ -108,5 +85,30 @@ public class FloorLineView extends JPanel {
         for (int i = currPlayerFloorLine.size(); i < floorLineButtons.size(); i++) {
             floorLineButtons.get(i).setEnabled(isEnabled);
         }
+    }
+
+    public void performTileOffer(Player player, Tile selectedTile) {
+        if (Game.getInstance().getCurrSelectedFactory() != null) {
+            player.addFloorLineFromFactory(
+                    Game.getInstance().getCurrSelectedFactory(),
+                    selectedTile.getType()
+            );
+        } else {
+            player.addFloorLineFromTileTable(
+                    selectedTile
+            );
+        }
+    }
+
+    public void refreshViews(Player player) {
+        refresh(player);
+        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
+            factoryView.refresh();
+        }
+        GameView.getInstance().getTileTableView().refresh();
+        PatternLineView patternLineView = GameView.getInstance().getBoardViews().get(
+                Game.getInstance().getCurrPlayerIdx()).getPatternLineView();
+        patternLineView.refresh(player);
+        patternLineView.toggleEnable(false);
     }
 }
