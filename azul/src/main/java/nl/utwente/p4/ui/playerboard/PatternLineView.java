@@ -60,49 +60,16 @@ public class PatternLineView extends JPanel {
 
     private void fillTileView(Player currPlayer, int row) {
         Tile selectedTile = Game.getInstance().getCurrSelectedTile();
-        if (selectedTile == null) {
-            return;
-        }
-
+        if (selectedTile == null) return;
         try {
-            if (Game.getInstance().getCurrSelectedFactory() != null) {
-                currPlayer.getFactoryOfferFromFactory(
-                        Game.getInstance().getCurrSelectedFactory(),
-                        selectedTile.getType(),
-                        row
-                );
-            } else {
-                currPlayer.getFactoryOfferFromTileTable(
-                        selectedTile,
-                        row
-                );
-            }
+            performTileOffer(currPlayer, selectedTile, row);
         } catch (Exception e) {
-            JOptionPane errorMessagePane = new JOptionPane(e.getMessage(), JOptionPane.ERROR_MESSAGE);
-            JDialog dialog = errorMessagePane.createDialog(null, "Error adding to Pattern Line");
-            dialog.setModal(false);
-            dialog.setVisible(true);
-
-            new Timer(5000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dialog.setVisible(false);
-                }
-            }).start();
+            handleTileOfferError(e);
            return;
         }
-
-        refreshRow(currPlayer, row, true);
-        toggleEnable(false);
-        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
-            factoryView.refresh();
-        }
-        GameView.getInstance().getTileTableView().refresh();
-        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(currPlayer);
-
+        refreshViews(currPlayer, row);
         Game.getInstance().setCurrSelectedFactory(null);
         Game.getInstance().setCurrSelectedTile(null);
-
         Game.getInstance().nextPlayer();
     }
 
@@ -148,5 +115,44 @@ public class PatternLineView extends JPanel {
         }
 
         return patternLineButton;
+    }
+
+    public void performTileOffer(Player player, Tile selectedTile, int row) {
+        if (Game.getInstance().getCurrSelectedFactory() != null) {
+            player.getFactoryOfferFromFactory(
+                    Game.getInstance().getCurrSelectedFactory(),
+                    selectedTile.getType(),
+                    row
+            );
+        } else {
+            player.getFactoryOfferFromTileTable(
+                    selectedTile,
+                    row
+            );
+        }
+    }
+
+    public void handleTileOfferError(Exception error) {
+        JOptionPane errorMessagePane = new JOptionPane(error.getMessage(), JOptionPane.ERROR_MESSAGE);
+        JDialog dialog = errorMessagePane.createDialog(null, "Error adding to Pattern Line");
+        dialog.setModal(false);
+        dialog.setVisible(true);
+
+        new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.setVisible(false);
+            }
+        }).start();
+    }
+
+    public void refreshViews(Player player, int row) {
+        refreshRow(player, row, true);
+        toggleEnable(false);
+        for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
+            factoryView.refresh();
+        }
+        GameView.getInstance().getTileTableView().refresh();
+        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(player);
     }
 }
