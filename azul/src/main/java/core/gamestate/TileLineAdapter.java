@@ -4,7 +4,9 @@ import nl.utwente.p4.components.GeneralTileLine;
 import nl.utwente.p4.components.Tile;
 import nl.utwente.p4.exceptions.WrongTileType;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TileLineAdapter implements GeneralTileLine {
     private PatternLine line;
@@ -75,6 +77,23 @@ public class TileLineAdapter implements GeneralTileLine {
         line.setTileType(convertToForeignType(lineType));
     }
 
+    private static final HashMap<nl.utwente.p4.constants.TileType, TileType> homeType = new HashMap<>() {{
+        put(nl.utwente.p4.constants.TileType.BLACK, TileType.BLACK);
+        put(nl.utwente.p4.constants.TileType.WHITE, TileType.GREEN);
+        put(nl.utwente.p4.constants.TileType.BLUE, TileType.BLUE);
+        put(nl.utwente.p4.constants.TileType.YELLOW, TileType.YELLOW);
+        put(nl.utwente.p4.constants.TileType.RED, TileType.RED);
+    }};
+    private static final HashMap<TileType, nl.utwente.p4.constants.TileType> foreignType = new HashMap<>() {
+        {
+            put(TileType.BLACK, nl.utwente.p4.constants.TileType.BLACK);
+            put(TileType.GREEN, nl.utwente.p4.constants.TileType.WHITE);
+            put(TileType.BLUE, nl.utwente.p4.constants.TileType.BLUE);
+            put(TileType.YELLOW, nl.utwente.p4.constants.TileType.YELLOW);
+            put(TileType.RED, nl.utwente.p4.constants.TileType.RED);
+        }
+    };
+
     /**
      * Converts our TileType to the TileType of Team 5 and
      *
@@ -84,25 +103,7 @@ public class TileLineAdapter implements GeneralTileLine {
         if (tileType == null) {
             return null;
         }
-
-        switch (tileType) {
-            case BLACK -> {
-                return core.gamestate.TileType.BLACK;
-            }
-            case WHITE -> {
-                return core.gamestate.TileType.GREEN;
-            }
-            case BLUE -> {
-                return core.gamestate.TileType.BLUE;
-            }
-            case YELLOW -> {
-                return core.gamestate.TileType.YELLOW;
-            }
-            case RED -> {
-                return core.gamestate.TileType.RED;
-            }
-        }
-        return null;
+        return homeType.get(tileType);
     }
 
     /**
@@ -114,24 +115,6 @@ public class TileLineAdapter implements GeneralTileLine {
         if (tileType == null) {
             return nl.utwente.p4.constants.TileType.NULL;
         }
-
-        switch (tileType) {
-            case BLACK -> {
-                return nl.utwente.p4.constants.TileType.BLACK;
-            }
-            case GREEN -> {
-                return nl.utwente.p4.constants.TileType.WHITE;
-            }
-            case BLUE -> {
-                return nl.utwente.p4.constants.TileType.BLUE;
-            }
-            case YELLOW -> {
-                return nl.utwente.p4.constants.TileType.YELLOW;
-            }
-            case RED -> {
-                return nl.utwente.p4.constants.TileType.RED;
-            }
-        }
-        return nl.utwente.p4.constants.TileType.NULL;
+        return foreignType.get(tileType);
     }
 }
