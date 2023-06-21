@@ -188,7 +188,7 @@ public class GameTest {
             player.getPatternLine().clearPatterLineRow(0);
         }
       assertTrue(game.hasAnyPlayerFilledRow());
-      assertEquals(11, game.getPlayers().get(game.getWinningPlayer()).getScoreTrack());
+      assertEquals(13, game.getPlayers().get(game.getWinningPlayer()).getScoreTrack());
     }
     @Test
     void hasAnyPlayerFilledRow_False() {
