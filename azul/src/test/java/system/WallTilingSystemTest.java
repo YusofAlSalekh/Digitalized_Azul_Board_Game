@@ -135,7 +135,7 @@ public class WallTilingSystemTest {
             FloorLineView floor = bv.getFloorLineView();
             assertEquals(7, floor.getFloorLineButtons().size());
             for (JButton button: floor.getFloorLineButtons()) {
-                assertEquals(TileType.NULL, ColorConverter.reverse(button.getBackground(), false));
+                assertEquals(TileType.NULL, ColorConverter.reverse(button.getBackground(), true));
             }
         }
 

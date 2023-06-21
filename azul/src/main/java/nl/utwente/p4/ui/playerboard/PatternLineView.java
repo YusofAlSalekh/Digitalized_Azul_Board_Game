@@ -153,6 +153,8 @@ public class PatternLineView extends JPanel {
             factoryView.refresh();
         }
         GameView.getInstance().getTileTableView().refresh();
-        GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView().refresh(player);
+        FloorLineView floorLineView = GameView.getInstance().getBoardViews().get(Game.getInstance().getCurrPlayerIdx()).getFloorLineView();
+        floorLineView.refresh(player);
+        floorLineView.toggleEnable(false);
     }
 }
