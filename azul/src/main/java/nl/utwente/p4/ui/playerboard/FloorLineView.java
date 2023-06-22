@@ -13,6 +13,7 @@ import nl.utwente.p4.ui.helper.ColorConverter;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 @Getter
@@ -49,7 +50,7 @@ public class FloorLineView extends JPanel {
                 floorLineButton.setBackground(ColorConverter.convert(tileType));
                 if (tileType == TileType.FIRST_PLAYER) floorLineButton.setText("FP");
             } else {
-                floorLineButton.setBackground(ColorConverter.convert(TileType.NULL));
+                floorLineButton.setBackground(ColorConverter.convertDisabled(TileType.NULL));
             }
             floorLineButton.setSize(new Dimension(20, 20));
             floorLineButton.setEnabled(false);
@@ -83,7 +84,8 @@ public class FloorLineView extends JPanel {
         ArrayList<Tile> currPlayerFloorLine = currPlayer.getFloorLine().getTiles();
 
         for (int i = currPlayerFloorLine.size(); i < floorLineButtons.size(); i++) {
-            floorLineButtons.get(i).setEnabled(isEnabled);
+            JButton floorLineButton = refreshColor(i, isEnabled);
+            floorLineButton.setEnabled(isEnabled);
         }
     }
 
@@ -102,6 +104,7 @@ public class FloorLineView extends JPanel {
 
     public void refreshViews(Player player) {
         refresh(player);
+        toggleEnable(false);
         for (FactoryView factoryView : GameView.getInstance().getFactoryViews()) {
             factoryView.refresh();
         }
@@ -111,4 +114,17 @@ public class FloorLineView extends JPanel {
         patternLineView.refresh(player);
         patternLineView.toggleEnable(false);
     }
+
+    private JButton refreshColor(int idx, boolean isEnabledColor) {
+        HashMap<TileType, Color> colorMap = ColorConverter.getColorMapEnabled();
+        if (!isEnabledColor) {
+            colorMap = ColorConverter.getColorMapDisabled();
+        }
+
+        JButton floorLineButton = floorLineButtons.get(idx);
+        floorLineButton.setBackground(colorMap.get(TileType.NULL));
+
+        return floorLineButton;
+    }
+
 }

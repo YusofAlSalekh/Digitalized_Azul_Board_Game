@@ -103,7 +103,7 @@ public class InitialGameStartSystemTest {
             }
             for (JButton floorLineButton : boardView.getFloorLineView().getFloorLineButtons()) {
                 assertEquals(" ", floorLineButton.getText());
-                assertEquals(ColorConverter.convert(TileType.NULL), floorLineButton.getBackground());
+                assertEquals(ColorConverter.convertDisabled(TileType.NULL), floorLineButton.getBackground());
                 assertFalse(floorLineButton.isEnabled());
             }
         }

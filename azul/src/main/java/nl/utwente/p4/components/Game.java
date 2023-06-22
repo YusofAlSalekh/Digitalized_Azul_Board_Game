@@ -237,6 +237,7 @@ public class Game {
 
     public int getWinningPlayer() {
         int winningPlayerIdx = 0;
+        players.get(winningPlayerIdx).calculateFinalScore();
 
         for (int i = 1; i < players.size(); i++) {
             Player winningPlayer = players.get(winningPlayerIdx);
