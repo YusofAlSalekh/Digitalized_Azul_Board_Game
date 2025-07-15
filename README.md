@@ -2,7 +2,9 @@
 
 ## Project Description
 
-This project is a digital implementation of the board game *Azul*, developed in Java with a graphical user interface using Java Swing. The aim was to apply core software engineering principles while working collaboratively in a team setting.
+📌 Course project at the University of Twente
+
+This project is a digital implementation of the board game *Azul*, built in Java with a graphical user interface using Swing. The aim was to apply software engineering principles, including modular design, testing, and team-based development.
 
 The application allows local gameplay for 2 to 4 players, supporting all essential rules of the Azul game. It provides interactive feedback through the GUI for illegal actions, and uses structured backend logic to ensure correct game flow.
 
